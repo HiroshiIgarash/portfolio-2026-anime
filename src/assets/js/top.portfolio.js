@@ -19,3 +19,21 @@ $('.js-visualChange').on('click', function () {
 	const visualNum = Number($(this).data('visual')) - 1;
 	mvBgSwiper.slideTo(visualNum);
 });
+
+/*-----------------------------------------------
+ * MV - Fixed Scroll
+-------------------------------------------------*/
+gsap.registerPlugin(ScrollTrigger);
+
+ScrollTrigger.create({
+	trigger: '#mv',
+	start: 'top top',
+	end: '+=100%',
+	pin: true,
+	pinSpacing: true,
+	scrub: true,
+	animation: gsap.to('.js-mv__catchWrap', {
+		yPercent: -30,
+		ease: 'none',
+	}),
+});
