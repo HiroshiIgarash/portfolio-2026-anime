@@ -37,3 +37,36 @@ ScrollTrigger.create({
 		ease: 'none',
 	}),
 });
+
+/*-----------------------------------------------
+ * MV - Catch Animation
+-------------------------------------------------*/
+function playMvCatchAnimation() {
+	const tl = gsap.timeline({ delay: .3 });
+
+	tl.set('.mv__catch--mainText', { opacity: 1 })
+		.to('.mv__catch--mainBand', {
+			scaleX: 1,
+			duration: .5,
+			ease: 'power2.inOut',
+		})
+		.set('.mv__catch--mainBand', {
+			transformOrigin: 'right center',
+		})
+		.to('.mv__catch--mainBand', {
+			scaleX: 0,
+			duration: .5,
+			ease: 'power2.inOut',
+		})
+		.to('.mv__catch--listsItem', {
+			opacity: 1,
+			y: 0,
+			duration: .6,
+			stagger: .15,
+			ease: 'power2.out',
+		}, '-=.2');
+}
+
+$(window).on('load', function () {
+	playMvCatchAnimation();
+});
