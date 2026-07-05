@@ -1,0 +1,87 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * BG STAGE (ABOUT/PROJECTS 固定背景ワイプ)
+ * 背景画像自体は動かさず、GSAP ScrollTriggerで
+ * .bgStage をpinしたまま .-projects レイヤーの
+ * clip-pathをスクラブして境界だけを上げていく
+-------------------------------------------------*/
+.aboutProjectsWrap {
+	position: relative;
+}
+
+/**
+ * bgStage
+ */
+.bgStage {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	z-index: 0;
+	overflow: hidden;
+}
+.bgStage__layer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.bgStage__layer picture,
+.bgStage__layer img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+.bgStage__layer.-about {
+	z-index: 1;
+}
+.bgStage__layer.-projects {
+	z-index: 2;
+	clip-path: inset(100% 0 0 0);
+}
+/**
+ * bgStage__layer overlay
+ */
+.bgStage__layer::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	pointer-events: none;
+}
+.bgStage__layer.-about::after,
+.bgStage__layer.-projects::after {
+	background: linear-gradient(180deg, rgba(0, 0, 0, .75) 0%, rgba(0, 0, 0, .35) 40%, rgba(0, 0, 0, .75) 100%);
+}
+
+/**
+ * skills__circle
+ * PROJECTS下端でスクロールすると画面下中央から広がり、
+ * SKILLSセクションの青背景へ接続するトランジション
+ */
+.skills {
+	position: relative;
+	z-index: 2;
+	min-height: 100vh;
+	background-color: var(--color-navy);
+	overflow: hidden;
+}
+.skills__circle {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: vwmin(100);
+	height: vwmin(100);
+	border-radius: 50%;
+	background-color: var(--color-navy);
+	transform: translate(-50%, -50%) scale(0);
+	transform-origin: center;
+	z-index: 0;
+}
