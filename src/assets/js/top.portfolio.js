@@ -2,8 +2,8 @@
  * MV
 -------------------------------------------------*/
 /**
-* Swiper - mv__bg
-**/
+ * Swiper - mv__bg
+ */
 let mvBgSwiper = new Swiper('.js-mv__bgSwiper', {
 	allowTouchMove: false,
 	effect: 'fade',
