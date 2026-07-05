@@ -1,0 +1,40 @@
+@use "sass:string";
+
+// -----------------------------------------------
+// サイズ式・メディアクエリを関数化したもの
+// カンプ: PC 1200px / SP 750px（:root の --vw-min）
+// ※ unquote で文字列出力しているのは、dart-sass が calc() を簡約して
+//    想定の表記（min(calc(...), Npx)）と変わってしまうのを防ぐため
+// -----------------------------------------------
+
+// SP レイアウト（〜768px）。コンポーネント群の直後にトップレベルで使う
+@mixin sp {
+	@media screen and (max-width: 768px) {
+		@content;
+	}
+}
+
+// hover デバイスのみ（タッチに hover を残さない）。transition もこの中で宣言する
+@mixin hover {
+	@media screen and (hover: hover) and (pointer: fine) {
+		@content;
+	}
+}
+
+// PC 基本: カンプ px 値上限の流体サイズ
+// vwmin(40) → min(calc(40 / var(--vw-min) * 100vw), 40px)
+@function vwmin($px) {
+	@return string.unquote("min(calc(#{$px} / var(--vw-min) * 100vw), #{$px}px)");
+}
+
+// PC 拡大許容: 大画面で --max-percent 倍まで伸びてよい要素用
+// vwmax(40) → min(calc(40 / var(--vw-min) * 100vw), calc(40px * var(--max-percent)))
+@function vwmax($px) {
+	@return string.unquote("min(calc(#{$px} / var(--vw-min) * 100vw), calc(#{$px}px * var(--max-percent)))");
+}
+
+// SP: 上限なし流体。@include sp の中で使う
+// vw(40) → calc(40 / var(--vw-min) * 100vw)
+@function vw($px) {
+	@return string.unquote("calc(#{$px} / var(--vw-min) * 100vw)");
+}

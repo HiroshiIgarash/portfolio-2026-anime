@@ -1,0 +1,30 @@
+@use "../global/mixins" as *;
+
+/*-----------------------------------------------
+ * Bace
+-------------------------------------------------*/
+:root {
+	/* Fonts（デザイン決定後に差し替え） */
+	--font-ja: "Noto Sans JP", sans-serif;
+	--font-en: "Poppins", sans-serif;
+
+	/* Size */
+	--vw-min: 1200;
+	--max-percent: 1.6;
+
+	--def-font-size: 16;
+
+	/* Colors（仮。デザイン決定後に差し替え。色相で命名する） */
+	--color-teal: #00afaa;
+	--color-pink: #ff649b;
+	--color-orange: #ffaf00;
+	--color-lightyellow: #ffe6b0;
+	--color-navy: #14213d;
+}
+
+@include sp {
+	:root {
+		--vw-min: 750;
+		--def-font-size: 24;
+	}
+}

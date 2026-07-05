@@ -1,0 +1,59 @@
+@use "../global/mixins" as *;
+
+body {
+	-webkit-text-size-adjust: 100%;
+	background-color: #fff;
+	color: #000;
+	font-family: var(--font-ja);
+	font-feature-settings: "palt";
+	font-size: vwmin(16);
+	font-weight: normal;
+	letter-spacing: 0.07em;
+	line-height: 1.8;
+	word-wrap: break-word;
+}
+.pc {
+	display: block;
+}
+.sp {
+	display: none;
+}
+a {
+	color: #222;
+}
+a:hover {
+	text-decoration: none;
+}
+
+@include sp {
+	html {
+		font-size: 62.5%;
+	}
+	body {
+		font-size: 10px;
+		font-size: 1rem;
+		font-size: calc(24 / var(--vw-min) * 100vw);
+		min-width: 320px;
+	}
+	.sp {
+		display: block;
+	}
+	.pc {
+		display: none;
+	}
+}
+
+/**
+ * scroll bar
+ */
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+::-webkit-scrollbar-track {
+	background: #eee;
+}
+::-webkit-scrollbar-thumb {
+	background: var(--color-navy);
+	border-radius: 0;
+}
