@@ -65,27 +65,113 @@ const pageJs = 'top';
 		</ul>
 	</div><!-- /.mv__visualThumbArea -->
 	<div class="mv__catchWrap js-mv__catchWrap">
-		<div class="mv__catch">
+		<div class="mv__catch js-mv__catch">
 			<h2 class="mv__catch--main">
-				<span class="mv__catch--mainText">
-					わくわくに満ちた<br>体験を。
+				<span class="mv__catch--mainLine js-mv__catchLine">
+					<span class="mv__catch--mainText js-mv__catchText">わくわくに満ちた</span>
+					<span class="mv__catch--mainBand js-mv__catchBand"></span>
 				</span>
-				<span class="mv__catch--mainBand"></span>
+				<span class="mv__catch--mainLine js-mv__catchLine">
+					<span class="mv__catch--mainText js-mv__catchText">体験を。</span>
+					<span class="mv__catch--mainBand js-mv__catchBand"></span>
+				</span>
 			</h2>
 			<div class="mv__catch--lists">
-				<p class="mv__catch--listsItem">ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。</p>
-				<p class="mv__catch--listsItem">ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。</p>
-				<p class="mv__catch--listsItem">ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。</p>
+				<p class="mv__catch--listsItem">Webサイトは、ただ情報を伝えるだけのものではないと考えています。訪れた人の心を動かし、期待や好奇心を生み出す、わくわくに満ちた体験を届けたいと思っています。</p>
+				<p class="mv__catch--listsItem">アニメーションやインタラクションを駆使し、まるで魔法に触れたかのような新体験を創り出します。思わず驚き、夢中になってしまうような演出で、記憶に残る瞬間を届けます。</p>
+				<p class="mv__catch--listsItem">ページを進めるたびに次が気になり、気付けば夢中になっている。そんな心躍る体験を通して、ユーザーとコンテンツをつなぐWebサイトを制作したいと考えています。</p>
 			</div>
 		</div>
 	</div><!-- /.mv__catchWrap -->
 </header><!-- /#mv -->
 <main class="l-main">
-	<!-- BEGIN #content -->
-	<section id="content" class="l-content">
+	<div class="aboutProjectsWrap js-bgStage__wrap">
+		<div class="bgStage js-bgStage">
+			<div class="bgStage__layer -about">
+				<picture>
+					<source srcset="<%= root %>assets/img/top/about-bg.webp" type="image/webp">
+					<img src="<%= root %>assets/img/top/about-bg.jpg" alt="">
+				</picture>
+			</div><!-- /.bgStage__layer.-about -->
+			<div class="bgStage__layer -projects">
+				<picture>
+					<source srcset="<%= root %>assets/img/top/projects-bg.webp" type="image/webp">
+					<img src="<%= root %>assets/img/top/projects-bg.jpg" alt="">
+				</picture>
+			</div><!-- /.bgStage__layer.-projects -->
+		</div><!-- /.bgStage -->
+		<section id="about" class="about">
+		<div class="about__left">
+			<h2 class="about__head js-scrani">
+				<span class="about__head--char"><span class="about__head--charIn">A</span></span>
+				<span class="about__head--char"><span class="about__head--charIn">B</span></span>
+				<span class="about__head--char"><span class="about__head--charIn">O</span></span>
+				<span class="about__head--char"><span class="about__head--charIn">U</span></span>
+				<span class="about__head--char"><span class="about__head--charIn">T</span></span>
+			</h2>
+			<div class="about__avatar">
+				<button type="button" class="about__avatar--btn js-about__avatarChange">
+					<img class="about__avatar--img --is-current" data-avatar="front" src="<%= root %>assets/img/about/avatar-front.png" alt="アバター(表)">
+					<img class="about__avatar--img" data-avatar="back" src="<%= root %>assets/img/about/avatar-back.png" alt="アバター(裏)">
+					<span class="hd">クリックしてアバターを切り替え</span>
+				</button>
+			</div>
+		</div><!-- /.about__left -->
+		<div class="about__right">
+			<p class="about__text js-scrani">ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。</p>
+			<p class="about__text js-scrani">ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。</p>
+			<p class="about__text js-scrani">ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。</p>
+		</div><!-- /.about__right -->
+	</section><!-- /#about -->
+		<section id="projects" class="projects">
+			<h2 class="projects__head js-scrani">
+				<span class="projects__head--char"><span class="projects__head--charIn">P</span></span>
+				<span class="projects__head--char"><span class="projects__head--charIn">R</span></span>
+				<span class="projects__head--char"><span class="projects__head--charIn">O</span></span>
+				<span class="projects__head--char"><span class="projects__head--charIn">J</span></span>
+				<span class="projects__head--char"><span class="projects__head--charIn">E</span></span>
+				<span class="projects__head--char"><span class="projects__head--charIn">C</span></span>
+				<span class="projects__head--char"><span class="projects__head--charIn">T</span></span>
+				<span class="projects__head--char"><span class="projects__head--charIn">S</span></span>
+			</h2>
+			<div class="projects__swiper swiper js-projectsSwiper">
+				<ul class="swiper-wrapper">
+					<li class="projects__slide swiper-slide js-projectsModalOpen" data-modal="projectModal01">
+						<picture>
+							<source srcset="<%= root %>assets/img/top/projects/koremina.webp" type="image/webp">
+							<img src="<%= root %>assets/img/top/projects/koremina.jpg" alt="コレミナ">
+						</picture>
+					</li>
+					<li class="projects__slide swiper-slide js-projectsModalOpen" data-modal="projectModal02">
+						<picture>
+							<source srcset="<%= root %>assets/img/top/projects/holo-comment.webp" type="image/webp">
+							<img src="<%= root %>assets/img/top/projects/holo-comment.jpg" alt="ホロライブコメント検索">
+						</picture>
+					</li>
+					<li class="projects__slide swiper-slide js-projectsModalOpen" data-modal="projectModal03">
+						<picture>
+							<source srcset="<%= root %>assets/img/top/projects/tategamanga.webp" type="image/webp">
+							<img src="<%= root %>assets/img/top/projects/tategamanga.jpg" alt="タテマンガ投稿Webサービス">
+						</picture>
+					</li>
+					<li class="projects__slide swiper-slide js-projectsModalOpen" data-modal="projectModal04">
+						<picture>
+							<source srcset="<%= root %>assets/img/top/projects/corporate.webp" type="image/webp">
+							<img src="<%= root %>assets/img/top/projects/corporate.jpg" alt="コーポレートサイトリニューアル">
+						</picture>
+					</li>
+				</ul>
+				<div class="projects__nav js-projectsNav"></div>
+			</div><!-- /.projects__swiper -->
+			<div class="projects__more">
+				<a href="<%= root %>products" class="projects__more--btn js-anchor">詳しくみる</a>
+			</div>
+		</section><!-- /#projects -->
+	</div><!-- /.aboutProjectsWrap -->
+	<section id="skills" class="skills">
+		<div class="skills__circle js-skillsCircle"></div>
 		<!-- デザイン未確定のためプレースホルダ -->
-	</section>
-	<!-- END #content -->
+	</section><!-- /#skills -->
 </main>
 <%- include('../_inc/_footer', { root: root }) -%>
 </div>
