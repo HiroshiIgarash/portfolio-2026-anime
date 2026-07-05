@@ -19,6 +19,69 @@ const pageJs = 'top';
 <div id="fullWrap">
 <%- include('../_inc/_loading') -%>
 <%- include('../_inc/_header', { root: root }) -%>
+<!-- BEGIN #mv -->
+<header id="mv" class="mv">
+	<div class="mv__bg">
+		<div class="mv__bgSwiper swiper js-mv__bgSwiper">
+			<ul class="mv__bgSlideLists swiper-wrapper">
+				<li class="mv__bgSlideList swiper-slide" data-visual="1">
+					<picture>
+						<source srcset="<%= root %>assets/img/top/mv1.webp" type="image/webp">
+						<img src="<%= root %>assets/img/top/mv1.jpg" alt="空を見上げる少年と少女">
+					</picture>
+				</li>
+				<li class="mv__bgSlideList swiper-slide" data-visual="2">
+					<picture>
+						<source srcset="<%= root %>assets/img/top/mv2.webp" type="image/webp">
+						<img src="<%= root %>assets/img/top/mv2.jpg" alt="山頂へ続く道を歩く登山者">
+					</picture>
+				</li>
+				<li class="mv__bgSlideList swiper-slide" data-visual="3">
+					<picture>
+						<source srcset="<%= root %>assets/img/top/mv3.webp" type="image/webp">
+						<img src="<%= root %>assets/img/top/mv3.jpg" alt="バレーボールの試合の一場面">
+					</picture>
+				</li>
+			</ul>
+		</div>
+	</div><!-- /.mv__bg -->
+	<div class="mv__overlay"></div>
+	<div class="mv__visualThumbArea">
+		<ul class="mv__visualThumbLists">
+			<li class="mv__visualThumbList">
+				<button type="button" class="btn_visualChange js-visualChange --is-current" data-visual="1">
+					<span class="hd">1枚目のビジュアルに切り替え</span>
+				</button>
+			</li>
+			<li class="mv__visualThumbList">
+				<button type="button" class="btn_visualChange js-visualChange" data-visual="2">
+					<span class="hd">2枚目のビジュアルに切り替え</span>
+				</button>
+			</li>
+			<li class="mv__visualThumbList">
+				<button type="button" class="btn_visualChange js-visualChange" data-visual="3">
+					<span class="hd">3枚目のビジュアルに切り替え</span>
+				</button>
+			</li>
+		</ul>
+	</div><!-- /.mv__visualThumbArea -->
+	<div class="mv__catchWrap js-mv__catchWrap">
+		<div class="mv__catch">
+			<h2 class="mv__catch--main">
+				<span class="mv__catch--mainText">
+					わくわくに満ちた<br>体験を。
+				</span>
+				<span class="mv__catch--mainBand"></span>
+			</h2>
+			<div class="mv__catch--lists">
+				<p class="mv__catch--listsItem">ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。</p>
+				<p class="mv__catch--listsItem">ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。</p>
+				<p class="mv__catch--listsItem">ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。</p>
+			</div>
+		</div>
+	</div><!-- /.mv__catchWrap -->
+</header>
+<!-- END #mv -->
 <main class="l-main">
 	<!-- BEGIN #content -->
 	<section id="content" class="l-content">
