@@ -1,0 +1,125 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * Modal
+-------------------------------------------------*/
+.modalBox {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	background: rgba(20, 33, 61, .85);
+	z-index: 9999;
+}
+.oneModal {
+	display: none;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+.oneModalIn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	width: 100%;
+	min-height: 100%;
+	height: auto;
+	margin: 0 auto;
+}
+.oneModalIn__cont {
+	width: vwmin(720);
+	padding: vwmin(64) 0;
+}
+.oneModalIn__cont--img {
+	width: 100%;
+	aspect-ratio: 1200 / 630;
+	object-fit: cover;
+	border-radius: vwmin(12);
+	display: block;
+}
+.oneModalIn__cont--name {
+	margin: vwmin(32) 0 vwmin(16);
+	font-size: vwmin(32);
+	font-weight: 700;
+	color: #fff;
+}
+.oneModalIn__cont--text {
+	font-size: vwmin(20);
+	line-height: 1.9;
+	color: #fff;
+}
+
+/**
+ * closeBtn
+ */
+.closeBtn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: vwmin(80);
+	height: vwmin(80);
+	margin: vwmin(40);
+	z-index: 2;
+}
+.closeBtn__btn {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	border: 1px solid #fff;
+	background: none;
+	cursor: pointer;
+}
+.closeBtn__btn::before,
+.closeBtn__btn::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 40%;
+	height: 1px;
+	background: #fff;
+}
+.closeBtn__btn::before {
+	transform: translate(-50%, -50%) rotate(45deg);
+}
+.closeBtn__btn::after {
+	transform: translate(-50%, -50%) rotate(-45deg);
+}
+@include hover {
+	.closeBtn__btn {
+		transition: transform .3s ease;
+	}
+	.closeBtn__btn:hover {
+		transform: rotate(180deg);
+	}
+}
+
+@include sp {
+	.oneModalIn {
+		min-width: 100%;
+	}
+	.oneModalIn__cont {
+		width: 100%;
+		padding: vw(120) vw(32);
+	}
+	.oneModalIn__cont--name {
+		margin: vw(32) 0 vw(16);
+		font-size: vw(40);
+	}
+	.oneModalIn__cont--text {
+		font-size: vw(28);
+	}
+	.closeBtn {
+		width: vw(80);
+		height: vw(80);
+		margin: vw(32);
+	}
+}
