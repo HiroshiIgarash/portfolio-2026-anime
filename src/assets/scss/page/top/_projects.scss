@@ -1,0 +1,190 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * PROJECTS
+-------------------------------------------------*/
+.projects {
+	position: relative;
+	z-index: 1;
+	min-height: 100vh;
+	padding: vwmin(160) 0;
+}
+
+/**
+ * projects__head
+ * .about__head と同一構造（8文字分のstagger）
+ */
+.projects__head {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	font-family: var(--font-en);
+	font-size: vwmin(88);
+	line-height: 1;
+	font-weight: 900;
+	letter-spacing: 0;
+	color: #fff;
+	margin: 0 0 vwmin(120);
+	padding-bottom: vwmin(24);
+}
+.projects__head::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	width: vwmin(320);
+	height: 4px;
+	transform: translateX(-50%) scaleX(0);
+	transform-origin: center;
+	background-color: var(--color-teal);
+	transition: transform .8s ease;
+	transition-delay: .5s;
+}
+.projects__head.--is-ani::after {
+	transform: translateX(-50%) scaleX(1);
+}
+.projects__head--char {
+	display: inline-block;
+	overflow: hidden;
+}
+.projects__head--charIn {
+	display: inline-block;
+	transform: translateY(110%);
+	opacity: 0;
+	transition: transform .6s ease, opacity .6s ease;
+}
+.projects__head.--is-ani .projects__head--charIn {
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.projects__head--char:nth-child(1) .projects__head--charIn {
+	transition-delay: .08s;
+}
+.projects__head--char:nth-child(2) .projects__head--charIn {
+	transition-delay: .16s;
+}
+.projects__head--char:nth-child(3) .projects__head--charIn {
+	transition-delay: .24s;
+}
+.projects__head--char:nth-child(4) .projects__head--charIn {
+	transition-delay: .32s;
+}
+.projects__head--char:nth-child(5) .projects__head--charIn {
+	transition-delay: .4s;
+}
+.projects__head--char:nth-child(6) .projects__head--charIn {
+	transition-delay: .48s;
+}
+.projects__head--char:nth-child(7) .projects__head--charIn {
+	transition-delay: .56s;
+}
+.projects__head--char:nth-child(8) .projects__head--charIn {
+	transition-delay: .64s;
+}
+
+/**
+ * projects__swiper
+ * coverflowで左右のスライドが奥へ回り込んで見えるようにする
+ */
+.projects__swiper {
+	width: 100%;
+	padding: vwmin(40) 0 vwmin(80);
+}
+.projects__slide {
+	width: vwmin(560);
+	aspect-ratio: 1200 / 630;
+	border-radius: vwmin(12);
+	overflow: hidden;
+	cursor: pointer;
+}
+.projects__slide picture,
+.projects__slide img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/**
+ * projects__nav
+ * swiper pagination のバレットを円形ボタンとして装飾
+ */
+.projects__nav {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: vwmin(16);
+	margin-top: vwmin(8);
+}
+.projects__nav .swiper-pagination-bullet {
+	width: vwmin(14);
+	height: vwmin(14);
+	background: rgba(255, 255, 255, .4);
+	opacity: 1;
+	margin: 0;
+	transition: background-color .3s ease, transform .3s ease;
+}
+.projects__nav .swiper-pagination-bullet-active {
+	background: var(--color-teal);
+	transform: scale(1.3);
+}
+@include hover {
+	.projects__nav .swiper-pagination-bullet:hover {
+		background: rgba(255, 255, 255, .7);
+	}
+}
+
+/**
+ * projects__more
+ */
+.projects__more {
+	display: flex;
+	justify-content: center;
+	margin-top: vwmin(80);
+}
+.projects__more--btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: vwmin(280);
+	height: vwmin(72);
+	border: 1px solid #fff;
+	border-radius: vwmin(36);
+	color: #fff;
+	font-size: vwmin(20);
+	letter-spacing: .05em;
+	text-decoration: none;
+	transition: background-color .3s ease, color .3s ease;
+}
+@include hover {
+	.projects__more--btn:hover {
+		background-color: #fff;
+		color: var(--color-navy);
+	}
+}
+
+@include sp {
+	.projects {
+		padding: vw(160) 0;
+	}
+	.projects__head {
+		font-size: vw(72);
+		margin-bottom: vw(80);
+		padding-bottom: vw(24);
+	}
+	.projects__head::after {
+		width: vw(240);
+	}
+	.projects__slide {
+		width: vw(560);
+	}
+	.projects__more {
+		margin-top: vw(80);
+	}
+	.projects__more--btn {
+		width: vw(400);
+		height: vw(96);
+		font-size: vw(28);
+	}
+}
