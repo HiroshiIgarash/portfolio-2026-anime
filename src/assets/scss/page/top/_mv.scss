@@ -3,7 +3,170 @@
 /*-----------------------------------------------
  * MV
 -------------------------------------------------*/
+.mv {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+}
+
 /**
-* mv
-* TODO: トップのメインビジュアル。デザイン決定後に実装
-**/
+ * mv__bg
+ */
+.mv__bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+.mv__bgSwiper {
+	width: 100%;
+	height: 100%;
+}
+.mv__bgSlideList picture {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+.mv__bgSlideList img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/**
+ * mv__overlay
+ */
+.mv__overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 2;
+	background: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .45) 50%);
+	pointer-events: none;
+}
+
+/**
+ * mv__visualThumbArea
+ */
+.mv__visualThumbArea {
+	position: absolute;
+	left: vwmin(48);
+	bottom: vwmin(48);
+	z-index: 3;
+}
+.mv__visualThumbLists {
+	display: flex;
+	gap: vwmin(16);
+}
+.mv__visualThumbList {
+	width: vwmin(72);
+	height: vwmin(72);
+}
+
+/* btn_visualChange */
+.btn_visualChange {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	border: solid 2px rgba(255, 255, 255, .6);
+	background-color: rgba(255, 255, 255, .15);
+	cursor: pointer;
+	padding: 0;
+	transition: border-color .3s ease, background-color .3s ease;
+}
+.btn_visualChange.--is-current {
+	border-color: #fff;
+	background-color: rgba(255, 255, 255, .35);
+}
+
+@include hover {
+	.btn_visualChange:hover {
+		border-color: #fff;
+	}
+}
+
+@include sp {
+	.mv__visualThumbArea {
+		left: vw(24);
+		bottom: vw(24);
+	}
+	.mv__visualThumbLists {
+		gap: vw(16);
+	}
+	.mv__visualThumbList {
+		width: vw(56);
+		height: vw(56);
+	}
+}
+
+/**
+ * mv__catchWrap / mv__catch
+ */
+.mv__catchWrap {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 50%;
+	height: 100%;
+	z-index: 3;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+}
+.mv__catch {
+	width: 100%;
+	padding: 0 vwmin(80);
+	color: #fff;
+}
+
+/* mv__catch--main */
+.mv__catch--main {
+	position: relative;
+	display: inline-block;
+	font-size: vwmin(56);
+	line-height: 1.4;
+	font-weight: 700;
+	margin: 0 0 vwmin(32);
+}
+.mv__catch--mainText {
+	position: relative;
+	display: inline-block;
+}
+
+/* mv__catch--lists */
+.mv__catch--lists {
+	display: flex;
+	flex-direction: column;
+	gap: vwmin(16);
+}
+.mv__catch--listsItem {
+	font-size: vwmin(16);
+	line-height: 1.8;
+	margin: 0;
+}
+
+@include sp {
+	.mv__catchWrap {
+		width: 100%;
+		padding: 0 vw(32);
+	}
+	.mv__catch {
+		padding: 0;
+	}
+	.mv__catch--main {
+		font-size: vw(40);
+		margin: 0 0 vw(32);
+	}
+	.mv__catch--lists {
+		gap: vw(16);
+	}
+	.mv__catch--listsItem {
+		font-size: vw(24);
+	}
+}
