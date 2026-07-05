@@ -60,28 +60,3 @@
 .bgStage__layer.-projects::after {
 	background: linear-gradient(180deg, rgba(0, 0, 0, .75) 0%, rgba(0, 0, 0, .35) 40%, rgba(0, 0, 0, .75) 100%);
 }
-
-/**
- * skills__circle
- * PROJECTS下端でスクロールすると画面下中央から広がり、
- * SKILLSセクションの青背景へ接続するトランジション
- */
-.skills {
-	position: relative;
-	z-index: 2;
-	min-height: 100vh;
-	background-color: var(--color-navy);
-	overflow: hidden;
-}
-.skills__circle {
-	position: absolute;
-	top: 0;
-	left: 50%;
-	width: vwmin(100);
-	height: vwmin(100);
-	border-radius: 50%;
-	background-color: var(--color-navy);
-	transform: translate(-50%, -50%) scale(0);
-	transform-origin: center;
-	z-index: 0;
-}

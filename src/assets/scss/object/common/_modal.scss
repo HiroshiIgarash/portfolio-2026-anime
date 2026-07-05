@@ -54,6 +54,22 @@
 	line-height: 1.9;
 	color: #fff;
 }
+@include sp {
+	.oneModalIn {
+		min-width: 100%;
+	}
+	.oneModalIn__cont {
+		width: 100%;
+		padding: vw(120) vw(32);
+	}
+	.oneModalIn__cont--name {
+		margin: vw(32) 0 vw(16);
+		font-size: vw(40);
+	}
+	.oneModalIn__cont--text {
+		font-size: vw(28);
+	}
+}
 
 /**
  * closeBtn
@@ -101,22 +117,7 @@
 		transform: rotate(180deg);
 	}
 }
-
 @include sp {
-	.oneModalIn {
-		min-width: 100%;
-	}
-	.oneModalIn__cont {
-		width: 100%;
-		padding: vw(120) vw(32);
-	}
-	.oneModalIn__cont--name {
-		margin: vw(32) 0 vw(16);
-		font-size: vw(40);
-	}
-	.oneModalIn__cont--text {
-		font-size: vw(28);
-	}
 	.closeBtn {
 		width: vw(80);
 		height: vw(80);

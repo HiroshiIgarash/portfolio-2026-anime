@@ -1,0 +1,33 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * SKILLS
+-------------------------------------------------*/
+/**
+ * skills
+ */
+.skills {
+	position: relative;
+	z-index: 2;
+	min-height: 100vh;
+	background-color: var(--color-navy);
+	overflow: hidden;
+}
+
+/**
+ * skills__circle
+ * PROJECTS下端でスクロールすると画面下中央から広がり、
+ * SKILLSセクションの青背景へ接続するトランジション
+ */
+.skills__circle {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: vwmin(100);
+	height: vwmin(100);
+	border-radius: 50%;
+	background-color: var(--color-navy);
+	transform: translate(-50%, -50%) scale(0);
+	transform-origin: center;
+	z-index: 0;
+}

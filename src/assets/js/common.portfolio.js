@@ -24,6 +24,31 @@ $(function(){
 
 	set_scrani();
 
+	// PROJECTS - Modal Open/Close
+	$('.js-projectsModalOpen').on('click', function () {
+		const modalID = $(this).data('modal');
+		$('#' + modalID).fadeIn(500);
+		$('.js-modalBox').fadeIn(500);
+		$('body').css({ overflow: 'hidden' });
+		lenis.stop();
+	});
+
+	function modalClose() {
+		$('.modalBox, .oneModal').fadeOut(500);
+		$('body').css({ overflow: '' });
+		lenis.start();
+	}
+
+	$('.js-modalClose').on('click', function () {
+		modalClose();
+	});
+
+	$('.js-oneModalIn').on('click touchend', function (e) {
+		if (!$(e.target).closest('.js-oneModalIn__cont').length) {
+			modalClose();
+		}
+	});
+
 });
 
 
@@ -67,31 +92,3 @@ gsap.ticker.add((time)=>{
 })
 
 gsap.ticker.lagSmoothing(0)
-
-
-/*-----------------------------------------------
- * PROJECTS - Modal Open/Close
--------------------------------------------------*/
-$('.js-projectsModalOpen').on('click', function () {
-	const modalID = $(this).data('modal');
-	$('#' + modalID).fadeIn(500);
-	$('.js-modalBox').fadeIn(500);
-	$('body').css({ overflow: 'hidden' });
-	lenis.stop();
-});
-
-function modalClose() {
-	$('.modalBox, .oneModal').fadeOut(500);
-	$('body').css({ overflow: '' });
-	lenis.start();
-}
-
-$('.js-modalClose').on('click', function () {
-	modalClose();
-});
-
-$('.js-oneModalIn').on('click touchend', function (e) {
-	if (!$(e.target).closest('.js-oneModalIn__cont').length) {
-		modalClose();
-	}
-});
