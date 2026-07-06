@@ -103,7 +103,7 @@ module.exports = (env, argv) => {
 			// 1. dist … sass watch が出力する /assets/css/* をコピー不要でそのまま配信
 			// 2. src/assets … ソースの /assets/js/* /assets/img/* /assets/og/* をコピー不要で配信
 			static: [
-				{ directory: path.resolve(projectRoot, 'dist') },
+				{ directory: path.resolve(projectRoot, 'dist/assets/css'), publicPath: '/assets/css' },
 				{ directory: path.resolve(projectRoot, 'src/assets'), publicPath: '/assets' }
 			],
 			port: 8080,
