@@ -190,11 +190,41 @@ cardSources.forEach((def, laneIndex) => {
 	cards.push(mesh);
 });
 
+// マウス移動: カメラの軽いパララックスに反映
+// (バネ+減衰のスプリングで柔らかく追従させる。lerpのみだと一定速度で
+// 近づくだけの硬い動きになるため、行き過ぎて戻るような柔らかさを出す)
+let mouseNdc = { x: 0.5, y: 0.5 };
+const smoothMouse = { x: 0.5, y: 0.5 };
+const mouseVelocity = { x: 0, y: 0 };
+const MOUSE_SPRING = 0.16;
+const MOUSE_DAMPING = 0.82;
+stage.addEventListener('mousemove', (e) => {
+	const rect = stage.getBoundingClientRect();
+	mouseNdc.x = (e.clientX - rect.left) / rect.width;
+	mouseNdc.y = 1 - (e.clientY - rect.top) / rect.height;
+});
+stage.addEventListener('touchmove', (e) => {
+	const t = e.touches[0];
+	if (!t) return;
+	const rect = stage.getBoundingClientRect();
+	mouseNdc.x = (t.clientX - rect.left) / rect.width;
+	mouseNdc.y = 1 - (t.clientY - rect.top) / rect.height;
+}, { passive: true });
+
 const clock = new THREE.Clock();
 
 function animate() {
 	requestAnimationFrame(animate);
 	const dt = Math.min(clock.getDelta(), 0.05);
+
+	mouseVelocity.x = (mouseVelocity.x + (mouseNdc.x - smoothMouse.x) * MOUSE_SPRING) * MOUSE_DAMPING;
+	mouseVelocity.y = (mouseVelocity.y + (mouseNdc.y - smoothMouse.y) * MOUSE_SPRING) * MOUSE_DAMPING;
+	smoothMouse.x += mouseVelocity.x;
+	smoothMouse.y += mouseVelocity.y;
+
+	camera.position.x = THREE.MathUtils.lerp(camera.position.x, (smoothMouse.x - 0.5) * 2.0, 0.08);
+	camera.position.y = THREE.MathUtils.lerp(camera.position.y, (smoothMouse.y - 0.5) * 1.2, 0.08);
+	camera.lookAt(0, 0, 0);
 
 	cards.forEach((card, laneIndex) => {
 		const ud = card.userData;
