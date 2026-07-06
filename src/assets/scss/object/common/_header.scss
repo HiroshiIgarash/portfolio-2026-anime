@@ -13,6 +13,30 @@
 	z-index: 900;
 }
 
+/* inner (overlay) */
+.l-header__inner {
+	position: fixed;
+	inset: 0;
+	background-color: var(--color-cyan);
+	pointer-events: none;
+	clip-path: circle(0% at calc(100% - vwmin(68)) vwmin(68));
+	transition: clip-path .6s ease;
+	z-index: 1;
+}
+.l-header.is-active .l-header__inner {
+	pointer-events: auto;
+	clip-path: circle(150% at calc(100% - vwmin(68)) vwmin(68));
+}
+
+@include sp {
+	.l-header__inner {
+		clip-path: circle(0% at calc(100% - vw(80)) vw(80));
+	}
+	.l-header.is-active .l-header__inner {
+		clip-path: circle(150% at calc(100% - vw(80)) vw(80));
+	}
+}
+
 /* logo */
 .l-header__logo {
 	position: absolute;
