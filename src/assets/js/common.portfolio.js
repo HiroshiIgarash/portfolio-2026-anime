@@ -193,3 +193,56 @@ gsap.ticker.add((time)=>{
 })
 
 gsap.ticker.lagSmoothing(0)
+
+
+/*-----------------------------------------------
+ * Footer Bend [スクロール速度に応じてFooter上辺をたわませる]
+-------------------------------------------------*/
+const footerBendPath = document.querySelector('.js-footerBendPath');
+const footerEl = document.querySelector('.js-footer');
+let footerBendActive = false;
+
+if (footerBendPath && footerEl) {
+	const BEND_SENSITIVITY = 1.2;   // velocity -> 振幅の倍率（大きめ初期値。確認しながら弱める）
+	const BEND_MAX = 40;            // 振幅の最大値（px、viewBox座標系）
+	const bendState = { v: 0 };     // gsap.toのtween対象を固定オブジェクトにし、overwriteを確実に効かせる
+	let bendIdleTimer = null;
+
+	const setBendPath = (amount) => {
+		const y = 30 + amount;
+		footerBendPath.setAttribute('d', `M0,30 Q600,${y} 1200,30 L1200,60 L0,60 Z`);
+	};
+
+	const releaseBend = () => {
+		gsap.to(bendState, {
+			v: 0,
+			duration: 0.6,
+			ease: 'power2.out',
+			overwrite: true,
+			onUpdate: () => setBendPath(bendState.v),
+		});
+	};
+
+	const bendObserver = new IntersectionObserver((entries) => {
+		footerBendActive = entries[0].isIntersecting;
+		if (!footerBendActive) {
+			clearTimeout(bendIdleTimer);
+			releaseBend();
+		}
+	}, { rootMargin: '0px 0px 200px 0px' });
+	bendObserver.observe(footerEl);
+
+	lenis.on('scroll', (e) => {
+		if (!footerBendActive) return;
+		clearTimeout(bendIdleTimer);
+		const target = gsap.utils.clamp(-BEND_MAX, BEND_MAX, e.velocity * BEND_SENSITIVITY);
+		gsap.to(bendState, {
+			v: target,
+			duration: 0.15,
+			ease: 'none',
+			overwrite: true,
+			onUpdate: () => setBendPath(bendState.v),
+		});
+		bendIdleTimer = setTimeout(releaseBend, 120);
+	});
+}

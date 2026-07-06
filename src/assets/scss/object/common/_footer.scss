@@ -13,6 +13,31 @@
 		padding: vw(160) vw(48) vw(96);
 	}
 }
+/**
+ * bendWrap
+ */
+.l-footer__bendWrap {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: vwmin(60);
+	transform: translateY(-99%);
+	pointer-events: none;
+
+	@include sp {
+		height: vw(60);
+	}
+}
+.l-footer__bendSvg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+.l-footer__bendPath {
+	fill: var(--color-navy);
+}
+
 .l-footer__inner {
 	position: relative;
 	width: 100%;
