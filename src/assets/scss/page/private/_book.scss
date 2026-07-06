@@ -18,14 +18,15 @@
 	position: relative;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	align-items: center;
-	min-height: vwmin(360);
-	padding: vwmin(48);
+	width: 100%;
+	aspect-ratio: 1191 / 842;
+	padding: vwmin(64) vwmin(56);
 
 	@include sp {
 		grid-template-columns: 1fr;
-		min-height: auto;
-		padding: vw(24) vw(16);
+		aspect-ratio: auto;
+		min-height: vw(420);
+		padding: vw(32) vw(20);
 	}
 }
 .private__book.-left {
@@ -46,12 +47,13 @@
 	display: block;
 	width: 100%;
 	height: 100%;
-	object-fit: fill;
+	object-fit: contain;
 }
 
 .private__illust {
 	position: relative;
 	z-index: 1;
+	align-self: start;
 	opacity: 0;
 	will-change: transform, opacity;
 	padding: vwmin(24);
@@ -78,8 +80,7 @@
 .private__text {
 	position: relative;
 	z-index: 1;
-	opacity: 0;
-	will-change: transform, opacity;
+	align-self: center;
 	padding: vwmin(24);
 
 	@include sp {
@@ -100,6 +101,8 @@
 	font-size: vwmin(24);
 	font-weight: 700;
 	margin-bottom: vwmin(16);
+	opacity: 0;
+	will-change: transform, opacity;
 
 	@include sp {
 		font-size: vw(32);
@@ -109,6 +112,8 @@
 .private__text--body {
 	font-size: vwmin(15);
 	line-height: 1.9;
+	opacity: 0;
+	will-change: transform, opacity;
 
 	@include sp {
 		font-size: vw(26);
