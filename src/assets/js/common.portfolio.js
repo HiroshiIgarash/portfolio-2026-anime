@@ -205,7 +205,7 @@ let footerBendActive = false;
 if (footerBendPath && footerEl) {
 	const BEND_SENSITIVITY = 1000;  // velocity -> 振幅の倍率（実測でLenisのvelocityが0.01〜0.1程度と判明。大きめ初期値、確認しながら弱める）
 	const BEND_MAX = 50;            // 振幅の最大値（px、viewBox座標系）
-	const RELEASE_DELAY = 60;       // wheel/touch入力が止んでからreleaseBendを始めるまでの遅延(ms)。実際のwheelイベント間隔より短いと常に「止まった」と誤判定してしまう
+	const RELEASE_DELAY = 150;      // wheel/touch入力が止んでからreleaseBendを始めるまでの遅延(ms)。実際のwheelイベント間隔より短いと常に「止まった」と誤判定してしまう
 	const bendState = { v: 0 };     // gsap.toのtween対象を固定オブジェクトにし、overwriteを確実に効かせる
 	let bendIdleTimer = null;
 	let inputActive = false;        // Lenisの慣性減衰でなく実際のwheel/touch入力の有無で判定する
