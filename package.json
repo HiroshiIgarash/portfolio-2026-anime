@@ -14,6 +14,7 @@
 		"html-loader": "^5.1.0",
 		"html-webpack-plugin": "^5.6.7",
 		"npm-run-all": "^4.1.5",
+		"playwright": "^1.61.1",
 		"sass": "^1.83.0",
 		"template-ejs-loader": "^0.9.4",
 		"webpack": "^5.108.4",
