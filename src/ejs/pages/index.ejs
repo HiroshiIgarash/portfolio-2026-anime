@@ -199,8 +199,21 @@ const pageJs = 'top';
 		];
 		-%>
 		<div class="career__timeline js-careerTimeline">
-			<div class="career__line">
-				<div class="career__line--fill js-careerLineFill"></div>
+			<svg class="career__lineSvg js-careerLineSvg" preserveAspectRatio="none">
+				<defs>
+					<linearGradient id="careerLineGradient" x1="0" y1="0" x2="0" y2="1">
+						<stop offset="0%" stop-color="#00afaa" />
+						<stop offset="100%" stop-color="#ffaf00" />
+					</linearGradient>
+				</defs>
+				<path class="career__linePath--deco js-careerLinePathDeco" />
+				<path class="career__linePath--bg" />
+				<path class="career__linePath--fill js-careerLinePathFill" />
+			</svg>
+			<div class="career__orbTrail js-careerOrbTrail">
+				<% for (let t = 0; t < 4; t++) { -%>
+				<span class="career__orbTrail--dot"></span>
+				<% } -%>
 			</div>
 			<div class="career__orb js-careerOrb">
 				<% for (let p = 0; p < 6; p++) { -%>
