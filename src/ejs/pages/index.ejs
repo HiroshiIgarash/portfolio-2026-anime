@@ -262,7 +262,7 @@ const pageJs = 'top';
 			{ period: '2024 — 2026', title: 'Web開発会社にて · タテマンガ投稿サービス開発', text: '大手出版社のタテマンガ投稿サービスを受託開発・保守。フロント中心にバックエンドも横断。並行して在籍企業のコーポレートサイトリニューアル(多言語化対応)も担当。', deco: { type: 'image', src: 'tategamanga', panel: true } },
 			{ period: '2025', title: '応用情報技術者試験 合格', text: '基礎知識を体系化する目的で取得。実務との往復で土台を強くした。', deco: { type: 'image', src: 'goukaku' } },
 			{ period: '2026', title: 'ホロライブコメント検索 公開', text: 'Claude Codeとの協働開発を本格的に試した個人プロジェクト。1週間で公開、運用継続中。', deco: { type: 'css', shape: 'triangle' } },
-			{ period: 'NOW · 2026', title: '新しい環境を求めて', text: 'Web制作会社で、あっと驚くようなアニメーションや演出に挑戦できる環境を探しています。', current: true, deco: { type: 'css', shape: 'compass' } },
+			{ period: 'NOW · 2026', title: '新しい環境を求めて', text: 'Web制作会社で、あっと驚くようなアニメーションや演出に挑戦できる環境を探しています。', current: true },
 		];
 		-%>
 		<div class="career__timeline js-careerTimeline">
@@ -294,6 +294,7 @@ const pageJs = 'top';
 				<% careerList.forEach(function (c, i) { -%>
 				<li class="career__item js-careerItem js-scrani <%= i % 2 === 0 ? '-left' : '-right' %><% if (c.current) { -%> --is-current<% } -%>">
 					<span class="career__item--dot js-careerDot<% if (c.current) { -%> --is-current<% } -%>"></span>
+					<% if (c.deco) { -%>
 					<div class="career__item--deco js-careerDeco -<%= c.deco.type %>"<% if (c.deco.shape) { -%> data-deco-shape="<%= c.deco.shape %>"<% } %><% if (c.deco.panel) { -%> data-deco-panel<% } %>>
 						<% if (c.deco.type === 'image') { -%>
 						<picture>
@@ -302,6 +303,7 @@ const pageJs = 'top';
 						</picture>
 						<% } -%>
 					</div>
+					<% } -%>
 					<div class="career__item--body">
 						<p class="career__item--period"><%= c.period %></p>
 						<h3 class="career__item--title"><%= c.title %><% if (c.handNote) { -%> <span class="career__item--handNote"><%= c.handNote %></span><% } -%></h3>

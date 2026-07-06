@@ -281,6 +281,7 @@
 	padding-bottom: 0;
 }
 .career__item--dot {
+	grid-row: 1;
 	grid-column: 2;
 	justify-self: center;
 	align-self: start;
@@ -339,31 +340,21 @@
 
 /**
  * career__item--deco.-image
- * 白背景クリップアートを円形バッジ化する（タテマンガのpanelは除く）
+ * 透過クリップアートをそのままのシルエットで浮かせる（タテマンガのpanelは除く）
  */
 .career__item--deco.-image:not([data-deco-panel]) picture {
 	display: block;
-	width: vwmin(120);
-	height: vwmin(120);
-	border-radius: 50%;
-	overflow: hidden;
-	background-color: #fff;
-	box-shadow: 0 vwmin(8) vwmin(24) rgba(20, 33, 61, .12);
+	width: vwmin(300);
+	filter: drop-shadow(0 vwmin(12) vwmin(20) rgba(20, 33, 61, .18));
 
 	@include sp {
-		width: vw(72);
-		height: vw(72);
+		width: vw(210);
 	}
 }
 .career__item--deco.-image:not([data-deco-panel]) img {
 	width: 100%;
-	height: 100%;
-	object-fit: contain;
-	padding: vwmin(12);
-
-	@include sp {
-		padding: vw(8);
-	}
+	height: auto;
+	display: block;
 }
 
 /**
@@ -372,13 +363,13 @@
  */
 .career__item--deco[data-deco-panel] picture {
 	display: block;
-	width: vwmin(140);
+	width: vwmin(210);
 	border-radius: vwmin(16);
 	overflow: hidden;
 	box-shadow: 0 vwmin(8) vwmin(24) rgba(20, 33, 61, .12);
 
 	@include sp {
-		width: vw(160);
+		width: vw(240);
 	}
 }
 .career__item--deco[data-deco-panel] img {
@@ -388,6 +379,7 @@
 }
 
 .career__item--body {
+	grid-row: 1;
 	grid-column: 3;
 	/* word-break:keep-all併用時、grid 1frトラックの既定min-width:autoがテキストの
 	   最小幅で押し広げられ、item毎に中央dotの位置がずれるのを防ぐ */
@@ -504,12 +496,12 @@
  * CSS製の装飾図形。画像を使わずborder/clip-pathのみで描画する
  */
 .career__item--deco[data-deco-shape="circle"] {
-	width: vwmin(96);
-	height: vwmin(96);
+	width: vwmin(144);
+	height: vwmin(144);
 
 	@include sp {
-		width: vw(56);
-		height: vw(56);
+		width: vw(84);
+		height: vw(84);
 	}
 }
 .career__item--deco[data-deco-shape="circle"]::before {
@@ -523,73 +515,85 @@
 	box-shadow: 0 vwmin(8) vwmin(24) rgba(20, 33, 61, .12);
 }
 .career__item--deco[data-deco-shape="triangle"] {
-	width: vwmin(112);
-	height: vwmin(96);
+	width: vwmin(168);
+	height: vwmin(144);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 
 	@include sp {
-		width: vw(64);
-		height: vw(56);
+		width: vw(96);
+		height: vw(84);
 	}
 }
 .career__item--deco[data-deco-shape="triangle"]::before {
 	content: "";
 	width: 0;
 	height: 0;
-	border-left: vwmin(56) solid transparent;
-	border-right: vwmin(56) solid transparent;
-	border-bottom: vwmin(96) solid var(--color-violet);
+	border-left: vwmin(84) solid transparent;
+	border-right: vwmin(84) solid transparent;
+	border-bottom: vwmin(144) solid var(--color-violet);
 	filter: drop-shadow(0 vwmin(6) vwmin(12) rgba(20, 33, 61, .16));
 
 	@include sp {
-		border-left-width: vw(32);
-		border-right-width: vw(32);
-		border-bottom-width: vw(56);
+		border-left-width: vw(48);
+		border-right-width: vw(48);
+		border-bottom-width: vw(84);
 	}
 }
-.career__item--deco[data-deco-shape="compass"] {
-	position: relative;
-	width: vwmin(96);
-	height: vwmin(96);
+/**
+ * career__item--deco 常時ふわふわ浮遊
+ * スクロール視差（GSAPが.js-careerDeco自体のtransformを操作）とは別レイヤーで
+ * 常に上下に揺れ続けるアニメーションを子要素/疑似要素に付与する。
+ * animation-delayは.career__item--deco自体に持たせ、子側はinheritで受け取ることで、
+ * 同じ形状(circle/triangle等)が複数あっても項目ごとに位相をずらせる
+ */
+@keyframes careerDecoFloat {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(vwmin(-16)); }
+}
+@keyframes careerDecoFloatSp {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(vw(-10)); }
+}
+.career__item--deco {
+	animation-delay: 0s;
+}
+.career__item:nth-child(2) .career__item--deco { animation-delay: -.6s; }
+.career__item:nth-child(3) .career__item--deco { animation-delay: -1.2s; }
+.career__item:nth-child(4) .career__item--deco { animation-delay: -1.8s; }
+.career__item:nth-child(5) .career__item--deco { animation-delay: -2.4s; }
+.career__item:nth-child(6) .career__item--deco { animation-delay: -3s; }
+
+.career__item--deco.-image:not([data-deco-panel]) picture {
+	animation: careerDecoFloat 3.6s ease-in-out infinite;
+	animation-delay: inherit;
 
 	@include sp {
-		width: vw(56);
-		height: vw(56);
+		animation-name: careerDecoFloatSp;
 	}
 }
-.career__item--deco[data-deco-shape="compass"]::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	border-radius: 50%;
-	border: vwmin(4) solid var(--color-navy);
-	box-sizing: border-box;
-	background-color: #fff;
-	box-shadow: 0 vwmin(8) vwmin(24) rgba(20, 33, 61, .12);
+.career__item--deco[data-deco-panel] picture {
+	animation: careerDecoFloat 4.2s ease-in-out infinite;
+	animation-delay: inherit;
 
 	@include sp {
-		border-width: vw(3);
+		animation-name: careerDecoFloatSp;
 	}
 }
-.career__item--deco[data-deco-shape="compass"]::after {
-	content: "";
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 0;
-	height: 0;
-	border-left: vwmin(8) solid transparent;
-	border-right: vwmin(8) solid transparent;
-	border-bottom: vwmin(32) solid var(--color-orange);
-	transform: translate(-50%, -50%) rotate(-35deg);
-	transform-origin: center vwmin(16);
+.career__item--deco[data-deco-shape="circle"]::before {
+	animation: careerDecoFloat 3.8s ease-in-out infinite;
+	animation-delay: inherit;
 
 	@include sp {
-		border-left-width: vw(5);
-		border-right-width: vw(5);
-		border-bottom-width: vw(20);
-		transform-origin: center vw(10);
+		animation-name: careerDecoFloatSp;
+	}
+}
+.career__item--deco[data-deco-shape="triangle"]::before {
+	animation: careerDecoFloat 4.4s ease-in-out infinite;
+	animation-delay: inherit;
+
+	@include sp {
+		animation-name: careerDecoFloatSp;
 	}
 }
