@@ -20,7 +20,24 @@ loadingIntroTl.to(loadingProgress, {
 	onUpdate: function () {
 		setLoadingProgress(loadingProgress.value);
 	},
-}, 0);
+}, 0)
+	.fromTo('.js-loadingFrameA', { strokeDashoffset: 50 }, {
+		strokeDashoffset: 0,
+		duration: .6,
+		ease: 'power2.inOut',
+	}, .6)
+	.fromTo('.js-loadingFrameB', { strokeDashoffset: 50 }, {
+		strokeDashoffset: -50,
+		duration: .6,
+		ease: 'power2.inOut',
+	}, .6)
+	.to('.js-loadingChar', {
+		opacity: 1,
+		x: 0,
+		duration: .4,
+		stagger: .05,
+		ease: 'power2.out',
+	}, 1.2);
 
 function finishLoading() {
 	gsap.to(loadingProgress, {
