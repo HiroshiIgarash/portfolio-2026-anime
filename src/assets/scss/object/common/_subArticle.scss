@@ -6,9 +6,8 @@
  */
 .subArticle {
 	padding-top: vwmin(120);
-}
-@include sp {
-	.subArticle {
+
+	@include sp {
 		padding-top: vw(160);
 	}
 }
@@ -24,6 +23,11 @@
 	gap: vwmin(12);
 	text-align: center;
 	padding: vwmin(64) 0;
+
+	@include sp {
+		gap: vw(16);
+		padding: vw(96) 0;
+	}
 }
 .contTitle2__en {
 	font-family: var(--font-en);
@@ -32,22 +36,18 @@
 	letter-spacing: .04em;
 	color: var(--color-navy);
 	line-height: 1;
+
+	@include sp {
+		font-size: vw(64);
+	}
 }
 .contTitle2__ja {
 	font-size: vwmin(16);
 	font-weight: 700;
 	letter-spacing: .3em;
 	color: var(--color-navy);
-}
-@include sp {
-	.contTitle2 {
-		gap: vw(16);
-		padding: vw(96) 0;
-	}
-	.contTitle2__en {
-		font-size: vw(64);
-	}
-	.contTitle2__ja {
+
+	@include sp {
 		font-size: vw(22);
 	}
 }
