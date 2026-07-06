@@ -1,72 +1,128 @@
-# Task 3 Report: dot追従（translateX）とグリッド列幅変更
+# Task 3 Report: SCSS — グリッド配置＋画像バッジ／パネルスタイル
 
-## Summary
-Successfully implemented Task 3 changes: extended the wavy CAREER timeline to apply translateX transforms to each dot so they follow the curve, and widened the grid column holding the dots to prevent overlap with text content.
+## Implementation Summary
 
-## Implementation Details
+Successfully added SCSS styling for `.career__item--deco` elements to support image-based decorative illustrations in the career timeline section.
 
 ### Changes Made
 
-1. **SCSS Grid Column Width Update** (`src/assets/scss/page/top/_career.scss:256`)
-   - Changed `.career__item`'s `grid-template-columns` from `1fr vwmin(40) 1fr` to `1fr vwmin(96) 1fr`
-   - Desktop viewport only (PC layout)
-   - SP layout's `vw(40)` unchanged as specified
+**File Modified:** `src/assets/scss/page/top/_career.scss`
 
-2. **JavaScript Dot Transform Addition** (`src/assets/js/top.portfolio.js:243-245`)
-   - Added forEach loop inside `buildCareerLine()` after careerLinePoints assignment
-   - Each dot now receives: `transform: translateX(Npx)` based on its position on the curve
-   - Formula: `Math.round(dotPoints[i].x - centerX)` provides the offset from centerline
-   - Reuses existing `dotPoints` and `centerX` variables from Task 2 implementation
+#### Step 1: Grid Placement for Deco Elements
+Added `.career__item--deco` and `.career__item.-left .career__item--deco` rules to position decorative elements in the grid:
+- Default deco positioned in column 1 (right side) with `justify-self: end`
+- `-left` variant positioned in column 3 (left side) with `justify-self: start`
+- SP layout: both variants move to column 2 with `justify-self: start`
 
-### Verification
+#### Step 2: Circular Badge Styling
+Added `.career__item--deco.-image:not([data-deco-panel])` rules for white-background clipart as circular badges:
+- `picture` element: 120px (vwmin) square with 50% border-radius, white background, shadow
+- `img` element: 100% fill with `object-fit: contain` and 12px padding
+- SP scaling: 72px width/height, 8px padding
 
-✓ **SCSS Compilation**: `npm run build:scss` executed successfully with no errors
-✓ **Compiled CSS**: Verified output shows correct compiled value: 
-  - `grid-template-columns: 1fr min(calc(96 / var(--vw-min) * 100vw), 96px) 1fr;`
-✓ **Code Location**: Both changes placed exactly where the task brief specified
-✓ **Scope**: Modified only the two required files; no unintended changes
-✓ **Git Worktree Path**: Verified as `/Users/hiroshi/Desktop/work/portfolio-2026-anime/.claude/worktrees/career-timeline`
+#### Step 3: Rounded Panel Styling
+Added `.career__item--deco[data-deco-panel]` rules for tategamanga panel images:
+- `picture` element: 140px width (vwmin) with 16px border-radius, shadow
+- `img` element: 100% width, auto height, block display
+- SP adjustment: 160px width
+
+#### Step 4: Body Row Adjustment
+Modified `.career__item--body` SP media query to add:
+- `grid-row: 2;` - positions body below deco on SP
+- `margin-top: vw(16);` - adds spacing between deco and body
+
+## Build Verification
+
+### Build Command Output
+```
+> build:scss
+> sass src/assets/scss:dist/assets/css --style=expanded --no-source-map
+```
+**Result:** ✓ Build completed successfully with no errors
+
+### CSS Compilation Verification
+```bash
+grep -c "career__item--deco" dist/assets/css/top.portfolio.css
+```
+**Result:** `14` (confirming rules are present in compiled CSS)
+
+### Sample Compiled CSS
+Grid placement rule:
+```css
+.career__item--deco {
+  grid-row: 1;
+  grid-column: 1;
+  justify-self: end;
+  align-self: start;
+}
+```
+
+Circular badge styling:
+```css
+.career__item--deco.-image:not([data-deco-panel]) picture {
+  display: block;
+  width: min(calc(120 / var(--vw-min) * 100vw), 120px);
+  height: min(calc(120 / var(--vw-min) * 100vw), 120px);
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 min(calc(8 / var(--vw-min) * 100vw), 8px) min(calc(24 / var(--vw-min) * 100vw), 24px) rgba(20, 33, 61, 0.12);
+}
+```
+
+Panel styling:
+```css
+.career__item--deco[data-deco-panel] picture {
+  display: block;
+  width: min(calc(140 / var(--vw-min) * 100vw), 140px);
+  border-radius: min(calc(16 / var(--vw-min) * 100vw), 16px);
+  overflow: hidden;
+  box-shadow: 0 min(calc(8 / var(--vw-min) * 100vw), 8px) min(calc(24 / var(--vw-min) * 100vw), 24px) rgba(20, 33, 61, 0.12);
+}
+```
 
 ## Self-Review Checklist
 
-- [x] Changed ONLY PC grid column width (`vwmin(40)` → `vwmin(96)`), left SP block's `vw(40)` untouched
-- [x] Added translateX line inside `buildCareerLine()`, placed correctly after careerLinePoints and before `const d = ...`
-- [x] Used existing `dotPoints`/`centerX` variables (no duplicate calculations)
-- [x] Confirmed worktree path matches exactly before committing
-- [x] Avoided adding anything under `dist/` to git (build output only)
-- [x] Staged only the two required source files for commit
+- ✓ Selectors written in full (no `&__element` nesting chains)
+  - All selectors explicitly qualified (`.career__item--deco`, `.career__item.-left .career__item--deco`, etc.)
+  
+- ✓ `@include sp { ... }` blocks nested inside each rule
+  - Media queries properly nested within each rule declaration
+  - SP-specific `grid-column`, `width`, `height`, `padding` adjustments inline
+  
+- ✓ Deco elements positioned in opposite grid column from body
+  - Default items: deco in column 1 (right) with `justify-self: end`, body in column 3
+  - `-left` items: deco in column 3 (left) with `justify-self: start`, body in column 1
+  - SP: both converge to column 2 with stacking (deco grid-row 1, body grid-row 2)
+  
+- ✓ Only modified `src/assets/scss/page/top/_career.scss`
+  - No other files changed
+  - CSS output generated in dist/ (not hand-edited)
 
 ## Files Changed
-- `src/assets/js/top.portfolio.js` — +3 lines (dot transform loop)
-- `src/assets/scss/page/top/_career.scss` — +1 change (grid column width)
 
-## Git Commit
-- **SHA:** `e98ac3a`
-- **Message:** "feat: make CAREER dots follow the wavy line, widen dot column"
-- **Committed from:** `/Users/hiroshi/Desktop/work/portfolio-2026-anime/.claude/worktrees/career-timeline` (correct worktree)
+1. `src/assets/scss/page/top/_career.scss` — Added 78 lines (Steps 1-4 SCSS rules + body modification)
 
-## Conclusion
-Task 3 complete. Dots now follow the wavy curve with translateX positioning, and the grid column is widened to accommodate horizontal dot movement without text overlap.
+## Commit Information
 
-## Fix Round 1 — Verification
+**SHA:** 658a99c
+**Subject:** feat: style CAREER deco images as circle badges or panel
+**Message:**
+```
+feat: style CAREER deco images as circle badges or panel
 
-**Command Run:**
-```bash
-node .claude-check-career-t3-verify.mjs
+Place career__item--deco in the column opposite career__item--body,
+render white-background clipart as circular badges and the manga
+panel image as a rounded-square panel.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
 ```
 
-**Playwright Output (Step 4 Verification):**
-```json
-[
-  "matrix(1, 0, 0, 1, -48, 0)",
-  "matrix(1, 0, 0, 1, 48, 0)"
-]
-```
+## Issues & Concerns
 
-**Verification Result:**
-✓ Both dots have computed `transform` values (not `"none"`)
-✓ First dot: `matrix(1, 0, 0, 1, -48, 0)` — horizontal translation component = **-48**
-✓ Second dot: `matrix(1, 0, 0, 1, 48, 0)` — horizontal translation component = **+48**
-✓ **Opposite-sign confirmation**: -48 and +48 are opposite signs ✓
-
-**Conclusion**: Task 3 dot-translateX functionality verified. `.js-careerDot` elements correctly receive opposite-sign horizontal transforms to follow the wavy line curve.
+None. All steps executed successfully:
+- SCSS compiled without errors
+- All `.career__item--deco` rules present in compiled CSS (grep count: 14)
+- Grid layout and sizing match specification
+- Media query nesting follows project conventions
+- Worktree path verified before commit

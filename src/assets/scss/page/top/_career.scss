@@ -281,6 +281,7 @@
 	padding-bottom: 0;
 }
 .career__item--dot {
+	grid-row: 1;
 	grid-column: 2;
 	justify-self: center;
 	align-self: start;
@@ -311,14 +312,84 @@
 .career__item--dot.--is-current.--is-lit {
 	box-shadow: 0 0 0 vwmin(10) rgba(255, 175, 0, .3);
 }
-.career__item--body {
+
+/**
+ * career__item--deco
+ * 経歴内容に応じた装飾イラスト。career__item--bodyの反対カラムに配置する
+ * （-leftはbodyが左カラムのためdecoは右、デフォルトの-rightはその逆）
+ */
+.career__item--deco {
+	grid-row: 1;
+	grid-column: 1;
+	justify-self: end;
+	align-self: start;
+
+	@include sp {
+		grid-column: 2;
+		justify-self: start;
+	}
+}
+.career__item.-left .career__item--deco {
 	grid-column: 3;
-	/* word-break:keep-all併用時、grid 1frトラックの既定min-width:autoがテキストの
-	   最小幅で押し広げられ、item毎に中央dotの位置がずれるのを防ぐ */
+	justify-self: start;
+
+	@include sp {
+		grid-column: 2;
+	}
+}
+
+/**
+ * career__item--deco.-image
+ * 透過クリップアートをそのままのシルエットで浮かせる（タテマンガのpanelは除く）
+ */
+.career__item--deco.-image:not([data-deco-panel]) picture {
+	display: block;
+	width: vwmin(300);
+	filter: drop-shadow(0 vwmin(12) vwmin(20) rgba(20, 33, 61, .18));
+
+	@include sp {
+		width: vw(210);
+	}
+}
+.career__item--deco.-image:not([data-deco-panel]) img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+/**
+ * career__item--deco[data-deco-panel]
+ * タテマンガのポップアート紙面は円形にせず、模様背景ごと角丸四角で見せる
+ */
+.career__item--deco[data-deco-panel] picture {
+	display: block;
+	width: vwmin(210);
+	border-radius: vwmin(16);
+	overflow: hidden;
+	box-shadow: 0 vwmin(8) vwmin(24) rgba(20, 33, 61, .12);
+
+	@include sp {
+		width: vw(240);
+	}
+}
+.career__item--deco[data-deco-panel] img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.career__item--body {
+	grid-row: 1;
+	grid-column: 3;
+	/* .career__item--noBreak(white-space:nowrap)併用時、grid 1frトラックの既定
+	   min-width:autoがテキストの最小幅で押し広げられ、item毎に中央dotの位置が
+	   ずれるのを防ぐ */
 	min-width: 0;
 
 	@include sp {
 		grid-column: 2;
+		grid-row: 2;
+		margin-top: vw(16);
 	}
 }
 .career__item.-left .career__item--body {
@@ -364,8 +435,7 @@
 	transform: translateX(vwmin(40));
 	transition: opacity .6s ease, transform .6s ease;
 	transition-delay: .15s;
-	/* カタカナ語(コーディング等)の途中で改行されるのを防ぐ */
-	word-break: keep-all;
+	text-wrap: pretty;
 
 	@include sp {
 		font-size: vw(32);
@@ -373,13 +443,20 @@
 		transform: translateX(vw(40));
 	}
 }
+/**
+ * career__item--noBreak
+ * カタカナ語などtext-wrap: prettyでも途中改行を防げない語をピンポイントで保護する
+ */
+.career__item--noBreak {
+	white-space: nowrap;
+}
 .career__item--text {
 	font-size: vwmin(16);
 	line-height: 1.9;
 	color: rgba(20, 33, 61, .72);
 	margin: 0;
 	white-space: pre-line;
-	word-break: keep-all;
+	text-wrap: pretty;
 	opacity: 0;
 	transform: translateX(vwmin(40));
 	transition: opacity .6s ease, transform .6s ease;
@@ -419,4 +496,55 @@
 .career__item.--is-ani .career__item--text {
 	opacity: 1;
 	transform: translateX(0);
+}
+
+/**
+ * career__item--deco[data-deco-shape]
+ * CSS製の装飾図形。画像を使わずborder/clip-pathのみで描画する
+ */
+.career__item--deco[data-deco-shape="circle"] {
+	width: vwmin(144);
+	height: vwmin(144);
+
+	@include sp {
+		width: vw(84);
+		height: vw(84);
+	}
+}
+.career__item--deco[data-deco-shape="circle"]::before {
+	content: "";
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background-color: var(--color-blue);
+	clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 0% 100%, 0% 0%, 50% 0%);
+	box-shadow: 0 vwmin(8) vwmin(24) rgba(20, 33, 61, .12);
+}
+.career__item--deco[data-deco-shape="triangle"] {
+	width: vwmin(144);
+	height: vwmin(168);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	@include sp {
+		width: vw(84);
+		height: vw(96);
+	}
+}
+.career__item--deco[data-deco-shape="triangle"]::before {
+	content: "";
+	width: 0;
+	height: 0;
+	border-top: vwmin(84) solid transparent;
+	border-bottom: vwmin(84) solid transparent;
+	border-left: vwmin(144) solid var(--color-skyblue);
+	filter: drop-shadow(0 vwmin(6) vwmin(12) rgba(20, 33, 61, .16));
+
+	@include sp {
+		border-top-width: vw(48);
+		border-bottom-width: vw(48);
+		border-left-width: vw(96);
+	}
 }
