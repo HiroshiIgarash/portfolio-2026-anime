@@ -9,11 +9,11 @@
 	   居座り続けることがある。.careerも同じ理由でz-index:2を持つ)より確実に手前に出す */
 	z-index: 3;
 	width: 100%;
-	padding: vwmax(160) vwmin(80) vwmin(80);
+	padding: vwmin(96) vwmin(80) vwmin(64);
 	background-color: var(--color-navy);
 
 	@include sp {
-		padding: vw(160) vw(48) vw(96);
+		padding: vw(96) vw(48) vw(80);
 	}
 }
 /**
@@ -90,6 +90,62 @@
 	}
 	.l-footer__logo--link:hover .l-footer__logo--svg {
 		opacity: .7;
+	}
+}
+
+/**
+ * catch
+ */
+.l-footer__catch {
+	max-width: vwmin(400);
+	font-size: vwmin(13);
+	line-height: 1.8;
+	color: var(--color-white);
+	opacity: .6;
+	text-align: center;
+
+	@include sp {
+		max-width: vw(500);
+		font-size: vw(22);
+	}
+}
+
+/**
+ * footerNav
+ */
+.footerNav {
+	width: 100%;
+}
+.footerNavLists {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: vwmin(32);
+
+	@include sp {
+		gap: vw(32);
+	}
+}
+.footerNavLists__link {
+	display: inline-block;
+	font-family: var(--font-en);
+	font-size: vwmin(13);
+	font-weight: 700;
+	letter-spacing: .05em;
+	color: var(--color-white);
+	text-decoration: none;
+
+	@include sp {
+		font-size: vw(22);
+	}
+}
+
+@include hover {
+	.footerNavLists__link {
+		transition: opacity .3s ease;
+	}
+	.footerNavLists__link:hover {
+		opacity: .6;
 	}
 }
 
