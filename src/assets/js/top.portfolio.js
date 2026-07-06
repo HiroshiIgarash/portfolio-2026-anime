@@ -177,15 +177,14 @@ projectsSwiper.on('realIndexChange', function () {
 ScrollTrigger.create({
 	trigger: '#skills',
 	start: 'top bottom',
-	end: 'top 50%',
+	end: 'top top',
 	scrub: true,
 	invalidateOnRefresh: true,
 	pin: '.js-skillsCircle',
 	pinSpacing: false,
-	animation: gsap.to('.js-skillsCircle', {
-		scale: 40,
-		ease: 'none',
-	}),
+	animation: gsap.timeline()
+		.to('.js-skillsCircle', { scale: 40, ease: 'none', duration: 1 })
+		.to({}, { duration: 1 }),
 	onLeave: function () {
 		$('#skills').css('opacity', 1);
 		$('.js-skillsCircle').css('visibility', 'hidden');
@@ -264,15 +263,14 @@ $('.js-skillsNext').on('click', function () {
 ScrollTrigger.create({
 	trigger: '#career',
 	start: 'top bottom',
-	end: 'top 50%',
+	end: 'top top',
 	scrub: true,
 	invalidateOnRefresh: true,
 	pin: '.js-careerCircle',
 	pinSpacing: false,
-	animation: gsap.to('.js-careerCircle', {
-		scale: 40,
-		ease: 'none',
-	}),
+	animation: gsap.timeline()
+		.to('.js-careerCircle', { scale: 40, ease: 'none', duration: 1 })
+		.to({}, { duration: 1 }),
 	onLeave: function () {
 		$('#career').css('opacity', 1);
 		$('.js-careerCircle').css('visibility', 'hidden');
