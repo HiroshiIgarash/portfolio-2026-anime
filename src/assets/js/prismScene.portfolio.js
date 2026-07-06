@@ -5,6 +5,22 @@
 import * as THREE from "three";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
+function isWebglAvailable() {
+	try {
+		const testCanvas = document.createElement('canvas');
+		return !!(window.WebGLRenderingContext && (testCanvas.getContext('webgl2') || testCanvas.getContext('webgl')));
+	} catch (e) {
+		return false;
+	}
+}
+
+if (!isWebglAvailable()) {
+	// WebGL非対応環境ではcanvasを隠し、Task 1でHTMLに用意した .prism__fallback (picture要素) を見せる
+	document.querySelector('.js-prismCanvas').style.display = 'none';
+	document.querySelector('.prism__fallback').classList.add('--is-visible');
+	throw new Error('PRISM: WebGL not available, falling back to static image');
+}
+
 const canvas = document.querySelector('.js-prismCanvas');
 const stage = canvas.closest('.prism');
 
@@ -117,6 +133,9 @@ function computeFlowBound() {
 	return visibleWidth / 2 + 2; // カード半幅+余白ぶん、画面外に確実に出す
 }
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const MOTION_SCALE = prefersReducedMotion ? 0.25 : 1;
+
 function randomizeSpawn(userData, lane, { initial = false } = {}) {
 	userData.y = lane.y + (Math.random() - 0.5) * 0.4;
 	userData.z = lane.z + (Math.random() - 0.5) * 0.4;
@@ -125,8 +144,8 @@ function randomizeSpawn(userData, lane, { initial = false } = {}) {
 	userData.rotX = (Math.random() - 0.5) * (Math.PI * 0.3);
 	userData.scale = 0.7 + Math.random() * 0.7;
 	// 奥のレーンほどゆっくり、手前ほど速く流れる(視差)
-	userData.speed = 0.5 + (userData.z + 2.5) * 0.12 + Math.random() * 0.25;
-	userData.spinSpeed = 0.15 + Math.random() * 0.25;
+	userData.speed = (0.5 + (userData.z + 2.5) * 0.12 + Math.random() * 0.25) * MOTION_SCALE;
+	userData.spinSpeed = (0.15 + Math.random() * 0.25) * MOTION_SCALE;
 	userData.x = initial
 		? THREE.MathUtils.lerp(flowLeftBound, flowRightBound, Math.random())
 		: flowRightBound + Math.random() * 3;
