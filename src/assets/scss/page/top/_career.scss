@@ -7,7 +7,7 @@
 	position: relative;
 	z-index: 1;
 	padding: vwmin(160) 0;
-	background-color: var(--color-white);
+	background-color: #fff;
 
 	@include sp {
 		padding: vw(160) 0;
@@ -234,7 +234,7 @@
 		grid-column: 2;
 	}
 }
-.career__item.--is-left .career__item--body {
+.career__item.-left .career__item--body {
 	grid-column: 1;
 	text-align: right;
 
@@ -247,8 +247,8 @@
 /**
  * career__item--period / --title / --text / --handNote
  * 時間差フェードイン＋スライドイン（period→title→text/handNoteの順）。
- * デフォルト（--is-right相当）はテキストが右側に来るためtranslateXは+方向、
- * --is-leftのみ-方向に上書きし、SPでは全項目+方向に統一する
+ * デフォルト（-right相当）はテキストが右側に来るためtranslateXは+方向、
+ * -leftのみ-方向に上書きし、SPでは全項目+方向に統一する
  */
 .career__item--period {
 	font-family: var(--font-en);
@@ -315,10 +315,10 @@
 		margin-left: vw(12);
 	}
 }
-.career__item.--is-left .career__item--period,
-.career__item.--is-left .career__item--title,
-.career__item.--is-left .career__item--text {
-	transform: translateX(vwmin(-40));
+.career__item.-left .career__item--period,
+.career__item.-left .career__item--title,
+.career__item.-left .career__item--text {
+	transform: translateX(calc(vwmin(40) * -1));
 
 	@include sp {
 		transform: translateX(vw(40));
