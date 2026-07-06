@@ -457,6 +457,7 @@ function catmullRomToBezierPath(points) {
 let careerLinePoints = [];
 let careerLineTotalLength = 0;
 let careerLineTrailHistory = [];
+let careerScrollTrigger = null;
 
 function buildCareerLine() {
 	const timelineEl = document.querySelector('.js-careerTimeline');
@@ -510,9 +511,18 @@ function recalcCareerLine() {
 	buildCareerLine();
 	ScrollTrigger.refresh();
 	ScrollTrigger.update();
+	// パスを引き直したら、いま現在のスクロール量(progress)でオーブ・残像・fill・
+	// dot点灯を即座に描き直す。onUpdateはprogressが変化したときにしか発火しないため、
+	// これを呼ばないと再フロー後もオーブが古い座標のまま残り、次のスクロールで
+	// 開始位置へワープして見える(リロード直後にオーブ・残像がCSS既定位置に居座る)
+	renderCareerProgress(careerScrollTrigger ? careerScrollTrigger.progress : 0);
 }
 
 buildCareerLine();
+// ScrollTrigger生成前でもオーブ・残像を必ず開始点(progress 0)へ置く。
+// これをしないとonUpdate初回発火まで、オーブはCSS既定のtimeline中央上端、
+// 残像dotはtimeline左上原点に取り残され、余計なオレンジ点として見えてしまう
+renderCareerProgress(0);
 $(window).on('load', recalcCareerLine);
 
 let careerLineResizeTimer;
@@ -573,53 +583,67 @@ function playCareerClimaxBurst() {
 		}, '<');
 }
 
-ScrollTrigger.create({
+/**
+ * 指定progress(0〜1)でCAREERタイムラインの見た目一式を描く。
+ * ScrollTriggerのonUpdateから毎フレーム呼ぶほか、パス再構築後(recalcCareerLine)や
+ * 初期化直後にも呼び、オーブ・残像がCSS既定位置に取り残されないようにする。
+ */
+function renderCareerProgress(progress) {
+	const timelineEl = document.querySelector('.js-careerTimeline');
+	const fillPath = document.querySelector('.js-careerLinePathFill');
+	const orbEl = document.querySelector('.js-careerOrb');
+	if (!timelineEl || !fillPath || !orbEl) return;
+
+	const containerTop = timelineEl.getBoundingClientRect().top;
+	const containerHeight = timelineEl.offsetHeight;
+
+	fillPath.style.strokeDashoffset = careerLineTotalLength * (1 - progress);
+	document.querySelector('.js-careerLineFill').style.transform = `scaleY(${progress})`;
+
+	if (pcOnly.matches) {
+		const point = fillPath.getPointAtLength(careerLineTotalLength * progress);
+		orbEl.style.left = `${point.x}px`;
+		orbEl.style.top = `${point.y}px`;
+
+		careerLineTrailHistory.unshift({ x: point.x, y: point.y });
+		careerLineTrailHistory = careerLineTrailHistory.slice(0, 4 * 3);
+
+		document.querySelectorAll('.js-careerOrbTrailDot').forEach(function (trailDot, i) {
+			// 蓄積が浅い初期フレームでも残像を必ずオーブ側へ寄せる(履歴が届かない
+			// 分は最古の既知点→現在点でフォールバック)。既定のtimeline左上原点に
+			// 取り残して余計なオレンジ点を出さないため
+			const historyPoint = careerLineTrailHistory[(i + 1) * 3 - 1]
+				|| careerLineTrailHistory[careerLineTrailHistory.length - 1]
+				|| point;
+			trailDot.style.left = `${historyPoint.x}px`;
+			trailDot.style.top = `${historyPoint.y}px`;
+		});
+	} else {
+		orbEl.style.left = '';
+		orbEl.style.top = `${progress * 100}%`;
+	}
+
+	$('.js-careerDot').each(function () {
+		const $dot = $(this);
+		if ($dot.hasClass('--is-lit')) return;
+
+		const fraction = (this.getBoundingClientRect().top - containerTop) / containerHeight;
+		if (progress < fraction) return;
+
+		$dot.addClass('--is-lit');
+		if ($dot.hasClass('--is-current')) {
+			playCareerClimaxBurst();
+		}
+	});
+}
+
+careerScrollTrigger = ScrollTrigger.create({
 	trigger: '.js-careerTimeline',
 	start: 'top center',
 	end: 'bottom bottom',
 	scrub: true,
 	invalidateOnRefresh: true,
-	onUpdate: (self) => {
-		const containerTop = self.trigger.getBoundingClientRect().top;
-		const containerHeight = self.trigger.offsetHeight;
-		const fillPath = document.querySelector('.js-careerLinePathFill');
-		const orbEl = document.querySelector('.js-careerOrb');
-
-		fillPath.style.strokeDashoffset = careerLineTotalLength * (1 - self.progress);
-		document.querySelector('.js-careerLineFill').style.transform = `scaleY(${self.progress})`;
-
-		if (pcOnly.matches) {
-			const point = fillPath.getPointAtLength(careerLineTotalLength * self.progress);
-			orbEl.style.left = `${point.x}px`;
-			orbEl.style.top = `${point.y}px`;
-
-			careerLineTrailHistory.unshift({ x: point.x, y: point.y });
-			careerLineTrailHistory = careerLineTrailHistory.slice(0, 4 * 3);
-
-			document.querySelectorAll('.js-careerOrbTrailDot').forEach(function (trailDot, i) {
-				const historyPoint = careerLineTrailHistory[(i + 1) * 3 - 1];
-				if (!historyPoint) return;
-				trailDot.style.left = `${historyPoint.x}px`;
-				trailDot.style.top = `${historyPoint.y}px`;
-			});
-		} else {
-			orbEl.style.left = '';
-			orbEl.style.top = `${self.progress * 100}%`;
-		}
-
-		$('.js-careerDot').each(function () {
-			const $dot = $(this);
-			if ($dot.hasClass('--is-lit')) return;
-
-			const fraction = (this.getBoundingClientRect().top - containerTop) / containerHeight;
-			if (self.progress < fraction) return;
-
-			$dot.addClass('--is-lit');
-			if ($dot.hasClass('--is-current')) {
-				playCareerClimaxBurst();
-			}
-		});
-	},
+	onUpdate: (self) => renderCareerProgress(self.progress),
 });
 
 /*-----------------------------------------------
