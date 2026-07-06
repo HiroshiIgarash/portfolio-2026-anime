@@ -590,7 +590,7 @@ ScrollTrigger.create({
  * walk: 左→定位置 / toy: 右→定位置 / coding: 中央で拡大して背景化。
  * pin する .private__pin の中で3画像を scrub 制御する。
 -------------------------------------------------*/
-(function setupPrivateIntro() {
+function setupPrivateIntro() {
 	const stage = document.querySelector('.js-privateStage');
 	const pin = document.querySelector('.js-privatePin');
 	if (!stage || !pin) return;
@@ -621,4 +621,5 @@ ScrollTrigger.create({
 	// A/B を coding の拡大に合わせてフェードアウト
 	tl.to('.js-privateFloatA', { opacity: 0, ease: 'none' }, 0.6);
 	tl.to('.js-privateFloatB', { opacity: 0, ease: 'none' }, 0.6);
-})();
+}
+setupPrivateIntro();
