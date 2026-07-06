@@ -16,7 +16,8 @@
 
 /**
  * career__head
- * .skills__head と同一構造（6文字分のstagger、白背景上のためnavy・中央寄せ）
+ * about__head/projects__head と同型構造（char stagger + underline、6文字分）。
+ * careerのみ白背景のためnavy・中央寄せ（他2つは紺背景で白文字）
  */
 .career__head {
 	display: flex;

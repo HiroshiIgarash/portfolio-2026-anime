@@ -181,73 +181,62 @@ ScrollTrigger.create({
 
 /*-----------------------------------------------
  * CAREER - Item Text Stagger Reveal
- * 見出し「CAREER」自体は既存の .js-scrani 監視対象のため追加実装不要
+ * career__head同様、career__itemも.js-scrani(既存のIntersectionObserver監視)で
+ * --is-ani付与。個別ScrollTrigger実装は不要
 -------------------------------------------------*/
-$('.js-careerItem').each(function () {
-	const $item = $(this);
-	ScrollTrigger.create({
-		trigger: this,
-		start: 'top 75%',
-		once: true,
-		onEnter: () => $item.addClass('--is-ani'),
-		invalidateOnRefresh: true,
-	});
-});
 
 /*-----------------------------------------------
- * CAREER - Line Growth + Orb Descent
- * 同じtimelineの同じ位置(0)に両方のtweenを積むことで、
- * 線の伸長とオーブの位置がスクロール量に対して常に一致する
+ * CAREER - Line Growth + Orb Descent + Dot Lighting + Climax Burst
+ * 全て同一timelineのscrub progressから判定する。
+ * CAREERはページ最終セクション(直後はfooterのみ)のため、'bottom center'/'center center'を
+ * 個別のtriggerにすると、最後のdotが必要とするスクロール量までページが伸びておらず
+ * 発火しないケースがあった。endを'bottom bottom'にすればコンテナ自身の残りぶんだけで
+ * progress:1まで到達できるため、各dotのfraction(コンテナ内の相対位置)がprogressを
+ * 下回った時点で点灯させる方式にし、最後のdotも含め確実に発火させる
 -------------------------------------------------*/
+function playCareerClimaxBurst() {
+	const tl = gsap.timeline();
+	tl.to('.js-careerOrb', { scale: 1.6, duration: .4, ease: 'power2.out' })
+		.to('.js-careerOrb', { scale: 1, duration: .6, ease: 'elastic.out(1, .4)' })
+		.set('.career__orb--particle', { x: 0, y: 0, xPercent: -50, yPercent: -50, scale: 0, opacity: 1 }, '<')
+		.to('.career__orb--particle', {
+			x: () => gsap.utils.random(-80, 80),
+			y: () => gsap.utils.random(-80, 80),
+			xPercent: -50,
+			yPercent: -50,
+			scale: 1,
+			opacity: 0,
+			duration: .8,
+			stagger: .03,
+			ease: 'power2.out',
+		}, '<');
+}
+
 gsap.timeline({
 	scrollTrigger: {
 		trigger: '.js-careerTimeline',
 		start: 'top center',
-		end: 'bottom center',
+		end: 'bottom bottom',
 		scrub: true,
 		invalidateOnRefresh: true,
+		onUpdate: (self) => {
+			const containerTop = self.trigger.getBoundingClientRect().top;
+			const containerHeight = self.trigger.offsetHeight;
+
+			$('.js-careerDot').each(function () {
+				const $dot = $(this);
+				if ($dot.hasClass('--is-lit')) return;
+
+				const fraction = (this.getBoundingClientRect().top - containerTop) / containerHeight;
+				if (self.progress < fraction) return;
+
+				$dot.addClass('--is-lit');
+				if ($dot.hasClass('--is-current')) {
+					playCareerClimaxBurst();
+				}
+			});
+		},
 	},
 })
 	.to('.js-careerLineFill', { scaleY: 1, ease: 'none' }, 0)
 	.to('.js-careerOrb', { top: '100%', ease: 'none' }, 0);
-
-/*-----------------------------------------------
- * CAREER - Dot Lighting
- * オーブと同じ「画面中央通過」を基準にしているため、
- * オーブが実際にその高さへ到達するタイミングとずれない
--------------------------------------------------*/
-$('.js-careerDot').each(function () {
-	const $dot = $(this);
-	ScrollTrigger.create({
-		trigger: this,
-		start: 'center center',
-		once: true,
-		onEnter: () => $dot.addClass('--is-lit'),
-		invalidateOnRefresh: true,
-	});
-});
-
-/*-----------------------------------------------
- * CAREER - Climax Burst (current/2026到達時)
- * 巻き戻し時の二重発火を防ぐためonce:trueにする
--------------------------------------------------*/
-ScrollTrigger.create({
-	trigger: '.js-careerItem.--is-current',
-	start: 'center 80%',
-	once: true,
-	onEnter: () => {
-		const tl = gsap.timeline();
-		tl.to('.js-careerOrb', { scale: 1.6, duration: .4, ease: 'power2.out' })
-			.to('.js-careerOrb', { scale: 1, duration: .6, ease: 'elastic.out(1, .4)' })
-			.set('.career__orb--particle', { x: 0, y: 0, scale: 0, opacity: 1 }, '<')
-			.to('.career__orb--particle', {
-				x: () => gsap.utils.random(-80, 80),
-				y: () => gsap.utils.random(-80, 80),
-				scale: 1,
-				opacity: 0,
-				duration: .8,
-				stagger: .03,
-				ease: 'power2.out',
-			}, '<');
-	},
-});

@@ -209,7 +209,7 @@ const pageJs = 'top';
 			</div>
 			<ol class="career__list">
 				<% careerList.forEach(function (c, i) { -%>
-				<li class="career__item js-careerItem <%= i % 2 === 0 ? '-left' : '-right' %><% if (c.current) { -%> --is-current<% } -%>">
+				<li class="career__item js-careerItem js-scrani <%= i % 2 === 0 ? '-left' : '-right' %><% if (c.current) { -%> --is-current<% } -%>">
 					<span class="career__item--dot js-careerDot<% if (c.current) { -%> --is-current<% } -%>"></span>
 					<div class="career__item--body">
 						<p class="career__item--period"><%= c.period %></p>
