@@ -624,3 +624,60 @@ function setupPrivateIntro() {
 	// タイムライン合計 duration = 0.3 + 0.3 + 0.4 = 1.0（scrub進捗0-1と一致）
 }
 setupPrivateIntro();
+
+/*-----------------------------------------------
+ * PRIVATE - Swiper（通常）+ スライドの右から登場
+ * 各スライドの内側 .private__slide--inner を、gallery が画面に入ったら
+ * 右から傾きつつ定位置へ stagger 表示する。Swiper 本体の transform とは
+ * 別レイヤー(inner)を動かすことで競合を避ける。
+-------------------------------------------------*/
+function setupPrivateSwiper() {
+	const el = document.querySelector('.js-privateSwiper');
+	if (!el || typeof Swiper === 'undefined') return;
+
+	// 登場演出の初期状態は Swiper の loop 複製が生成される前（元スライドのみ）に適用する。
+	// loop:true では複製スライドが実スライドの前後に挿入されるため、初期化後に
+	// gsap.utils.toArray で取得し直すと複製ぶんも対象に含まれるが、初期状態を
+	// 先に固定しておけば複製生成時にDOM複製されるスタイルにも反映され、ちらつきを防げる。
+	const initialInners = gsap.utils.toArray('.private__slide--inner');
+	gsap.set(initialInners, { xPercent: 120, rotationY: 35, opacity: 0, transformOrigin: 'left center' });
+
+	const privateSwiper = new Swiper('.js-privateSwiper', {
+		slidesPerView: 'auto',
+		centeredSlides: true,
+		spaceBetween: 24,
+		loop: true,
+		autoplay: {
+			delay: 4000,
+			disableOnInteraction: false,
+		},
+		pagination: {
+			el: '.js-privateSwiperPagination',
+			clickable: true,
+		},
+		navigation: {
+			nextEl: '.js-privateSwiperNext',
+			prevEl: '.js-privateSwiperPrev',
+		},
+	});
+
+	// 登場演出: gallery が画面に入ったら一度だけ、複製ぶんも含む全innerを右から傾き→定位置へ。
+	// loop複製はSwiper初期化(afterInit)までに生成済みのため、初期化後に再取得する。
+	const inners = gsap.utils.toArray('.private__slide--inner');
+	ScrollTrigger.create({
+		trigger: '.private__gallery',
+		start: 'top 70%',
+		once: true,
+		onEnter: function () {
+			gsap.to(inners, {
+				xPercent: 0,
+				rotationY: 0,
+				opacity: 1,
+				duration: 0.9,
+				ease: 'power3.out',
+				stagger: 0.15,
+			});
+		},
+	});
+}
+setupPrivateSwiper();
