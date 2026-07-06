@@ -5,6 +5,9 @@
 -------------------------------------------------*/
 .l-footer {
 	position: relative;
+	/* .skillsFill(z-index:2、PROJECTS→SKILLS白円が全画面被覆したままposition:absoluteで
+	   居座り続けることがある。.careerも同じ理由でz-index:2を持つ)より確実に手前に出す */
+	z-index: 3;
 	width: 100%;
 	padding: vwmax(160) vwmin(80) vwmin(80);
 	background-color: var(--color-navy);
