@@ -346,3 +346,22 @@ ScrollTrigger.create({
 		});
 	},
 });
+
+/*-----------------------------------------------
+ * CAREER - Deco Layer Parallax
+ * 背面装飾線(--deco)を進捗線よりわずかに遅く動かし、奥行きを出す
+-------------------------------------------------*/
+gsap.fromTo('.js-careerLinePathDeco',
+	{ y: 0 },
+	{
+		y: vwminPx(32),
+		ease: 'none',
+		scrollTrigger: {
+			trigger: '.js-careerTimeline',
+			start: 'top bottom',
+			end: 'bottom top',
+			scrub: true,
+			invalidateOnRefresh: true,
+		},
+	}
+);
