@@ -78,7 +78,8 @@
 	}
 }
 
-.l-header__navBtn--blob {
+/* blob */
+.l-header__navBtnWrap--blob {
 	position: absolute;
 	inset: -30%;
 	background-color: var(--color-offwhite);
@@ -88,7 +89,7 @@
 	animation: ani_blobMorph 6s ease-in-out infinite;
 	transition: opacity .4s ease;
 }
-.l-header.is-active .l-header__navBtn--blob {
+.l-header.is-active .l-header__navBtnWrap--blob {
 	opacity: 0;
 }
 
