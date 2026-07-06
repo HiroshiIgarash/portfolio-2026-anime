@@ -5,10 +5,8 @@
 -------------------------------------------------*/
 /**
  * career
- * デザイン未確定のためプレースホルダー
- * 通常のスクロールフローに従うだけの要素。
- * .careerTransition__circleStage（sticky）の下端がスクロールで
- * 画面上端を過ぎた後に、続けて下から現れてくる
+ * デザイン未確定のためプレースホルダー。
+ * .careerFill 内で円（z-index:0）より手前（z-index:1）に置く下地。
  */
 .career {
 	position: relative;
@@ -18,36 +16,50 @@
 }
 
 /**
- * careerTransition
- * SKILLS下端でスクロールすると画面下中央から円が広がり、
- * CAREERセクションの白背景へ接続するトランジション
- * .skillsTransitionと同じくGSAP ScrollTriggerのpinを使わず、
- * CSSのposition:stickyで円を画面に留める構成にする
+ * careerFill
+ * SKILLS→CAREERの白円トランジション。.skillsFill と同一構造。
+ * SKILLS下端でスクロールすると画面中央から白円が広がり、CAREERの白背景へ接続する。
  */
-.careerTransition {
+.careerFill {
 	position: relative;
+	z-index: 2;
+	/* .skillsFill と同じ。margin-topで前セクションに重ねて待機を詰める、横clip・縦visible */
+	margin-top: -70vh;
+	overflow-x: clip;
+	overflow-y: visible;
 }
-.careerTransition__spacer {
-	height: 100vh;
-}
-.careerTransition__circleStage {
-	position: sticky;
+.careerFill__bgTrack {
+	position: absolute;
 	top: 0;
-	height: 100vh;
-	overflow: hidden;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow-x: clip;
+	overflow-y: visible;
 	z-index: 0;
 	pointer-events: none;
 }
-.careerTransition__circle {
-	--circle-size: #{vwmin(100)};
+.careerFill__bg {
+	position: sticky;
+	top: 0;
+	width: 100%;
+	height: 100vh;
+}
+.careerFill__circle {
+	/* .skillsFill__circle と同じ。中心を画面下端の中央に置き、下から上へ湧き出て全画面を覆う */
 	position: absolute;
-	bottom: -50vh;
 	left: 50%;
-	width: var(--circle-size);
-	height: var(--circle-size);
-	margin-left: calc(var(--circle-size) / -2);
+	top: 140%;
+	width: 250vmax;
+	height: 250vmax;
+	margin-left: -125vmax;
+	margin-top: -125vmax;
 	border-radius: 50%;
 	background-color: var(--color-white);
 	transform: scale(0);
 	transform-origin: center;
+}
+.careerFill__spacer {
+	/* .skillsFill__spacer と同じ。短くして #career が広がりきる前にせり上がるようにする */
+	height: 50vh;
 }

@@ -171,14 +171,15 @@ const pageJs = 'top';
 			</div>
 		</section><!-- /#projects -->
 	</div><!-- /.aboutProjectsWrap -->
-	<div class="skillsTransition">
-		<div class="skillsTransition__spacer"></div>
-		<div class="skillsTransition__circleStage">
-			<div class="skillsTransition__circle js-skillsCircle"></div>
+	<div class="skillsFill">
+		<div class="skillsFill__bgTrack">
+			<div class="skillsFill__bg">
+				<div class="skillsFill__circle js-skillsCircle"></div>
+			</div>
 		</div>
-	</div><!-- /.skillsTransition -->
+		<div class="skillsFill__spacer"></div>
 	<section id="skills" class="skills">
-		<h2 class="skills__head js-scrani">
+		<h2 class="skills__head">
 			<span class="skills__head--char"><span class="skills__head--charIn">S</span></span>
 			<span class="skills__head--char"><span class="skills__head--charIn">K</span></span>
 			<span class="skills__head--char"><span class="skills__head--charIn">I</span></span>
@@ -227,15 +228,18 @@ const pageJs = 'top';
 			<a href="<%= root %>skills" class="skills__more--btn">詳しくみる</a>
 		</div>
 	</section><!-- /#skills -->
-	<div class="careerTransition">
-		<div class="careerTransition__spacer"></div>
-		<div class="careerTransition__circleStage">
-			<div class="careerTransition__circle js-careerCircle"></div>
+	</div><!-- /.skillsFill -->
+	<div class="careerFill">
+		<div class="careerFill__bgTrack">
+			<div class="careerFill__bg">
+				<div class="careerFill__circle js-careerCircle"></div>
+			</div>
 		</div>
-	</div><!-- /.careerTransition -->
+		<div class="careerFill__spacer"></div>
 	<section id="career" class="career">
 		<!-- デザイン未確定のためプレースホルダ -->
 	</section><!-- /#career -->
+	</div><!-- /.careerFill -->
 </main>
 <%- include('../_inc/_footer', { root: root }) -%>
 </div>

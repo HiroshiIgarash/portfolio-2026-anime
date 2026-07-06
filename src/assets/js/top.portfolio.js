@@ -169,26 +169,52 @@ projectsSwiper.on('realIndexChange', function () {
 
 /*-----------------------------------------------
  * PROJECTS -> SKILLS - White Circle Transition
- * 参考実装に倣い、
- * GSAP ScrollTriggerのpinは使わずCSSのposition:stickyで
- * .js-skillsCircleを画面に留め、scrubでscaleだけをアニメーションする。
- * #skillsは.skillsTransitionより前面（z-index）にあるため、
- * 通常のスクロールフローで下から現れる円の拡大と
- * セクションの出現が自然に同時進行する
- * （pin解除タイミングのズレによる前後セクションの同時表示や
- * 拡大しきった後の無反応区間が構造的に発生しない）
+ * 白円が画面全体を覆うfill-circleパターンを実装。
+ * .skillsFill__bg（position:sticky）が円を画面中央に留め、GSAPはscaleのみを
+ * スクラブする（pinは使わない）。円は150vmax固定でscale(1)が全画面被覆。
+ * .skillsFillのtopが画面下端→上端まで（=ちょうど1画面ぶん）でscale 0→1とし、
+ * 覆いきった瞬間に、同wrap内で最初から円の手前にある#skillsへ遅延なく移る。
 -------------------------------------------------*/
-gsap.to('.js-skillsCircle', {
-	scale: 40,
-	ease: 'none',
-	scrollTrigger: {
-		trigger: '.skillsTransition__spacer',
-		start: 'top bottom',
-		end: 'bottom top',
-		scrub: true,
-		invalidateOnRefresh: true,
-	},
-});
+/**
+ * 円のscaleを GSAP ScrollTrigger の自動 start/end 推定に任せると、手前の bgStage(pin) の
+ * レイアウトや画面サイズの影響で scale が 1 まで届かず、円が最大まで拡大しないことがある。
+ * そこで .skillsFill / .careerFill の実位置(getBoundingClientRect)から直接 scale を計算し、
+ * 確実に 0→1（= 直径250vmax = 全画面被覆）まで拡大させる。
+ * top が画面下端(vh)のとき scale0、画面上端(0)のとき scale1。上端を越えたら 1 で保持。
+ */
+function setupFillCircle(fillSel, circleSel, revealSel) {
+	const fill = document.querySelector(fillSel);
+	const circle = document.querySelector(circleSel);
+	const reveal = revealSel ? document.querySelector(revealSel) : null;
+	if (!fill || !circle) return;
+	function update() {
+		const vh = window.innerHeight;
+		const vw = window.innerWidth;
+		// .skillsFill の top が画面上端(0)を越えて上へスクロールした量で scale を決める。
+		// 分母を大きくするほどゆっくり育つ（0.4vh でゆったり）。
+		const top = fill.getBoundingClientRect().top;
+		const progress = Math.min(Math.max(-top / (vh * 0.4), 0), 1);
+		circle.style.transform = 'scale(' + progress + ')';
+		if (reveal) {
+			// 円が画面の四隅すべてを覆った瞬間に中身へ --covered を付けてフェード表示する。
+			// 「白い円が覆いきってから、その白の上に SKILLS が浮かび上がる」ので、
+			// #skills の白背景が夜景の上にせり上がって境目が直線で出る問題が起きない。
+			// 覆い判定は円の実寸(getBoundingClientRect)で行うので画面比率に依存しない。
+			const c = circle.getBoundingClientRect();
+			const cx = c.left + c.width / 2;
+			const cy = c.top + c.height / 2;
+			const r = c.width / 2;
+			const covered = [[0, 0], [vw, 0], [0, vh], [vw, vh]].every(function (p) {
+				return Math.hypot(p[0] - cx, p[1] - cy) <= r;
+			});
+			reveal.classList.toggle('--covered', covered);
+		}
+	}
+	window.addEventListener('scroll', update, { passive: true });
+	window.addEventListener('resize', update);
+	update();
+}
+setupFillCircle('.skillsFill', '.js-skillsCircle', '#skills');
 
 /*-----------------------------------------------
  * SKILLS - Menu Switching
@@ -250,16 +276,6 @@ $('.js-skillsNext').on('click', function () {
 
 /*-----------------------------------------------
  * SKILLS -> CAREER - White Circle Transition
- * .skillsTransitionと同じくpinを使わないposition:sticky方式
+ * .skillsFill と同一。下から白円が湧き出て覆いきったら #career をフェード表示する
 -------------------------------------------------*/
-gsap.to('.js-careerCircle', {
-	scale: 40,
-	ease: 'none',
-	scrollTrigger: {
-		trigger: '.careerTransition__spacer',
-		start: 'top bottom',
-		end: 'bottom top',
-		scrub: true,
-		invalidateOnRefresh: true,
-	},
-});
+setupFillCircle('.careerFill', '.js-careerCircle', '#career');
