@@ -78,7 +78,7 @@
 }
 
 /* line */
-.l-header__navBtn__lineWrap {
+.l-header__navBtnLineWrap {
 	position: relative;
 	width: 40%;
 	height: vwmin(16);
@@ -121,7 +121,7 @@
 }
 
 @include sp {
-	.l-header__navBtn__lineWrap {
+	.l-header__navBtnLineWrap {
 		height: vw(20);
 	}
 	.l-header__navBtn:after {
