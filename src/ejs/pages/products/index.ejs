@@ -1,0 +1,41 @@
+<%
+const root = '../';
+const page = 'products';
+const pageCss = 'products';
+const pageJs = 'products';
+-%>
+<!doctype html>
+<html lang="ja">
+<%- include('../../_inc/_head', {
+	root: root,
+	page: page,
+	pageTitle: '制作実績｜' + site.siteName,
+	pageDescription: site.description,
+	pageCss: pageCss,
+	pageJs: pageJs
+}) -%>
+<body id="sub" data-page="<%= page %>" data-root="<%= root %>">
+<!-- BEGIN #fullWrap -->
+<div id="fullWrap">
+<%- include('../../_inc/_loading') -%>
+<%- include('../../_inc/_header', { root: root }) -%>
+<main class="l-main">
+	<article class="subArticle">
+		<h1 class="contTitle2">
+			<span class="contTitle2__en font-cinzel">PRODUCTS</span>
+			<span class="contTitle2__ja">制作実績</span>
+		</h1>
+		<!-- BEGIN .productsSnap -->
+		<div class="productsSnap js-productsSnap">
+		</div>
+		<!-- END .productsSnap -->
+	</article>
+</main>
+<%- include('../../_inc/_footer', { root: root }) -%>
+</div>
+<!-- END #fullWrap -->
+
+<%- include('../../_inc/_modal', { root: root }) -%>
+<%- include('../../_inc/_scripts', { root: root, pageJs: pageJs }) -%>
+</body>
+</html>

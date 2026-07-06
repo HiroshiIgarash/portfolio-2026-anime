@@ -1,0 +1,9 @@
+@use "../../global/mixins" as *;
+
+/**
+ * productsSnap
+ * フルスクリーン・スクロールスナップのコンテナ
+ */
+.productsSnap {
+	position: relative;
+}
