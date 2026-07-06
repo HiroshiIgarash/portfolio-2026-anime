@@ -1,0 +1,65 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * CAREER
+-------------------------------------------------*/
+/**
+ * career
+ * デザイン未確定のためプレースホルダー。
+ * .careerFill 内で円（z-index:0）より手前（z-index:1）に置く下地。
+ */
+.career {
+	position: relative;
+	z-index: 1;
+	min-height: 100vh;
+	background-color: var(--color-white);
+}
+
+/**
+ * careerFill
+ * SKILLS→CAREERの白円トランジション。.skillsFill と同一構造。
+ * SKILLS下端でスクロールすると画面中央から白円が広がり、CAREERの白背景へ接続する。
+ */
+.careerFill {
+	position: relative;
+	z-index: 2;
+	/* .skillsFill と同じ。margin-topで前セクションに重ねて待機を詰める、横clip・縦visible */
+	margin-top: -70vh;
+	overflow-x: clip;
+	overflow-y: visible;
+}
+.careerFill__bgTrack {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow-x: clip;
+	overflow-y: visible;
+	z-index: 0;
+	pointer-events: none;
+}
+.careerFill__bg {
+	position: sticky;
+	top: 0;
+	width: 100%;
+	height: 100vh;
+}
+.careerFill__circle {
+	/* .skillsFill__circle と同じ。中心を画面下端の中央に置き、下から上へ湧き出て全画面を覆う */
+	position: absolute;
+	left: 50%;
+	top: 140%;
+	width: 250vmax;
+	height: 250vmax;
+	margin-left: -125vmax;
+	margin-top: -125vmax;
+	border-radius: 50%;
+	background-color: var(--color-white);
+	transform: scale(0);
+	transform-origin: center;
+}
+.careerFill__spacer {
+	/* .skillsFill__spacer と同じ。短くして #career が広がりきる前にせり上がるようにする */
+	height: 50vh;
+}

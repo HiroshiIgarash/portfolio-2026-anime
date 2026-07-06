@@ -5,29 +5,384 @@
 -------------------------------------------------*/
 /**
  * skills
+ * .skillsFill 内で円（.skillsFill__bgTrack, z-index:0）より手前（z-index:1）に置く下地。
  */
 .skills {
 	position: relative;
-	z-index: 2;
+	z-index: 1;
 	min-height: 100vh;
-	background-color: var(--color-navy);
-	overflow: hidden;
+	padding: vwmin(64) 0 vwmin(160);
+	background-color: var(--color-white);
+	/* 円が覆いきるまでは opacity:0 で隠す（白背景がせり上がって夜景との境目が直線で
+	   見える問題を防ぐ）。覆いきったら JS が .--covered を付け、白い円の上にフェードで現れる。 */
+	opacity: 0;
+	transition: opacity .3s ease;
+
+	@include sp {
+		padding: vw(80) 0 vw(160);
+	}
+}
+.skills.--covered {
+	opacity: 1;
 }
 
 /**
- * skills__circle
- * PROJECTS下端でスクロールすると画面下中央から広がり、
- * SKILLSセクションの青背景へ接続するトランジション
+ * skillsFill
+ * PROJECTS→SKILLSの白円トランジション。
+ * ・__bgTrack(absolute) 内の __bg(sticky) が円の位置を留め、円のscaleは JS(setupFillCircle)が
+ *   .skillsFill の実位置から直接算出する（GSAP ScrollTriggerのpinは使わない）
+ * ・円は下端中央アンカーで下から湧き出て全画面を白く覆う
+ * ・#skills は同wrap内 z-index:1 で、円が覆いきってから spacer ぶん後にせり上がる
+ * ・margin-top で前セクション(PROJECTS)に重ね、円が育ち始めるまでの待機を詰める
+ * ・z-index:2 で pin中のbgStage(z-index:0)より前面。bgStageは #skills が上端に来るまで
+ *   pinされ続けるので、覆う前に固定背景が流れて白との境目が直線で出ることはない
  */
-.skills__circle {
+.skillsFill {
+	position: relative;
+	z-index: 2;
+	margin-top: -70vh;
+	/* 横は clip（巨大な円で横スクロールを出さない）／縦は visible（円の上端を切らない） */
+	overflow-x: clip;
+	overflow-y: visible;
+}
+.skillsFill__bgTrack {
 	position: absolute;
 	top: 0;
-	left: 50%;
-	width: vwmin(100);
-	height: vwmin(100);
-	border-radius: 50%;
-	background-color: var(--color-navy);
-	transform: translate(-50%, -50%) scale(0);
-	transform-origin: center;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow-x: clip;
+	overflow-y: visible;
 	z-index: 0;
+	pointer-events: none;
+}
+.skillsFill__bg {
+	position: sticky;
+	top: 0;
+	width: 100%;
+	height: 100vh;
+}
+.skillsFill__circle {
+	/* 中心を __bg の下端＝画面下端の中央に置き、下から上へ湧き出るように拡大する。
+	   下端中央から最遠点（上の両隅）まで届くよう直径250vmaxを確保し全画面を白く覆う。
+	   中心寄せは margin で行う（translate だと scale が移動量まで倍化してしまうため使わない）。 */
+	position: absolute;
+	left: 50%;
+	top: 140%;
+	width: 250vmax;
+	height: 250vmax;
+	margin-left: -125vmax;
+	margin-top: -125vmax;
+	border-radius: 50%;
+	background-color: var(--color-white);
+	transform: scale(0);
+	transform-origin: center;
+}
+.skillsFill__spacer {
+	/* #skills を下に押し下げるスクロール距離。円が全画面を覆いきる（四隅が白くなる）まで
+	   #skills の白背景を画面外下に隠し、覆った後にせり上がらせる。短すぎると覆う前に
+	   #skills白が夜景の上に出て境目が直線で見える、長すぎると覆ってからSKILLSまで間延びする。 */
+	height: 50vh;
+}
+
+/**
+ * skills__head
+ * .projects__head と同一構造（6文字分のstagger）。白背景上のため文字色はnavy
+ */
+.skills__head {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	font-family: var(--font-en);
+	font-size: vwmin(88);
+	line-height: 1;
+	font-weight: 900;
+	letter-spacing: 0;
+	color: var(--color-navy);
+	margin: 0 0 vwmin(120);
+	padding-bottom: vwmin(24);
+
+	@include sp {
+		font-size: vw(72);
+		margin-bottom: vw(80);
+		padding-bottom: vw(24);
+	}
+}
+.skills__head::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	width: vwmin(320);
+	height: 4px;
+	transform: translateX(-50%) scaleX(0);
+	transform-origin: center;
+	background-color: var(--color-teal);
+	transition: transform .8s ease;
+	transition-delay: .5s;
+
+	@include sp {
+		width: vw(240);
+	}
+}
+.skills.--covered .skills__head::after {
+	transform: translateX(-50%) scaleX(1);
+}
+.skills__head--char {
+	display: inline-block;
+	overflow: hidden;
+}
+.skills__head--charIn {
+	display: inline-block;
+	transform: translateY(110%);
+	opacity: 0;
+	transition: transform .6s ease, opacity .6s ease;
+}
+.skills.--covered .skills__head--charIn {
+	transform: translateY(0);
+	opacity: 1;
+}
+.skills__head--char:nth-child(1) .skills__head--charIn {
+	transition-delay: .08s;
+}
+.skills__head--char:nth-child(2) .skills__head--charIn {
+	transition-delay: .16s;
+}
+.skills__head--char:nth-child(3) .skills__head--charIn {
+	transition-delay: .24s;
+}
+.skills__head--char:nth-child(4) .skills__head--charIn {
+	transition-delay: .32s;
+}
+.skills__head--char:nth-child(5) .skills__head--charIn {
+	transition-delay: .4s;
+}
+.skills__head--char:nth-child(6) .skills__head--charIn {
+	transition-delay: .48s;
+}
+
+/**
+ * skills__menu
+ * 4列×2行の円形アイコンボタン。SPは2列×4行
+ */
+.skills__menu {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: vwmin(32);
+	max-width: vwmin(760);
+	margin: 0 auto vwmin(96);
+
+	@include sp {
+		grid-template-columns: repeat(2, 1fr);
+		gap: vw(48);
+		margin-bottom: vw(96);
+	}
+}
+.skills__menu--btn {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 1 / 1;
+	padding: vwmin(24);
+	border: 2px solid rgba(20, 33, 61, .15);
+	border-radius: 50%;
+	background-color: #fff;
+	cursor: pointer;
+	transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+
+	@include sp {
+		padding: vw(32);
+	}
+}
+.skills__menu--btn img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+}
+.skills__menu--btn.--is-current {
+	border-color: var(--color-teal);
+	transform: scale(1.1);
+	box-shadow: 0 0 vwmin(24) rgba(0, 175, 170, .35);
+}
+@include hover {
+	.skills__menu--btn:hover {
+		border-color: var(--color-teal);
+	}
+}
+
+/**
+ * skills__detail
+ * 左に前へボタン、中央にアイコン+名前/説明、右に次へボタン
+ */
+.skills__detail {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: vwmin(40);
+	margin: 0 0 vwmin(96);
+
+	@include sp {
+		gap: vw(24);
+		margin-bottom: vw(96);
+	}
+}
+.skills__detail--prev,
+.skills__detail--next {
+	flex-shrink: 0;
+	position: relative;
+	width: vwmin(64);
+	height: vwmin(64);
+	padding: 0;
+	border: 1px solid var(--color-navy);
+	border-radius: 50%;
+	background: none;
+	cursor: pointer;
+	transition: background-color .3s ease;
+
+	@include sp {
+		width: vw(72);
+		height: vw(72);
+	}
+}
+.skills__detail--prev::before,
+.skills__detail--next::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: vwmin(10);
+	height: vwmin(10);
+	border-top: 2px solid var(--color-navy);
+	border-right: 2px solid var(--color-navy);
+
+	@include sp {
+		width: vw(12);
+		height: vw(12);
+	}
+}
+.skills__detail--prev::before {
+	transform: translate(-30%, -50%) rotate(-135deg);
+}
+.skills__detail--next::before {
+	transform: translate(-70%, -50%) rotate(45deg);
+}
+@include hover {
+	.skills__detail--prev:hover,
+	.skills__detail--next:hover {
+		background-color: rgba(20, 33, 61, .08);
+	}
+}
+.skills__detail--main {
+	display: flex;
+	align-items: center;
+	gap: vwmin(64);
+	width: 100%;
+	max-width: vwmin(760);
+
+	@include sp {
+		flex-direction: column;
+		gap: vw(48);
+	}
+}
+.skills__detail--icon {
+	flex-shrink: 0;
+	width: vwmin(200);
+	height: vwmin(200);
+
+	@include sp {
+		width: vw(240);
+		height: vw(240);
+	}
+}
+.skills__detail--icon img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+}
+.skills__detail--body {
+	display: flex;
+	flex-direction: column;
+	gap: vwmin(24);
+	min-width: 0;
+
+	@include sp {
+		align-items: center;
+		text-align: center;
+		gap: vw(24);
+	}
+}
+.skills__detail--name {
+	font-family: var(--font-en);
+	font-size: vwmin(40);
+	font-weight: 700;
+	color: var(--color-navy);
+	margin: 0;
+	opacity: 0;
+	transform: translateY(vwmin(20));
+	transition: opacity .8s ease, transform .8s ease;
+
+	@include sp {
+		font-size: vw(48);
+		transform: translateY(vw(20));
+	}
+}
+.skills__detail--name.--is-ani {
+	opacity: 1;
+	transform: translateY(0);
+}
+.skills__detail--text {
+	font-size: vwmin(20);
+	line-height: 1.9;
+	color: var(--color-navy);
+	margin: 0;
+	opacity: 0;
+	transform: translateY(vwmin(20));
+	transition: opacity .8s ease, transform .8s ease;
+
+	@include sp {
+		font-size: vw(28);
+		transform: translateY(vw(20));
+	}
+}
+.skills__detail--text.--is-ani {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/**
+ * skills__more
+ * .projects__more--btn と同一構造だが白背景上のためnavy基調に反転
+ */
+.skills__more {
+	display: flex;
+	justify-content: center;
+}
+.skills__more--btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: vwmin(280);
+	height: vwmin(72);
+	border: 1px solid var(--color-navy);
+	border-radius: vwmin(36);
+	color: var(--color-navy);
+	font-size: vwmin(20);
+	letter-spacing: .05em;
+	text-decoration: none;
+	transition: background-color .3s ease, color .3s ease;
+
+	@include sp {
+		width: vw(400);
+		height: vw(96);
+		font-size: vw(28);
+	}
+}
+@include hover {
+	.skills__more--btn:hover {
+		background-color: var(--color-navy);
+		color: #fff;
+	}
 }
