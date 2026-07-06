@@ -193,3 +193,52 @@ ScrollTrigger.create({
 		$('#skills').css('opacity', 0);
 	},
 });
+
+/*-----------------------------------------------
+ * SKILLS - Menu Switching
+ * メニュー/前後ボタンクリックで同一のswitchSkill()を呼び、
+ * アイコンがふんわり変わり→名前→説明の順に
+ * 時間差でフェードイン+スライドインする
+-------------------------------------------------*/
+let currentSkillIndex = 0;
+
+function switchSkill(index) {
+	const $btns = $('.js-skillsMenuBtn');
+	const total = $btns.length;
+	currentSkillIndex = (index + total) % total;
+
+	const $target = $btns.eq(currentSkillIndex);
+	$btns.removeClass('--is-current');
+	$target.addClass('--is-current');
+
+	const iconSrc = $target.find('img').attr('src');
+	const name = $target.data('name');
+	const text = $target.data('text');
+
+	const tl = gsap.timeline();
+	tl.to('.js-skillsDetailIcon img', { opacity: 0, duration: .2 })
+		.call(function () {
+			$('.js-skillsDetailIcon img').attr('src', iconSrc);
+		})
+		.to('.js-skillsDetailIcon img', { opacity: 1, duration: .3 })
+		.set('.js-skillsDetailName', { opacity: 0, y: 20 })
+		.call(function () {
+			$('.js-skillsDetailName').text(name);
+		})
+		.to('.js-skillsDetailName', { opacity: 1, y: 0, duration: .4 }, '+=.1')
+		.set('.js-skillsDetailText', { opacity: 0, y: 20 })
+		.call(function () {
+			$('.js-skillsDetailText').text(text);
+		})
+		.to('.js-skillsDetailText', { opacity: 1, y: 0, duration: .4 }, '+=.1');
+}
+
+$('.js-skillsMenuBtn').on('click', function () {
+	switchSkill(Number($(this).data('skill-index')));
+});
+$('.js-skillsPrev').on('click', function () {
+	switchSkill(currentSkillIndex - 1);
+});
+$('.js-skillsNext').on('click', function () {
+	switchSkill(currentSkillIndex + 1);
+});
