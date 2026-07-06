@@ -190,6 +190,127 @@ cardSources.forEach((def, laneIndex) => {
 	cards.push(mesh);
 });
 
+/*-----------------------------------------------
+ * クリック判定: カードにヒットしたら拡大トグル。
+ * - 拡大中でないカードをクリック → カメラ手前へ移動しつつ回転して拡大表示
+ * - 拡大中のカードを再クリック → 元の位置・大きさ・角度に戻す
+ * - 拡大中は他のカードのクリックを無視する(同時に2枚拡大させない)
+-------------------------------------------------*/
+const EXPAND_DURATION = 0.9;
+const EXPAND_Z = 5;
+const EXPAND_FILL_HEIGHT = 0.78; // 画面高さに対して占めさせたい割合
+const EXPAND_FILL_WIDTH = 0.92; // 画面幅に対して占めさせたい割合(縦長画面での幅制約)
+const CARD_WIDTH = 2.4;
+const CARD_HEIGHT = 1.5;
+let expandedCard = null;
+
+// 元のカードは大きさがランダム(0.7〜1.4倍)なので、単純な倍率だと
+// 拡大後の見た目サイズがカードごとにバラつく。カメラ距離とFOVから
+// 「画面に対して常に同じ割合で大きく見える」絶対スケールを逆算する
+function computeExpandScale() {
+	const distance = camera.position.z - EXPAND_Z;
+	const vFov = camera.fov * Math.PI / 180;
+	const visibleHeight = 2 * Math.tan(vFov / 2) * distance;
+	const visibleWidth = visibleHeight * camera.aspect;
+	const scaleByHeight = (visibleHeight * EXPAND_FILL_HEIGHT) / CARD_HEIGHT;
+	const scaleByWidth = (visibleWidth * EXPAND_FILL_WIDTH) / CARD_WIDTH;
+	return Math.min(scaleByHeight, scaleByWidth);
+}
+
+// 自転中のカードは現在角度が半端な値になっているため、単純に +3π するだけだと
+// 最終角度も半端なまま(中途半端な傾きで止まる)。目標を「絶対角度として
+// ちょうど裏(π)/表(0)に一致する、現在より先の角度」に計算し直し、
+// かつ最低1周は回転するようにする
+function nextExactAngle(current, targetMod) {
+	const twoPi = Math.PI * 2;
+	const currentMod = ((current % twoPi) + twoPi) % twoPi;
+	let target = current - currentMod + targetMod;
+	if (target <= current) target += twoPi;
+	return target + twoPi;
+}
+
+function expandCard(card) {
+	const ud = card.userData;
+	ud.paused = true;
+	ud.expanded = true;
+	expandedCard = card;
+
+	// カメラ(z=12)との間に十分な余白を残す(近づきすぎ対策)
+	gsap.to(card.position, {
+		x: 0, y: 0, z: EXPAND_Z,
+		duration: EXPAND_DURATION,
+		ease: 'power3.inOut'
+	});
+	// 画面サイズに対して常に同じ割合で大きく見えるよう、絶対スケールを都度計算する
+	const targetScale = computeExpandScale();
+	gsap.to(card.scale, {
+		x: targetScale, y: targetScale, z: targetScale,
+		duration: EXPAND_DURATION,
+		ease: 'power3.inOut'
+	});
+	// 1周以上回りつつ、絶対角度としてぴったり裏(π)を向く位置で止める
+	gsap.to(card.rotation, {
+		x: 0, y: nextExactAngle(card.rotation.y, Math.PI), z: 0,
+		duration: EXPAND_DURATION,
+		ease: 'power3.inOut'
+	});
+}
+
+function collapseCard(card) {
+	const ud = card.userData;
+	gsap.to(card.position, {
+		x: ud.x, y: ud.y, z: ud.z,
+		duration: EXPAND_DURATION,
+		ease: 'power3.inOut'
+	});
+	gsap.to(card.scale, {
+		x: ud.scale, y: ud.scale, z: ud.scale,
+		duration: EXPAND_DURATION,
+		ease: 'power3.inOut'
+	});
+	// 同様に1周以上回りつつ、絶対角度としてぴったり表(0)に戻す
+	gsap.to(card.rotation, {
+		x: ud.rotX, y: nextExactAngle(card.rotation.y, 0), z: ud.rotZ,
+		duration: EXPAND_DURATION,
+		ease: 'power3.inOut',
+		onComplete() {
+			// 蓄積角度が延々と増え続けないよう、見た目が同じ 0-2π の範囲に畳む
+			card.rotation.y = card.rotation.y % (Math.PI * 2);
+			ud.paused = false;
+			ud.expanded = false;
+			expandedCard = null;
+		}
+	});
+}
+
+const raycaster = new THREE.Raycaster();
+const pointerNdc = new THREE.Vector2();
+
+function onPointerClick(clientX, clientY) {
+	const rect = stage.getBoundingClientRect();
+	pointerNdc.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+	pointerNdc.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+
+	raycaster.setFromCamera(pointerNdc, camera);
+	const hits = raycaster.intersectObjects(cards);
+
+	if (expandedCard) {
+		// 拡大中のカードをクリックした時だけ元に戻す。他はまだ拡大中なので無視
+		if (hits.length > 0 && hits[0].object === expandedCard) {
+			collapseCard(expandedCard);
+		}
+		return;
+	}
+
+	if (hits.length === 0) return;
+	expandCard(hits[0].object);
+}
+stage.addEventListener('click', (e) => onPointerClick(e.clientX, e.clientY));
+stage.addEventListener('touchstart', (e) => {
+	const t = e.touches[0];
+	if (t) onPointerClick(t.clientX, t.clientY);
+}, { passive: true });
+
 // マウス移動: カメラの軽いパララックスに反映
 // (バネ+減衰のスプリングで柔らかく追従させる。lerpのみだと一定速度で
 // 近づくだけの硬い動きになるため、行き過ぎて戻るような柔らかさを出す)
