@@ -120,23 +120,23 @@
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	gap: vwmin(32);
+	gap: vwmin(40);
 
 	@include sp {
-		gap: vw(32);
+		gap: vw(40);
 	}
 }
 .footerNavLists__link {
 	display: inline-block;
 	font-family: var(--font-en);
-	font-size: vwmin(13);
+	font-size: vwmin(20);
 	font-weight: 700;
 	letter-spacing: .05em;
 	color: var(--color-white);
 	text-decoration: none;
 
 	@include sp {
-		font-size: vw(22);
+		font-size: vw(28);
 	}
 }
 
