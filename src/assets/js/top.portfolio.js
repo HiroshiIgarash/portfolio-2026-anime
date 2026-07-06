@@ -218,6 +218,10 @@ function switchSkill(index) {
 	const name = $target.data('name');
 	const text = $target.data('text');
 
+	// スクロールインの CSS transition が GSAP の毎フレーム inline style 書き換えにも
+	// 反応してしまい、狙った時間差アニメがにじむため無効化する（初回以降は GSAP のみが担当）
+	$('.js-skillsDetailName, .js-skillsDetailText').css('transition', 'none');
+
 	if (skillDetailTl) {
 		skillDetailTl.kill();
 	}
