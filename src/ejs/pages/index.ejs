@@ -253,7 +253,63 @@ const pageJs = 'top';
 		</div>
 		<div class="careerFill__spacer"></div>
 	<section id="career" class="career">
-		<!-- デザイン未確定のためプレースホルダ -->
+		<h2 class="career__head js-scrani">
+			<span class="career__head--char"><span class="career__head--charIn">C</span></span>
+			<span class="career__head--char"><span class="career__head--charIn">A</span></span>
+			<span class="career__head--char"><span class="career__head--charIn">R</span></span>
+			<span class="career__head--char"><span class="career__head--charIn">E</span></span>
+			<span class="career__head--char"><span class="career__head--charIn">E</span></span>
+			<span class="career__head--char"><span class="career__head--charIn">R</span></span>
+		</h2>
+		<%
+		const careerList = [
+			{ period: '2019 — 2022', title: '塾講師 · 2年半', text: '中3〜高2の数学を集団授業で担当。進路相談・三者面談も。人に教える経験は、その後のレビュー文化や後輩指導にも繋がっています。' },
+			{ period: '2022 — 2024', title: 'Web制作会社にてコーディング · 2年半', text: '数十〜数百ページ規模のコーポレートサイト制作、WordPress構築、後輩指導。マークアップとデザイン実装の地力を固めた時期。' },
+			{ period: '2024', title: 'コレミナ 公開', text: 'Next.js + Prisma + Neonを独学で構築。AIなしで2ヶ月かけて作りきった、初の本格個人プロダクト。' },
+			{ period: '2024 — 2026', title: 'Web開発会社にて · タテマンガ投稿サービス開発', text: '大手出版社のタテマンガ投稿サービスを受託開発・保守。フロント中心にバックエンドも横断。並行して在籍企業のコーポレートサイトリニューアル(多言語化対応)も担当。' },
+			{ period: '2025', title: '応用情報技術者試験 合格', text: '基礎知識を体系化する目的で取得。実務との往復で土台を強くした。' },
+			{ period: '2026', title: 'ホロライブコメント検索 公開', text: 'Claude Codeとの協働開発を本格的に試した個人プロジェクト。1週間で公開、運用継続中。' },
+			{ period: 'NOW · 2026', title: '新しい環境を求めて', text: 'Web制作会社で、あっと驚くようなアニメーションや演出に挑戦できる環境を探しています。', current: true },
+		];
+		-%>
+		<div class="career__timeline js-careerTimeline">
+			<svg class="career__lineSvg js-careerLineSvg" preserveAspectRatio="none">
+				<defs>
+					<linearGradient id="careerLineGradient" x1="0" y1="0" x2="0" y2="1">
+						<stop offset="0%" stop-color="#00afaa" />
+						<stop offset="100%" stop-color="#ffaf00" />
+					</linearGradient>
+				</defs>
+				<path class="career__linePath--deco js-careerLinePathDeco" />
+				<path class="career__linePath--bg js-careerLinePathBg" />
+				<path class="career__linePath--fill js-careerLinePathFill" />
+			</svg>
+			<div class="career__line">
+				<div class="career__line--fill js-careerLineFill"></div>
+			</div>
+			<div class="career__orbTrail js-careerOrbTrail">
+				<% for (let t = 0; t < 4; t++) { -%>
+				<span class="career__orbTrail--dot js-careerOrbTrailDot"></span>
+				<% } -%>
+			</div>
+			<div class="career__orb js-careerOrb">
+				<% for (let p = 0; p < 6; p++) { -%>
+				<span class="career__orb--particle js-careerOrbParticle"></span>
+				<% } -%>
+			</div>
+			<ol class="career__list">
+				<% careerList.forEach(function (c, i) { -%>
+				<li class="career__item js-careerItem js-scrani <%= i % 2 === 0 ? '-left' : '-right' %><% if (c.current) { -%> --is-current<% } -%>">
+					<span class="career__item--dot js-careerDot<% if (c.current) { -%> --is-current<% } -%>"></span>
+					<div class="career__item--body">
+						<p class="career__item--period"><%= c.period %></p>
+						<h3 class="career__item--title"><%= c.title %><% if (c.handNote) { -%> <span class="career__item--handNote"><%= c.handNote %></span><% } -%></h3>
+						<p class="career__item--text"><%= c.text %></p>
+					</div>
+				</li>
+				<% }); -%>
+			</ol>
+		</div><!-- /.career__timeline -->
 	</section><!-- /#career -->
 	</div><!-- /.careerFill -->
 </main>
