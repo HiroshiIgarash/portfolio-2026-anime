@@ -240,6 +240,10 @@ function buildCareerLine() {
 		{ x: dotPoints[dotPoints.length - 1].x, y: containerHeight },
 	];
 
+	dots.forEach(function (dot, i) {
+		dot.style.transform = `translateX(${Math.round(dotPoints[i].x - centerX)}px)`;
+	});
+
 	const d = catmullRomToBezierPath(careerLinePoints);
 
 	svgEl.setAttribute('viewBox', `0 0 ${containerWidth} ${containerHeight}`);
