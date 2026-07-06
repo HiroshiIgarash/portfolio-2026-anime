@@ -230,7 +230,7 @@ function buildCareerLine() {
 
 	const dots = [...document.querySelectorAll('.js-careerDot')];
 	const dotPoints = dots.map(function (dot) {
-		const item = dot.closest('.career__item');
+		const item = dot.closest('.js-careerItem');
 		const y = dot.getBoundingClientRect().top - containerTop + dot.offsetHeight / 2;
 		const x = item.classList.contains('-left') ? centerX - amplitude : centerX + amplitude;
 		return { x: x, y: y };
@@ -250,7 +250,7 @@ function buildCareerLine() {
 
 	svgEl.setAttribute('viewBox', `0 0 ${containerWidth} ${containerHeight}`);
 	document.querySelector('.js-careerLinePathDeco').setAttribute('d', d);
-	document.querySelector('.career__linePath--bg').setAttribute('d', d);
+	document.querySelector('.js-careerLinePathBg').setAttribute('d', d);
 	document.querySelector('.js-careerLinePathFill').setAttribute('d', d);
 
 	const fillPath = document.querySelector('.js-careerLinePathFill');
@@ -284,8 +284,8 @@ function playCareerClimaxBurst() {
 	const tl = gsap.timeline();
 	tl.to('.js-careerOrb', { scale: 1.6, duration: .4, ease: 'power2.out' })
 		.to('.js-careerOrb', { scale: 1, duration: .6, ease: 'elastic.out(1, .4)' })
-		.set('.career__orb--particle', { x: 0, y: 0, xPercent: -50, yPercent: -50, scale: 0, opacity: 1 }, '<')
-		.to('.career__orb--particle', {
+		.set('.js-careerOrbParticle', { x: 0, y: 0, xPercent: -50, yPercent: -50, scale: 0, opacity: 1 }, '<')
+		.to('.js-careerOrbParticle', {
 			x: () => gsap.utils.random(-80, 80),
 			y: () => gsap.utils.random(-80, 80),
 			xPercent: -50,
@@ -321,7 +321,7 @@ ScrollTrigger.create({
 			careerLineTrailHistory.unshift({ x: point.x, y: point.y });
 			careerLineTrailHistory = careerLineTrailHistory.slice(0, 4 * 3);
 
-			document.querySelectorAll('.career__orbTrail--dot').forEach(function (trailDot, i) {
+			document.querySelectorAll('.js-careerOrbTrailDot').forEach(function (trailDot, i) {
 				const historyPoint = careerLineTrailHistory[(i + 1) * 3 - 1];
 				if (!historyPoint) return;
 				trailDot.style.left = `${historyPoint.x}px`;
