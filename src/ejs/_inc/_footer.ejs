@@ -1,6 +1,29 @@
 <footer class="l-footer">
 	<div class="l-footer__inner">
 		<div class="l-footer__innerCont">
+			<p class="l-footer__logo">
+				<a href="<%= root %>index.html" class="l-footer__logo--link js-pageTransitionLink" title="トップページへ">
+					<span class="hd"><%= site.siteName %></span>
+					<span class="l-footer__logo--svg"></span>
+				</a>
+			</p>
+			<a href="https://github.com/HiroshiIgarash" target="_blank" rel="noopener noreferrer" class="l-footer__githubLink">
+				<span class="l-footer__githubLink--icon"></span>
+				<span class="hd">GitHub</span>
+			</a>
+			<div class="l-footer__backTop">
+				<a href="<%= root %>index.html#top" class="l-footer__backTop--link js-anchor" title="ページの先頭へ戻る">
+					<span class="l-footer__backTop--circleText" aria-hidden="true">
+						<% const backTopChars = '加速装置・'.repeat(3).split(''); -%>
+						<% backTopChars.forEach(function(char) { -%>
+						<span class="l-footer__backTop--circleChar"><%= char %></span>
+						<% }); -%>
+					</span>
+					<span class="l-footer__backTop--arrow">
+						<span class="hd">ページの先頭へ戻る</span>
+					</span>
+				</a>
+			</div><!-- /.l-footer__backTop -->
 			<p class="l-footer__copyright"><%- site.copyright %></p>
 		</div>
 	</div><!-- /.l-footer__inner -->
