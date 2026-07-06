@@ -133,7 +133,7 @@ let projectsSwiper = new Swiper('.js-projectsSwiper', {
 	slidesPerView: 'auto',
 	spaceBetween: 30,
 	loop: true,
-	loopAdditionalSlides: 4,
+	loopAdditionalSlides: 10,
 	autoplay: {
 		delay: 4000,
 		disableOnInteraction: false,
