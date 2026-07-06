@@ -5,29 +5,332 @@
 -------------------------------------------------*/
 /**
  * skills
+ * 円が画面全体を覆いきるまでは非表示にし、下からせり上がる
+ * セクション本体の縁が円の外側に透けて見えないようにする
+ * （JS側で円のトランジション完了と同時にopacity:1へ切り替える）
  */
 .skills {
 	position: relative;
 	z-index: 2;
 	min-height: 100vh;
-	background-color: var(--color-navy);
+	padding: vwmin(160) 0;
+	background-color: var(--color-white);
 	overflow: hidden;
+	opacity: 0;
+
+	@include sp {
+		padding: vw(160) 0;
+	}
 }
 
 /**
- * skills__circle
+ * skillsCircle
  * PROJECTS下端でスクロールすると画面下中央から広がり、
- * SKILLSセクションの青背景へ接続するトランジション
+ * SKILLSセクションの白背景へ接続するトランジション
+ * .skillsの外（.aboutProjectsWrap内末尾）に配置し、
+ * top:calc(100% + 45vh)で.aboutProjectsWrap下端（=SKILLS開始位置）より
+ * さらに下に中心を置き、緩やかな弧を描くようにする
+ * JS側のScrollTriggerでpinし、pin中は画面下中央に固定した状態でscaleする
  */
-.skills__circle {
+.skillsCircle {
 	position: absolute;
-	top: 0;
+	top: calc(100% + 45vh);
 	left: 50%;
 	width: vwmin(100);
 	height: vwmin(100);
 	border-radius: 50%;
-	background-color: var(--color-navy);
+	background-color: var(--color-white);
 	transform: translate(-50%, -50%) scale(0);
 	transform-origin: center;
-	z-index: 0;
+	z-index: 5;
+}
+
+/**
+ * skills__head
+ * .projects__head と同一構造（6文字分のstagger）。白背景上のため文字色はnavy
+ */
+.skills__head {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	font-family: var(--font-en);
+	font-size: vwmin(88);
+	line-height: 1;
+	font-weight: 900;
+	letter-spacing: 0;
+	color: var(--color-navy);
+	margin: 0 0 vwmin(120);
+	padding-bottom: vwmin(24);
+
+	@include sp {
+		font-size: vw(72);
+		margin-bottom: vw(80);
+		padding-bottom: vw(24);
+	}
+}
+.skills__head::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	width: vwmin(320);
+	height: 4px;
+	transform: translateX(-50%) scaleX(0);
+	transform-origin: center;
+	background-color: var(--color-teal);
+	transition: transform .8s ease;
+	transition-delay: .5s;
+
+	@include sp {
+		width: vw(240);
+	}
+}
+.skills__head.--is-ani::after {
+	transform: translateX(-50%) scaleX(1);
+}
+.skills__head--char {
+	display: inline-block;
+	overflow: hidden;
+}
+.skills__head--charIn {
+	display: inline-block;
+	transform: translateY(110%);
+	opacity: 0;
+	transition: transform .6s ease, opacity .6s ease;
+}
+.skills__head.--is-ani .skills__head--charIn {
+	transform: translateY(0);
+	opacity: 1;
+}
+.skills__head--char:nth-child(1) .skills__head--charIn {
+	transition-delay: .08s;
+}
+.skills__head--char:nth-child(2) .skills__head--charIn {
+	transition-delay: .16s;
+}
+.skills__head--char:nth-child(3) .skills__head--charIn {
+	transition-delay: .24s;
+}
+.skills__head--char:nth-child(4) .skills__head--charIn {
+	transition-delay: .32s;
+}
+.skills__head--char:nth-child(5) .skills__head--charIn {
+	transition-delay: .4s;
+}
+.skills__head--char:nth-child(6) .skills__head--charIn {
+	transition-delay: .48s;
+}
+
+/**
+ * skills__menu
+ * 4列×2行の円形アイコンボタン。SPは2列×4行
+ */
+.skills__menu {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: vwmin(32);
+	max-width: vwmin(760);
+	margin: 0 auto vwmin(96);
+
+	@include sp {
+		grid-template-columns: repeat(2, 1fr);
+		gap: vw(48);
+		margin-bottom: vw(96);
+	}
+}
+.skills__menu--btn {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 1 / 1;
+	padding: vwmin(24);
+	border: 2px solid rgba(20, 33, 61, .15);
+	border-radius: 50%;
+	background-color: #fff;
+	cursor: pointer;
+	transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+
+	@include sp {
+		padding: vw(32);
+	}
+}
+.skills__menu--btn img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+}
+.skills__menu--btn.--is-current {
+	border-color: var(--color-teal);
+	transform: scale(1.1);
+	box-shadow: 0 0 vwmin(24) rgba(0, 175, 170, .35);
+}
+@include hover {
+	.skills__menu--btn:hover {
+		border-color: var(--color-teal);
+	}
+}
+
+/**
+ * skills__detail
+ * 左に前へボタン、中央にアイコン+名前/説明、右に次へボタン
+ */
+.skills__detail {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: vwmin(40);
+	margin: 0 0 vwmin(96);
+
+	@include sp {
+		gap: vw(24);
+		margin-bottom: vw(96);
+	}
+}
+.skills__detail--prev,
+.skills__detail--next {
+	flex-shrink: 0;
+	position: relative;
+	width: vwmin(64);
+	height: vwmin(64);
+	padding: 0;
+	border: 1px solid var(--color-navy);
+	border-radius: 50%;
+	background: none;
+	cursor: pointer;
+	transition: background-color .3s ease;
+
+	@include sp {
+		width: vw(72);
+		height: vw(72);
+	}
+}
+.skills__detail--prev::before,
+.skills__detail--next::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: vwmin(10);
+	height: vwmin(10);
+	border-top: 2px solid var(--color-navy);
+	border-right: 2px solid var(--color-navy);
+
+	@include sp {
+		width: vw(12);
+		height: vw(12);
+	}
+}
+.skills__detail--prev::before {
+	transform: translate(-30%, -50%) rotate(-135deg);
+}
+.skills__detail--next::before {
+	transform: translate(-70%, -50%) rotate(45deg);
+}
+@include hover {
+	.skills__detail--prev:hover,
+	.skills__detail--next:hover {
+		background-color: rgba(20, 33, 61, .08);
+	}
+}
+.skills__detail--main {
+	display: flex;
+	align-items: center;
+	gap: vwmin(64);
+	width: 100%;
+	max-width: vwmin(760);
+
+	@include sp {
+		flex-direction: column;
+		gap: vw(48);
+	}
+}
+.skills__detail--icon {
+	flex-shrink: 0;
+	width: vwmin(200);
+	height: vwmin(200);
+
+	@include sp {
+		width: vw(240);
+		height: vw(240);
+	}
+}
+.skills__detail--icon img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+}
+.skills__detail--body {
+	display: flex;
+	flex-direction: column;
+	gap: vwmin(24);
+	min-width: 0;
+
+	@include sp {
+		align-items: center;
+		text-align: center;
+		gap: vw(24);
+	}
+}
+.skills__detail--name {
+	font-family: var(--font-en);
+	font-size: vwmin(40);
+	font-weight: 700;
+	color: var(--color-navy);
+	margin: 0;
+	opacity: 0;
+	transform: translateY(20px);
+
+	@include sp {
+		font-size: vw(48);
+	}
+}
+.skills__detail--text {
+	font-size: vwmin(20);
+	line-height: 1.9;
+	color: var(--color-navy);
+	margin: 0;
+	opacity: 0;
+	transform: translateY(20px);
+
+	@include sp {
+		font-size: vw(28);
+	}
+}
+
+/**
+ * skills__more
+ * .projects__more--btn と同一構造だが白背景上のためnavy基調に反転
+ */
+.skills__more {
+	display: flex;
+	justify-content: center;
+}
+.skills__more--btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: vwmin(280);
+	height: vwmin(72);
+	border: 1px solid var(--color-navy);
+	border-radius: vwmin(36);
+	color: var(--color-navy);
+	font-size: vwmin(20);
+	letter-spacing: .05em;
+	text-decoration: none;
+	transition: background-color .3s ease, color .3s ease;
+
+	@include sp {
+		width: vw(400);
+		height: vw(96);
+		font-size: vw(28);
+	}
+}
+@include hover {
+	.skills__more--btn:hover {
+		background-color: var(--color-navy);
+		color: #fff;
+	}
 }
