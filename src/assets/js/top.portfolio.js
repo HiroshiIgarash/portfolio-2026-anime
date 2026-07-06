@@ -242,3 +242,30 @@ $('.js-skillsPrev').on('click', function () {
 $('.js-skillsNext').on('click', function () {
 	switchSkill(currentSkillIndex + 1);
 });
+
+/*-----------------------------------------------
+ * SKILLS -> CAREER - White Circle Transition
+ * .js-careerCircleをpinし、画面下中央に固定した状態で
+ * scaleをスクラブ→そのまま白背景としてCAREERへ接続する
+ * #careerは円が完全に覆いきるまで非表示にし、
+ * セクション本体の縁が円の外側に透けないようにする
+-------------------------------------------------*/
+ScrollTrigger.create({
+	trigger: '#career',
+	start: 'top bottom',
+	end: 'top top',
+	scrub: true,
+	invalidateOnRefresh: true,
+	pin: '.js-careerCircle',
+	pinSpacing: false,
+	animation: gsap.to('.js-careerCircle', {
+		scale: 40,
+		ease: 'none',
+	}),
+	onLeave: function () {
+		$('#career').css('opacity', 1);
+	},
+	onEnterBack: function () {
+		$('#career').css('opacity', 0);
+	},
+});
