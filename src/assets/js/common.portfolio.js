@@ -245,6 +245,6 @@ if (footerBendPath && footerEl) {
 			overwrite: true,
 			onUpdate: () => setBendPath(bendState.v),
 		});
-		bendIdleTimer = setTimeout(releaseBend, 100);
+		bendIdleTimer = setTimeout(releaseBend, 10);
 	});
 }
