@@ -480,13 +480,9 @@ function buildCareerLine() {
 		dot.style.transform = pcOnly.matches ? `translateX(${Math.round(dotPoints[i].x - centerX)}px)` : '';
 	});
 
-	// dot間はCatmull-Romでなめらかに、先頭(見出し直下)・末尾(コンテナ下端)は
-	// 直線で継ぐ。曲線側に含めると次/前のdotへ先読みしたカーブが混ざり、
-	// まっすぐであるべき区間まで不要に曲がってしまうため
-	const firstPoint = dotPoints[0];
-	const lastPoint = dotPoints[dotPoints.length - 1];
-	const curve = catmullRomToBezierPath(dotPoints).replace('M', 'L');
-	const d = `M ${firstPoint.x} 0 ${curve} L ${lastPoint.x} ${containerHeight}`;
+	// 線の始点・終点は最初/最後のdotそのものに合わせる(見出し直下やコンテナ下端
+	// まで引き伸ばさない)
+	const d = catmullRomToBezierPath(dotPoints);
 
 	svgEl.setAttribute('viewBox', `0 0 ${containerWidth} ${containerHeight}`);
 	document.querySelector('.js-careerLinePathDeco').setAttribute('d', d);
