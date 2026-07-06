@@ -498,3 +498,98 @@
 	opacity: 1;
 	transform: translateX(0);
 }
+
+/**
+ * career__item--deco[data-deco-shape]
+ * CSS製の装飾図形。画像を使わずborder/clip-pathのみで描画する
+ */
+.career__item--deco[data-deco-shape="circle"] {
+	width: vwmin(96);
+	height: vwmin(96);
+
+	@include sp {
+		width: vw(56);
+		height: vw(56);
+	}
+}
+.career__item--deco[data-deco-shape="circle"]::before {
+	content: "";
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background-color: var(--color-nijisanji);
+	clip-path: polygon(50% 50%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 50% 0%);
+	box-shadow: 0 vwmin(8) vwmin(24) rgba(20, 33, 61, .12);
+}
+.career__item--deco[data-deco-shape="triangle"] {
+	width: vwmin(112);
+	height: vwmin(96);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	@include sp {
+		width: vw(64);
+		height: vw(56);
+	}
+}
+.career__item--deco[data-deco-shape="triangle"]::before {
+	content: "";
+	width: 0;
+	height: 0;
+	border-left: vwmin(56) solid transparent;
+	border-right: vwmin(56) solid transparent;
+	border-bottom: vwmin(96) solid var(--color-hololive);
+	filter: drop-shadow(0 vwmin(6) vwmin(12) rgba(20, 33, 61, .16));
+
+	@include sp {
+		border-left-width: vw(32);
+		border-right-width: vw(32);
+		border-bottom-width: vw(56);
+	}
+}
+.career__item--deco[data-deco-shape="compass"] {
+	position: relative;
+	width: vwmin(96);
+	height: vwmin(96);
+
+	@include sp {
+		width: vw(56);
+		height: vw(56);
+	}
+}
+.career__item--deco[data-deco-shape="compass"]::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: 50%;
+	border: vwmin(4) solid var(--color-navy);
+	box-sizing: border-box;
+	background-color: #fff;
+	box-shadow: 0 vwmin(8) vwmin(24) rgba(20, 33, 61, .12);
+
+	@include sp {
+		border-width: vw(3);
+	}
+}
+.career__item--deco[data-deco-shape="compass"]::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-left: vwmin(8) solid transparent;
+	border-right: vwmin(8) solid transparent;
+	border-bottom: vwmin(32) solid var(--color-orange);
+	transform: translate(-50%, -50%) rotate(-35deg);
+	transform-origin: center vwmin(16);
+
+	@include sp {
+		border-left-width: vw(5);
+		border-right-width: vw(5);
+		border-bottom-width: vw(20);
+		transform-origin: center vw(10);
+	}
+}
