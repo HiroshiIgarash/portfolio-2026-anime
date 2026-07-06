@@ -69,6 +69,10 @@
 }
 .private__book.-right .private__illust {
 	grid-column: 2;
+
+	@include sp {
+		grid-column: auto;
+	}
 }
 
 .private__text {
@@ -86,6 +90,11 @@
 .private__book.-right .private__text {
 	grid-column: 1;
 	grid-row: 1;
+
+	@include sp {
+		grid-column: auto;
+		grid-row: auto;
+	}
 }
 .private__text--title {
 	font-size: vwmin(24);
