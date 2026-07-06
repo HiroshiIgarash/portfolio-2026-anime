@@ -311,6 +311,82 @@
 .career__item--dot.--is-current.--is-lit {
 	box-shadow: 0 0 0 vwmin(10) rgba(255, 175, 0, .3);
 }
+
+/**
+ * career__item--deco
+ * 経歴内容に応じた装飾イラスト。career__item--bodyの反対カラムに配置する
+ * （-leftはbodyが左カラムのためdecoは右、デフォルトの-rightはその逆）
+ */
+.career__item--deco {
+	grid-row: 1;
+	grid-column: 1;
+	justify-self: end;
+	align-self: start;
+
+	@include sp {
+		grid-column: 2;
+		justify-self: start;
+	}
+}
+.career__item.-left .career__item--deco {
+	grid-column: 3;
+	justify-self: start;
+
+	@include sp {
+		grid-column: 2;
+	}
+}
+
+/**
+ * career__item--deco.-image
+ * 白背景クリップアートを円形バッジ化する（タテマンガのpanelは除く）
+ */
+.career__item--deco.-image:not([data-deco-panel]) picture {
+	display: block;
+	width: vwmin(120);
+	height: vwmin(120);
+	border-radius: 50%;
+	overflow: hidden;
+	background-color: #fff;
+	box-shadow: 0 vwmin(8) vwmin(24) rgba(20, 33, 61, .12);
+
+	@include sp {
+		width: vw(72);
+		height: vw(72);
+	}
+}
+.career__item--deco.-image:not([data-deco-panel]) img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	padding: vwmin(12);
+
+	@include sp {
+		padding: vw(8);
+	}
+}
+
+/**
+ * career__item--deco[data-deco-panel]
+ * タテマンガのポップアート紙面は円形にせず、模様背景ごと角丸四角で見せる
+ */
+.career__item--deco[data-deco-panel] picture {
+	display: block;
+	width: vwmin(140);
+	border-radius: vwmin(16);
+	overflow: hidden;
+	box-shadow: 0 vwmin(8) vwmin(24) rgba(20, 33, 61, .12);
+
+	@include sp {
+		width: vw(160);
+	}
+}
+.career__item--deco[data-deco-panel] img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
 .career__item--body {
 	grid-column: 3;
 	/* word-break:keep-all併用時、grid 1frトラックの既定min-width:autoがテキストの
@@ -319,6 +395,8 @@
 
 	@include sp {
 		grid-column: 2;
+		grid-row: 2;
+		margin-top: vw(16);
 	}
 }
 .career__item.-left .career__item--body {
