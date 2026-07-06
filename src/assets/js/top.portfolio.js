@@ -1,4 +1,125 @@
 /*-----------------------------------------------
+ * LOADING
+-------------------------------------------------*/
+const loadingBarFill = document.querySelector('.js-loadingBarFill');
+const loadingBarPercent = document.querySelector('.js-loadingBarPercent');
+const loadingFrameB = document.querySelector('.js-loadingFrameB');
+const loadingProgress = { value: 0 };
+const loadingFrameBDash = { value: 0 };
+
+function setLoadingProgress(value) {
+	loadingProgress.value = value;
+	loadingBarFill.style.width = value + '%';
+	loadingBarPercent.textContent = Math.round(value);
+}
+
+const loadingIntroTl = gsap.timeline({ paused: true });
+
+loadingIntroTl.to(loadingProgress, {
+	value: 90,
+	duration: 1.5,
+	ease: 'power2.out',
+	onUpdate: function () {
+		setLoadingProgress(loadingProgress.value);
+	},
+}, 0)
+	.fromTo('.js-loadingFrameA', { strokeDashoffset: 50 }, {
+		strokeDashoffset: 0,
+		duration: .6,
+		ease: 'power2.inOut',
+	}, .6)
+	// frameBはoffset固定・dasharrayの線長だけを0→50に伸ばす(offset側を動かすと起点がAと同じ左上を経由してしまうため)
+	.fromTo(loadingFrameBDash, { value: 0 }, {
+		value: 50,
+		duration: .6,
+		ease: 'power2.inOut',
+		onUpdate: function () {
+			loadingFrameB.style.strokeDasharray = loadingFrameBDash.value + ' 1000';
+		},
+	}, .6)
+	// CSSのtransform初期値をGSAPに読み取らせると、文字幅が狭い文字("I"や".")だけ
+	// 誤った値に変換されることがあるため、fromToでfrom値を明示しCSSの値を読みに行かせない
+	.fromTo('.js-loadingChar', { y: 10, opacity: 0 }, {
+		y: 0,
+		opacity: 1,
+		duration: .4,
+		stagger: .05,
+		ease: 'power2.out',
+	}, 1.2)
+	.to('.js-loadingSparkles', {
+		opacity: 1,
+		duration: .3,
+		ease: 'power1.out',
+	}, .2);
+
+function finishLoading() {
+	if (loadingIntroTl.progress() < 1) {
+		loadingIntroTl.eventCallback('onComplete', snapProgressToComplete);
+	} else {
+		snapProgressToComplete();
+	}
+}
+
+function snapProgressToComplete() {
+	gsap.to(loadingProgress, {
+		value: 100,
+		duration: .2,
+		ease: 'power1.out',
+		onUpdate: function () {
+			setLoadingProgress(loadingProgress.value);
+		},
+		onComplete: playLoadingReveal,
+	});
+}
+
+function playLoadingReveal() {
+	const revealTl = gsap.timeline({
+		onComplete: function () {
+			gsap.set('.js-loading', { display: 'none' });
+			$('body').removeClass('--is-loading').addClass('--is-loaded');
+			playMvCatchAnimation();
+			ScrollTrigger.refresh();
+		},
+	});
+
+	revealTl
+		.to('.js-loadingLogo', {
+			scale: 2.2,
+			opacity: 0,
+			duration: .5,
+			ease: 'power2.in',
+		}, 0)
+		.fromTo('.js-loadingRevealA', { scale: 0 }, {
+			scale: 1,
+			duration: .5,
+			ease: 'power2.in',
+		}, 0)
+		.fromTo('.js-loadingRevealB', { scale: 0 }, {
+			scale: 1,
+			duration: .5,
+			ease: 'power2.in',
+		}, .12)
+		.to('.js-loading', {
+			opacity: 0,
+			duration: .5,
+			ease: 'power1.out',
+		}, .7);
+}
+
+function startLoadingIntro() {
+	$('body').addClass('--is-loading');
+	loadingIntroTl.play();
+}
+
+if (window.__pageTransitionClosed) {
+	startLoadingIntro();
+} else {
+	document.addEventListener('pageTransitionClosed', startLoadingIntro, { once: true });
+}
+
+$(window).on('load', finishLoading);
+
+/*-----------------------------------------------
  * MV
 -------------------------------------------------*/
 /**
@@ -84,11 +205,6 @@ function playMvCatchAnimation() {
 		ease: 'power2.out',
 	}, '-=.2');
 }
-
-$(window).on('load', function () {
-	playMvCatchAnimation();
-	ScrollTrigger.refresh();
-});
 
 /*-----------------------------------------------
  * ABOUT - Avatar Change

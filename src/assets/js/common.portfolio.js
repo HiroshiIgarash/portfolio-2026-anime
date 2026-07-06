@@ -8,9 +8,99 @@ const spOnly = window.matchMedia('(max-width: 768px)');
 
 
 /*-----------------------------------------------
+ * PAGE TRANSITION
+-------------------------------------------------*/
+const pageTransitionCircleA = document.querySelector('.js-pageTransitionCircleA');
+const pageTransitionCircleB = document.querySelector('.js-pageTransitionCircleB');
+
+let pageTransitionLock = false;
+
+function playPageTransitionClose() {
+	gsap.set([pageTransitionCircleA, pageTransitionCircleB], { scale: 1, left: '50%', top: '50%' });
+
+	gsap.timeline({
+		onComplete: function () {
+			window.__pageTransitionClosed = true;
+			document.dispatchEvent(new CustomEvent('pageTransitionClosed'));
+		},
+	})
+		.to(pageTransitionCircleB, {
+			scale: 0,
+			duration: .5,
+			ease: 'power2.out',
+		}, 0)
+		.to(pageTransitionCircleA, {
+			scale: 0,
+			duration: .5,
+			ease: 'power2.out',
+		}, .12);
+}
+
+window.__pageTransitionClosed = false;
+playPageTransitionClose();
+
+// bfcache(戻る/進むでJSが再実行されないケース)復帰時、円が広がりきった
+// 状態のまま固まって見えるため、離脱前の状態に関わらず毎回closeし直す
+window.addEventListener('pageshow', function (e) {
+	if (!e.persisted) {
+		return;
+	}
+	pageTransitionLock = false;
+	playPageTransitionClose();
+});
+
+function isPlainLeftClick(e) {
+	return e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
+}
+
+function handlePageTransitionLinkClick(e) {
+	const link = e.currentTarget;
+
+	if (link.target === '_blank' || !isPlainLeftClick(e)) {
+		return;
+	}
+	if (link.href === location.href) {
+		e.preventDefault();
+		return;
+	}
+	if (pageTransitionLock) {
+		e.preventDefault();
+		return;
+	}
+
+	e.preventDefault();
+	pageTransitionLock = true;
+
+	[pageTransitionCircleA, pageTransitionCircleB].forEach(function (circle) {
+		circle.style.left = e.clientX + 'px';
+		circle.style.top = e.clientY + 'px';
+	});
+
+	gsap.timeline({
+		onComplete: function () {
+			location.href = link.href;
+		},
+	})
+		.fromTo(pageTransitionCircleA, { scale: 0 }, {
+			scale: 1,
+			duration: .5,
+			ease: 'power2.in',
+		}, 0)
+		.fromTo(pageTransitionCircleB, { scale: 0 }, {
+			scale: 1,
+			duration: .5,
+			ease: 'power2.in',
+		}, .12);
+}
+
+
+/*-----------------------------------------------
  * COMMON
 -------------------------------------------------*/
 $(function(){
+
+	// Page Transition - Link Click
+	$('.js-pageTransitionLink').on('click', handlePageTransitionLinkClick);
 
 	// Anchor Smooth Scroll
 	$('.js-anchor').on('click', function(){
