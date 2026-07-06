@@ -45,6 +45,63 @@ const pageJs = 'products';
 					<span class="productsIntro__scroll--line"></span>
 				</p>
 			</section>
+			<section class="productsItem -company js-scrani js-productsSnapItem" data-products-index="1">
+				<div class="productsItem__visual">
+					<p class="productsItem__num">01</p>
+					<div class="productsItem__gallery">
+						<div class="productsItem__placeholder">
+							<span class="productsItem__placeholder--text">準備中</span>
+						</div>
+					</div>
+					<p class="productsItem__badge -company">受託</p>
+					<h3 class="productsItem__title">タテマンガ投稿Webサービス・開発と保守</h3>
+					<p class="productsItem__subtitle">大手出版社のタテマンガ投稿サービス · Web開発会社の一員として受託開発</p>
+					<ul class="productsItem__meta">
+						<li class="productsItem__meta--item">業務 · 約1.5年</li>
+						<li class="productsItem__meta--item">受託開発</li>
+					</ul>
+				</div><!-- /.productsItem__visual -->
+				<div class="productsItem__body">
+					<div class="productsItem__text">
+						<p>所属していたWeb開発会社が大手出版社から受託したタテマンガ投稿サービスの開発に参画。リリース後のフェーズから機能拡張・運用改善を担当し、<strong>フロントエンドとバックエンドを横断</strong>して開発してきました。インフラ構成は<strong>バックエンドはAWS、フロントエンドはVercelにデプロイ</strong>。</p>
+						<ul>
+							<li><strong>URL限定公開機能の実装</strong> — URLを知っているユーザーのみ閲覧可能とする仕様で、設計から実装まで一貫して担当。DBに公開用キーのカラムを追加、GraphQL APIでキー検証してデータを返却制御、フロントはURLパラメータから取得しリクエストヘッダで連携。</li>
+							<li><strong>App Router化のリファクタリング</strong> — Pages Router から App Router への移行を実施。サーバーコンポーネントへの分離、データフェッチ戦略の見直し。</li>
+							<li><strong>漫画賞コンテストのLP・結果発表ページ制作</strong> — Contentful を活用して非エンジニアでも編集できる構造で構築。期間限定機能の応募フロー・管理画面の構築も担当。</li>
+							<li><strong>不正対策の実装</strong> — 同一IPアドレスからのいいね重複カウントを防ぐロジックを設計・実装。</li>
+							<li><strong>編集部おすすめ作品の表示ロジック改修</strong> — 既存のビジネスロジックを読み解き、運用課題に合わせて設計を見直した改修。</li>
+							<li>運用中サービスでのスキーマ変更・マイグレーション、不具合対応、パフォーマンス改善を継続的に実施。</li>
+						</ul>
+						<p class="productsItem__highlight"><strong>AIを組み込んだ業務開発：</strong>日々の開発にClaudeを組み込み、<strong>TDDのサイクルでテストファースト</strong>に進めるルールで運用。機能実装をagenticに任せる、設計・アーキテクチャの壁打ち、リファクタリング相談、バグ調査、テストコード作成まで、用途に応じて活用しています。</p>
+					</div><!-- /.productsItem__text -->
+					<div class="productsItem__block">
+						<p class="productsItem__block--label">TECH STACK</p>
+						<ul class="productsItem__techStack">
+							<li class="productsItem__techStack--item -hot">Next.js</li>
+							<li class="productsItem__techStack--item -hot">TypeScript</li>
+							<li class="productsItem__techStack--item">GraphQL</li>
+							<li class="productsItem__techStack--item">urql</li>
+							<li class="productsItem__techStack--item">Apollo Server</li>
+							<li class="productsItem__techStack--item">Prisma</li>
+							<li class="productsItem__techStack--item">PostgreSQL</li>
+							<li class="productsItem__techStack--item">Tailwind</li>
+							<li class="productsItem__techStack--item">shadcn/ui</li>
+							<li class="productsItem__techStack--item">Storybook</li>
+							<li class="productsItem__techStack--item">Chromatic</li>
+							<li class="productsItem__techStack--item">Vitest</li>
+							<li class="productsItem__techStack--item">Playwright</li>
+							<li class="productsItem__techStack--item">Contentful</li>
+							<li class="productsItem__techStack--item">AWS (CDK)</li>
+							<li class="productsItem__techStack--item">Vercel</li>
+							<li class="productsItem__techStack--item">Claude (TDD)</li>
+						</ul>
+					</div><!-- /.productsItem__block -->
+					<div class="productsItem__block">
+						<p class="productsItem__block--label">MY ROLE</p>
+						<p class="productsItem__block--text">フロント主担当 + GraphQLリゾルバ追加 + DBスキーマ設計変更 + 機能設計 + AI活用での開発 + CloudWatchでの監視・ログ調査 + AWS CDK Pipelinesによるデプロイ</p>
+					</div><!-- /.productsItem__block -->
+				</div><!-- /.productsItem__body -->
+			</section>
 		</div>
 		<!-- END .productsSnap -->
 	</article>
