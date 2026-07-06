@@ -184,10 +184,12 @@ ScrollTrigger.create({
  * 見出し「CAREER」自体は既存の .js-scrani 監視対象のため追加実装不要
 -------------------------------------------------*/
 $('.js-careerItem').each(function () {
+	const $item = $(this);
 	ScrollTrigger.create({
 		trigger: this,
 		start: 'top 75%',
-		toggleClass: { targets: this, className: '--is-ani' },
+		once: true,
+		onEnter: () => $item.addClass('--is-ani'),
 		invalidateOnRefresh: true,
 	});
 });
@@ -215,10 +217,12 @@ gsap.timeline({
  * オーブが実際にその高さへ到達するタイミングとずれない
 -------------------------------------------------*/
 $('.js-careerDot').each(function () {
+	const $dot = $(this);
 	ScrollTrigger.create({
 		trigger: this,
 		start: 'center center',
-		toggleClass: '--is-lit',
+		once: true,
+		onEnter: () => $dot.addClass('--is-lit'),
 		invalidateOnRefresh: true,
 	});
 });
@@ -229,7 +233,7 @@ $('.js-careerDot').each(function () {
 -------------------------------------------------*/
 ScrollTrigger.create({
 	trigger: '.js-careerItem.--is-current',
-	start: 'center center',
+	start: 'center 80%',
 	once: true,
 	onEnter: () => {
 		const tl = gsap.timeline();
