@@ -187,10 +187,10 @@
 .l-header__beacon--track {
 	display: flex;
 	flex: 0 0 auto;
-	animation: ani_beaconScroll 48s linear infinite;
+	animation: ani_beaconScroll 96s linear infinite;
 
 	@include sp {
-		animation-duration: 32s;
+		animation-duration: 64s;
 	}
 }
 .l-header__beacon--text {
