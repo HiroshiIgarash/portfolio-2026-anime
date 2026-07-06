@@ -606,20 +606,21 @@ function setupPrivateIntro() {
 		},
 	});
 
-	// walk: 左外→定位置
+	// walk: 左外→定位置（進捗 0.00-0.30）
 	tl.fromTo('.js-privateFloatA',
 		{ xPercent: -160, opacity: 0 },
-		{ xPercent: 0, opacity: 1, ease: 'none' }, 0.0);
-	// toy: 右外→定位置
+		{ xPercent: 0, opacity: 1, ease: 'none', duration: 0.3 }, 0.0);
+	// toy: 右外→定位置（進捗 0.30-0.60）
 	tl.fromTo('.js-privateFloatB',
 		{ xPercent: 160, opacity: 0 },
-		{ xPercent: 0, opacity: 1, ease: 'none' }, 0.3);
-	// coding: 中央で拡大して背景化（中央寄せはCSS側のflexに任せ、GSAPはscaleのみを与える）
+		{ xPercent: 0, opacity: 1, ease: 'none', duration: 0.3 }, 0.3);
+	// coding: 中央で拡大して背景化（中央寄せはCSS側のflexに任せ、GSAPはscaleのみを与える）（進捗 0.60-1.00）
 	tl.fromTo('.js-privateZoom',
 		{ scale: 0.35, opacity: 0 },
-		{ scale: 2.4, opacity: 1, ease: 'none' }, 0.6);
-	// A/B を coding の拡大に合わせてフェードアウト
-	tl.to('.js-privateFloatA', { opacity: 0, ease: 'none' }, 0.6);
-	tl.to('.js-privateFloatB', { opacity: 0, ease: 'none' }, 0.6);
+		{ scale: 2.4, opacity: 1, ease: 'none', duration: 0.4 }, 0.6);
+	// A/B を coding の拡大に合わせてフェードアウト（進捗 0.60-1.00）
+	tl.to('.js-privateFloatA', { opacity: 0, ease: 'none', duration: 0.4 }, 0.6);
+	tl.to('.js-privateFloatB', { opacity: 0, ease: 'none', duration: 0.4 }, 0.6);
+	// タイムライン合計 duration = 0.3 + 0.3 + 0.4 = 1.0（scrub進捗0-1と一致）
 }
 setupPrivateIntro();
