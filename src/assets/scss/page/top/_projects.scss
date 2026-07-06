@@ -1,5 +1,11 @@
 @use "../../global/mixins" as *;
 
+@property --projects-more-border-angle {
+	syntax: '<angle>';
+	initial-value: 0deg;
+	inherits: false;
+}
+
 /*-----------------------------------------------
  * PROJECTS
 -------------------------------------------------*/
@@ -106,14 +112,13 @@
 	width: 100%;
 	max-width: vwmin(1340);
 	margin: 0 auto;
-	padding: vwmin(40) 0 vwmin(80);
+	padding: vwmin(100) 0 vwmin(80);
 	overflow: hidden;
 }
 .projects__slide {
+	position: relative;
 	width: vwmin(560);
 	aspect-ratio: 1200 / 630;
-	border-radius: vwmin(12);
-	overflow: hidden;
 	cursor: pointer;
 }
 .projects__slide picture,
@@ -122,10 +127,142 @@
 	height: 100%;
 	object-fit: cover;
 	display: block;
+	border-radius: vwmin(12);
 }
 @include sp {
+	.projects__swiper {
+		padding-top: vw(180);
+	}
 	.projects__slide {
 		width: vw(560);
+	}
+}
+
+/**
+ * projects__slide--balloon
+ * アクティブスライドになった瞬間だけ左上にひょこっと出す「Click me!」吹き出し
+ */
+.projects__slide--balloon {
+	position: absolute;
+	top: 0;
+	left: vwmin(24);
+	z-index: 3;
+	padding: vwmin(16) vwmin(36);
+	border-radius: 999px;
+	background: #fff;
+	color: var(--color-navy);
+	font-family: var(--font-en);
+	font-size: vwmin(24);
+	font-weight: 700;
+	letter-spacing: .02em;
+	white-space: nowrap;
+	opacity: 0;
+	transform: translate(-30%, -70%) scale(0);
+	transform-origin: bottom right;
+	pointer-events: none;
+}
+.projects__slide--balloon::after {
+	content: "";
+	position: absolute;
+	right: vwmin(44);
+	bottom: 0;
+	width: vwmin(28);
+	height: vwmin(24);
+	background: #fff;
+	clip-path: polygon(0 0, 100% 0, 92% 100%);
+	transform: translateY(65%);
+}
+.projects__slide.swiper-slide-active .projects__slide--balloon {
+	animation: ani_balloonPop .7s cubic-bezier(.34, 1.56, .64, 1) forwards;
+}
+@keyframes ani_balloonPop {
+	0% {
+		opacity: 0;
+		transform: translate(-30%, -70%) scale(0) rotate(-20deg);
+	}
+	55% {
+		opacity: 1;
+		transform: translate(-30%, -70%) scale(1.15) rotate(6deg);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(-30%, -70%) scale(1) rotate(0deg);
+	}
+}
+@include sp {
+	.projects__slide--balloon {
+		left: vw(32);
+		padding: vw(24) vw(48);
+		font-size: vw(32);
+	}
+	.projects__slide--balloon::after {
+		right: vw(64);
+		width: vw(40);
+		height: vw(34);
+	}
+}
+
+/**
+ * projects__slide--label
+ * スライド右上に半分はみ出す楕円形ラベル。制作体制で2色に分ける
+ */
+.projects__slide--label {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	top: 0;
+	right: vwmin(24);
+	transform: translateY(-40%);
+	z-index: 2;
+	padding: vwmin(10) vwmin(28);
+	border-radius: 999px;
+	font-size: vwmin(18);
+	font-weight: 700;
+	letter-spacing: .05em;
+	color: #fff;
+	white-space: nowrap;
+}
+.projects__slide--label.-personal {
+	background: var(--color-pink);
+}
+.projects__slide--label.-company {
+	background: var(--color-teal);
+}
+@include sp {
+	.projects__slide--label {
+		right: vw(32);
+		padding: vw(14) vw(36);
+		font-size: vw(22);
+	}
+}
+
+/**
+ * projects__slide--name
+ * アクティブスライドの下にのみ作品名を表示(±1は非表示のまま)
+ */
+.projects__slide--name {
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform: translate(-50%, calc(100% + #{vwmin(24)}));
+	width: max-content;
+	color: #fff;
+	font-size: vwmin(22);
+	font-weight: 700;
+	letter-spacing: .05em;
+	text-align: center;
+	opacity: 0;
+	transition: opacity .3s ease;
+	pointer-events: none;
+}
+.projects__slide.swiper-slide-active .projects__slide--name {
+	opacity: 1;
+}
+@include sp {
+	.projects__slide--name {
+		transform: translate(-50%, calc(100% + #{vw(24)}));
+		font-size: vw(28);
 	}
 }
 
@@ -181,12 +318,60 @@
 	font-size: vwmin(20);
 	letter-spacing: .05em;
 	text-decoration: none;
-	transition: background-color .3s ease, color .3s ease;
+	position: relative;
+	overflow: hidden;
+	transition: color .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+.projects__more--btn::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-repeat: no-repeat;
+	background-image: linear-gradient(#fff, #fff);
+	background-size: 0% 100%;
+	background-position: right bottom;
+	transition: background-size .4s ease;
+}
+.projects__more--btnTxt {
+	display: inline-block;
+	position: relative;
+}
+.projects__more--btn::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: vwmin(3);
+	background: conic-gradient(from var(--projects-more-border-angle), var(--color-teal) 0deg, var(--color-teal) 230deg, #fff 300deg, var(--color-teal) 360deg);
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask-composite: exclude;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity .3s ease;
+}
+@keyframes ani_rotate {
+	to {
+		--projects-more-border-angle: 360deg;
+	}
 }
 @include hover {
 	.projects__more--btn:hover {
-		background-color: #fff;
 		color: var(--color-navy);
+		transform: scale(1.05);
+		box-shadow: 0 0 vwmin(32) color-mix(in srgb, var(--color-teal) 60%, transparent);
+	}
+	.projects__more--btn:hover::before {
+		background-size: 100% 100%;
+		background-position: left bottom;
+	}
+	.projects__more--btn:hover::after {
+		opacity: 1;
+		animation: ani_rotate 1.6s linear infinite;
 	}
 }
 @include sp {

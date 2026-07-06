@@ -136,10 +136,10 @@ const pageJs = 'top';
 			</h2>
 			<%
 			const projectsList = [
-				{ modal: 'projectModal01', img: 'koremina', alt: 'コレミナ' },
-				{ modal: 'projectModal02', img: 'holo-comment', alt: 'ホロライブコメント検索' },
-				{ modal: 'projectModal03', img: 'tategamanga', alt: 'タテマンガ投稿Webサービス' },
-				{ modal: 'projectModal04', img: 'corporate', alt: 'コーポレートサイトリニューアル' },
+				{ modal: 'projectModal01', img: 'koremina', alt: 'コレミナ', label: '個人制作' },
+				{ modal: 'projectModal02', img: 'holo-comment', alt: 'ホロライブコメント検索', label: '個人制作' },
+				{ modal: 'projectModal03', img: 'tategamanga', alt: 'タテマンガ投稿Webサービス', label: 'Web開発会社' },
+				{ modal: 'projectModal04', img: 'corporate', alt: 'コーポレートサイトリニューアル', label: 'Web開発会社' },
 			];
 			// Swiperのloopモードは実スライド数が少ないと自動的に無効化されるため、
 			// 4作品を3セット(12スライド)複製して実スライド数を確保する。
@@ -150,10 +150,13 @@ const pageJs = 'top';
 					<% for (let rep = 0; rep < 3; rep++) { -%>
 					<% projectsList.forEach(function (p) { -%>
 					<li class="projects__slide swiper-slide js-projectsModalOpen" data-modal="<%= p.modal %>"<% if (rep > 0) { -%> aria-hidden="true"<% } -%>>
+						<span class="projects__slide--balloon">Click me!</span>
+						<span class="projects__slide--label<%= p.label === '個人制作' ? ' -personal' : ' -company' %>"><%= p.label %></span>
 						<picture>
 							<source srcset="<%= root %>assets/img/top/projects/<%= p.img %>.webp" type="image/webp">
 							<img src="<%= root %>assets/img/top/projects/<%= p.img %>.jpg" alt="<%= p.alt %>">
 						</picture>
+						<p class="projects__slide--name"><%= p.alt %></p>
 					</li>
 					<% }); -%>
 					<% } -%>
@@ -167,7 +170,7 @@ const pageJs = 'top';
 				<% }); -%>
 			</div><!-- /.projects__nav -->
 			<div class="projects__more">
-				<a href="<%= root %>products" class="projects__more--btn">詳しくみる</a>
+				<a href="<%= root %>products" class="projects__more--btn"><span class="projects__more--btnTxt">詳しくみる</span></a>
 			</div>
 		</section><!-- /#projects -->
 	</div><!-- /.aboutProjectsWrap -->
