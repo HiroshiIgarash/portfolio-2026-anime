@@ -1,0 +1,332 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * CAREER
+-------------------------------------------------*/
+.career {
+	position: relative;
+	z-index: 1;
+	padding: vwmin(160) 0;
+	background-color: var(--color-white);
+
+	@include sp {
+		padding: vw(160) 0;
+	}
+}
+
+/**
+ * career__head
+ * .skills__head と同一構造（6文字分のstagger、白背景上のためnavy・中央寄せ）
+ */
+.career__head {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	font-family: var(--font-en);
+	font-size: vwmin(88);
+	line-height: 1;
+	font-weight: 900;
+	letter-spacing: 0;
+	color: var(--color-navy);
+	margin: 0 0 vwmin(160);
+	padding-bottom: vwmin(24);
+
+	@include sp {
+		font-size: vw(72);
+		margin-bottom: vw(120);
+		padding-bottom: vw(24);
+	}
+}
+.career__head::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	width: vwmin(320);
+	height: 4px;
+	transform: translateX(-50%) scaleX(0);
+	transform-origin: center;
+	background-color: var(--color-teal);
+	transition: transform .8s ease;
+	transition-delay: .5s;
+
+	@include sp {
+		width: vw(240);
+	}
+}
+.career__head.--is-ani::after {
+	transform: translateX(-50%) scaleX(1);
+}
+.career__head--char {
+	display: inline-block;
+	overflow: hidden;
+}
+.career__head--charIn {
+	display: inline-block;
+	transform: translateY(110%);
+	opacity: 0;
+	transition: transform .6s ease, opacity .6s ease;
+}
+.career__head.--is-ani .career__head--charIn {
+	transform: translateY(0);
+	opacity: 1;
+}
+.career__head--char:nth-child(1) .career__head--charIn {
+	transition-delay: .08s;
+}
+.career__head--char:nth-child(2) .career__head--charIn {
+	transition-delay: .16s;
+}
+.career__head--char:nth-child(3) .career__head--charIn {
+	transition-delay: .24s;
+}
+.career__head--char:nth-child(4) .career__head--charIn {
+	transition-delay: .32s;
+}
+.career__head--char:nth-child(5) .career__head--charIn {
+	transition-delay: .4s;
+}
+.career__head--char:nth-child(6) .career__head--charIn {
+	transition-delay: .48s;
+}
+
+/**
+ * career__timeline / career__list
+ * 縦線・光のオーブを保持する外枠（position:relativeの基準）と、
+ * 実際の7エントリを並べる<ol>を分離する
+ */
+.career__timeline {
+	position: relative;
+	max-width: vwmin(720);
+	margin: 0 auto;
+
+	@include sp {
+		max-width: none;
+	}
+}
+.career__list {
+	position: relative;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/**
+ * career__line / career__orb
+ * 中央を貫く縦線と、スクロール量に連動して降りてくる光のオーブ。
+ * PC: 中央（left:50%）／SP: ドット列の中心（vw(20)）に固定
+ */
+.career__line {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 2px;
+	height: 100%;
+	background-color: rgba(20, 33, 61, .12);
+	transform: translateX(-50%);
+
+	@include sp {
+		left: vw(20);
+	}
+}
+.career__line--fill {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--color-teal);
+	transform: scaleY(0);
+	transform-origin: top;
+}
+.career__orb {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: vwmin(20);
+	height: vwmin(20);
+	border-radius: 50%;
+	background-color: var(--color-orange);
+	box-shadow: 0 0 vwmin(16) rgba(255, 175, 0, .8), 0 0 vwmin(32) rgba(255, 175, 0, .4);
+	transform: translate(-50%, -50%);
+	z-index: 2;
+
+	@include sp {
+		left: vw(20);
+		width: vw(24);
+		height: vw(24);
+	}
+}
+.career__orb--particle {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: vwmin(6);
+	height: vwmin(6);
+	border-radius: 50%;
+	background-color: var(--color-orange);
+	opacity: 0;
+	pointer-events: none;
+	transform: translate(-50%, -50%) scale(0);
+
+	@include sp {
+		width: vw(8);
+		height: vw(8);
+	}
+}
+
+/**
+ * career__item
+ * 3列グリッド（左テキスト/ドット/右テキスト）で交互ジグザグ配置。
+ * SPは2列グリッド（ドット/テキスト）に切り替え、全項目を同じ並びに統一
+ */
+.career__item {
+	position: relative;
+	display: grid;
+	grid-template-columns: 1fr vwmin(40) 1fr;
+	column-gap: vwmin(32);
+	padding-bottom: vwmin(96);
+
+	@include sp {
+		grid-template-columns: vw(40) 1fr;
+		column-gap: vw(24);
+		padding-bottom: vw(96);
+	}
+}
+.career__item:last-child {
+	padding-bottom: 0;
+}
+.career__item--dot {
+	grid-column: 2;
+	justify-self: center;
+	align-self: start;
+	margin-top: vwmin(8);
+	width: vwmin(20);
+	height: vwmin(20);
+	border-radius: 50%;
+	background-color: #fff;
+	border: 2px solid var(--color-navy);
+	transform: scale(.3);
+	opacity: .3;
+	transition: transform .4s cubic-bezier(.34, 1.56, .64, 1), opacity .4s cubic-bezier(.34, 1.56, .64, 1), box-shadow .4s ease;
+	z-index: 3;
+
+	@include sp {
+		grid-column: 1;
+		margin-top: vw(8);
+	}
+}
+.career__item--dot.--is-lit {
+	transform: scale(1);
+	opacity: 1;
+	box-shadow: 0 0 0 vwmin(8) rgba(0, 175, 170, .25);
+}
+.career__item--dot.--is-current {
+	border-color: var(--color-orange);
+}
+.career__item--dot.--is-current.--is-lit {
+	box-shadow: 0 0 0 vwmin(10) rgba(255, 175, 0, .3);
+}
+.career__item--body {
+	grid-column: 3;
+
+	@include sp {
+		grid-column: 2;
+	}
+}
+.career__item.--is-left .career__item--body {
+	grid-column: 1;
+	text-align: right;
+
+	@include sp {
+		grid-column: 2;
+		text-align: left;
+	}
+}
+
+/**
+ * career__item--period / --title / --text / --handNote
+ * 時間差フェードイン＋スライドイン（period→title→text/handNoteの順）。
+ * デフォルト（--is-right相当）はテキストが右側に来るためtranslateXは+方向、
+ * --is-leftのみ-方向に上書きし、SPでは全項目+方向に統一する
+ */
+.career__item--period {
+	font-family: var(--font-en);
+	font-size: vwmin(20);
+	font-weight: 700;
+	letter-spacing: .05em;
+	color: var(--color-teal);
+	margin: 0 0 vwmin(8);
+	opacity: 0;
+	transform: translateX(vwmin(40));
+	transition: opacity .6s ease, transform .6s ease;
+
+	@include sp {
+		font-size: vw(24);
+		margin-bottom: vw(8);
+		transform: translateX(vw(40));
+	}
+}
+.career__item--title {
+	font-size: vwmin(28);
+	font-weight: 700;
+	line-height: 1.5;
+	color: var(--color-navy);
+	margin: 0 0 vwmin(12);
+	opacity: 0;
+	transform: translateX(vwmin(40));
+	transition: opacity .6s ease, transform .6s ease;
+	transition-delay: .15s;
+
+	@include sp {
+		font-size: vw(32);
+		margin-bottom: vw(12);
+		transform: translateX(vw(40));
+	}
+}
+.career__item--text {
+	font-size: vwmin(16);
+	line-height: 1.9;
+	color: rgba(20, 33, 61, .72);
+	margin: 0;
+	white-space: pre-line;
+	opacity: 0;
+	transform: translateX(vwmin(40));
+	transition: opacity .6s ease, transform .6s ease;
+	transition-delay: .3s;
+
+	@include sp {
+		font-size: vw(24);
+		transform: translateX(vw(40));
+	}
+}
+.career__item--handNote {
+	display: inline-block;
+	margin-left: vwmin(12);
+	font-family: var(--font-en);
+	font-size: vwmin(22);
+	font-style: italic;
+	font-weight: 700;
+	color: var(--color-orange);
+	transform: rotate(-4deg);
+
+	@include sp {
+		font-size: vw(24);
+		margin-left: vw(12);
+	}
+}
+.career__item.--is-left .career__item--period,
+.career__item.--is-left .career__item--title,
+.career__item.--is-left .career__item--text {
+	transform: translateX(vwmin(-40));
+
+	@include sp {
+		transform: translateX(vw(40));
+	}
+}
+.career__item.--is-ani .career__item--period,
+.career__item.--is-ani .career__item--title,
+.career__item.--is-ani .career__item--text {
+	opacity: 1;
+	transform: translateX(0);
+}
