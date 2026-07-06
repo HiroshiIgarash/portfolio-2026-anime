@@ -132,12 +132,13 @@ let projectsSwiper = new Swiper('.js-projectsSwiper', {
 	centeredSlides: true,
 	slidesPerView: 'auto',
 	loop: true,
+	loopAdditionalSlides: 4,
 	autoplay: {
 		delay: 4000,
 		disableOnInteraction: false,
 	},
 	coverflowEffect: {
-		rotate: 30,
+		rotate: -30,
 		depth: 200,
 		modifier: 1,
 		slideShadows: false,
