@@ -67,7 +67,8 @@
 		height: vw(124);
 	}
 }
-body[data-page="top"] .l-header__logo--svg {
+body[data-page="top"] .l-header__logo--svg,
+body[data-page="products"] .l-header__logo--svg {
 	background-color: #fff;
 }
 body[data-page="top"] .l-header.is-darkLogo .l-header__logo--svg {
