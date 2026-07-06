@@ -102,11 +102,14 @@ $('.js-about__avatarChange').on('click', function () {
  * .bgStage を#about〜#projectsの区間ぶんpinし、
  * PROJECTSレイヤーのclip-pathをスクラブして
  * 背景そのものは動かさずに境界だけ上げていく
+ * end は #skills（SKILLSへの円トランジション終了地点）まで延長し、
+ * 円が広がりきるまで背景がスクロールで流れないようにする
 -------------------------------------------------*/
 ScrollTrigger.create({
 	trigger: '.js-bgStage__wrap',
 	start: 'top top',
-	end: 'bottom bottom',
+	endTrigger: '#skills',
+	end: 'top top',
 	pin: '.js-bgStage',
 	pinSpacing: false,
 	invalidateOnRefresh: true,
@@ -166,6 +169,10 @@ projectsSwiper.on('realIndexChange', function () {
 
 /*-----------------------------------------------
  * PROJECTS -> SKILLS - Blue Circle Transition
+ * .js-skillsCircleをpinし、画面下中央に固定した状態で
+ * scaleをスクラブ→そのまま青背景としてSKILLSへ接続する
+ * #skillsは円が完全に覆いきるまで非表示にし、
+ * セクション本体の縁が円の外側に透けないようにする
 -------------------------------------------------*/
 ScrollTrigger.create({
 	trigger: '#skills',
@@ -173,8 +180,16 @@ ScrollTrigger.create({
 	end: 'top top',
 	scrub: true,
 	invalidateOnRefresh: true,
+	pin: '.js-skillsCircle',
+	pinSpacing: false,
 	animation: gsap.to('.js-skillsCircle', {
 		scale: 40,
 		ease: 'none',
 	}),
+	onLeave: function () {
+		$('#skills').css('opacity', 1);
+	},
+	onEnterBack: function () {
+		$('#skills').css('opacity', 0);
+	},
 });
