@@ -1,0 +1,132 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * Cursor
+-------------------------------------------------*/
+/**
+ * cursor
+ * PC(pointer:fine)限定。JS(assets/js/cursor.portfolio.js)がbody末尾に生成し、
+ * mousemoveに合わせてtransformで追従させるカスタムカーソル本体。
+ */
+.cursor {
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 10001;
+	will-change: transform;
+}
+body.--customCursor .cursor {
+	opacity: 1;
+}
+.cursor__body {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+
+/* dot */
+.cursor.-dot {
+	width: vwmin(24);
+	height: vwmin(24);
+	margin: calc(vwmin(12) * -1) 0 0 calc(vwmin(12) * -1);
+}
+.cursor.-dot .cursor__body {
+	/* 暗い背景でも視認できるようborderでコントラストを確保 */
+	background-color: var(--color-teal);
+	border: 1px solid var(--color-white);
+}
+.cursor.-dot.is-hidden {
+	opacity: 0;
+}
+
+/* ring */
+.cursor.-ring {
+	width: vwmin(64);
+	height: vwmin(64);
+	margin: calc(vwmin(32) * -1) 0 0 calc(vwmin(32) * -1);
+}
+.cursor.-ring .cursor__body {
+	position: relative;
+	border: 1px solid var(--color-teal);
+	/* 塗りつぶしなしの中抜きリングを半透明にするため要素ごとopacityを下げる */
+	opacity: .6;
+}
+.cursor.-ring .cursor__body::before {
+	/* ホバー時のスピナー用の切れ目付き円弧。通常時は非表示 */
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: 50%;
+	border: 1px solid transparent;
+	border-top-color: var(--color-teal);
+	border-right-color: var(--color-teal);
+	opacity: 0;
+}
+.cursor.-ring.is-active .cursor__body {
+	/* --max-percent は他コンポーネントの拡大許容トークン（1.6倍）を共用 */
+	transform: scale(var(--max-percent));
+	/* opacityで隠すと親のopacityが子孫::beforeの表示にも合成され
+	   スピナーごと消えるため、borderを透明化して通常の円だけ隠す */
+	border-color: transparent;
+	opacity: 1;
+}
+.cursor.-ring.is-active .cursor__body::before {
+	opacity: 1;
+	animation: ani_cursorSpin 1.2s linear infinite;
+}
+.cursor__label {
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-family: var(--font-en);
+	font-size: vwmin(14);
+	font-weight: 700;
+	letter-spacing: .1em;
+	color: var(--color-teal);
+	opacity: 0;
+	white-space: nowrap;
+}
+.cursor.-ring.is-active .cursor__label {
+	opacity: 1;
+}
+@include hover {
+	.cursor {
+		/* transformはJSがmousemove毎に書き換えるためtransition対象に含めない(追従が遅延する) */
+		transition: opacity .3s ease;
+	}
+	.cursor__body,
+	.cursor__label {
+		transition: transform .3s ease, opacity .3s ease;
+	}
+}
+
+/*-----------------------------------------------
+ * Native Cursor Override
+-------------------------------------------------*/
+/**
+ * body.--customCursor が付与されている間はネイティブカーソルを消す。
+ * ページ別CSS(top/products)側で個別指定されているcursor:pointerを
+ * 読込順に関わらず必ず上書きする必要があるため、ここのみ!importantを許容する。
+ */
+body.--customCursor,
+body.--customCursor * {
+	cursor: none !important;
+}
+body.--customCursor input,
+body.--customCursor textarea,
+body.--customCursor select,
+body.--customCursor [contenteditable] {
+	cursor: auto !important;
+}
+
+@keyframes ani_cursorSpin {
+	to {
+		transform: rotate(360deg);
+	}
+}
