@@ -304,7 +304,7 @@ projectsSwiper.on('realIndexChange', function () {
  * 確実に 0→1（= 直径250vmax = 全画面被覆）まで拡大させる。
  * top が画面下端(vh)のとき scale0、画面上端(0)のとき scale1。上端を越えたら 1 で保持。
  */
-function setupFillCircle(fillSel, circleSel, revealSel, growVh) {
+function setupFillCircle(fillSel, circleSel, revealSel, growVh, onCoveredChange) {
 	const fill = document.querySelector(fillSel);
 	const circle = document.querySelector(circleSel);
 	const reveal = revealSel ? document.querySelector(revealSel) : null;
@@ -330,13 +330,21 @@ function setupFillCircle(fillSel, circleSel, revealSel, growVh) {
 				return Math.hypot(p[0] - cx, p[1] - cy) <= r;
 			});
 			reveal.classList.toggle('--covered', covered);
+			if (onCoveredChange) {
+				onCoveredChange(covered);
+			}
 		}
 	}
 	window.addEventListener('scroll', update, { passive: true });
 	window.addEventListener('resize', update);
 	update();
 }
-setupFillCircle('.skillsFill', '.js-skillsCircle', '#skills', SKILLS_CIRCLE_GROW_VH);
+const headerEl = document.querySelector('.js-header');
+setupFillCircle('.skillsFill', '.js-skillsCircle', '#skills', SKILLS_CIRCLE_GROW_VH, function (covered) {
+	if (headerEl) {
+		headerEl.classList.toggle('is-darkLogo', covered);
+	}
+});
 
 /*-----------------------------------------------
  * SKILLS - Menu Switching

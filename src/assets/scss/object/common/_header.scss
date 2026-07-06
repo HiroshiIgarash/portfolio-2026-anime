@@ -54,8 +54,24 @@
 .l-header__logo--link {
 	display: block;
 }
-.l-header__logo--link img {
+.l-header__logo--svg {
+	display: block;
 	width: 100%;
+	height: vwmin(99);
+	background-color: var(--color-navy);
+	-webkit-mask: url(../img/common/logo.svg) no-repeat center / contain;
+	mask: url(../img/common/logo.svg) no-repeat center / contain;
+	transition: background-color .3s ease;
+
+	@include sp {
+		height: vw(124);
+	}
+}
+body[data-page="top"] .l-header__logo--svg {
+	background-color: #fff;
+}
+body[data-page="top"] .l-header.is-darkLogo .l-header__logo--svg {
+	background-color: var(--color-navy);
 }
 
 /**
