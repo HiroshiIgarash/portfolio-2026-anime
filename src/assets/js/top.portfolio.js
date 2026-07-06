@@ -215,6 +215,7 @@ function catmullRomToBezierPath(points) {
 
 let careerLinePoints = [];
 let careerLineTotalLength = 0;
+let careerLineTrailHistory = [];
 
 function buildCareerLine() {
 	const timelineEl = document.querySelector('.js-careerTimeline');
@@ -316,6 +317,16 @@ ScrollTrigger.create({
 			const point = fillPath.getPointAtLength(careerLineTotalLength * self.progress);
 			orbEl.style.left = `${point.x}px`;
 			orbEl.style.top = `${point.y}px`;
+
+			careerLineTrailHistory.unshift({ x: point.x, y: point.y });
+			careerLineTrailHistory = careerLineTrailHistory.slice(0, 4 * 3);
+
+			document.querySelectorAll('.career__orbTrail--dot').forEach(function (trailDot, i) {
+				const historyPoint = careerLineTrailHistory[(i + 1) * 3 - 1];
+				if (!historyPoint) return;
+				trailDot.style.left = `${historyPoint.x}px`;
+				trailDot.style.top = `${historyPoint.y}px`;
+			});
 		} else {
 			orbEl.style.left = '';
 			orbEl.style.top = `${self.progress * 100}%`;
