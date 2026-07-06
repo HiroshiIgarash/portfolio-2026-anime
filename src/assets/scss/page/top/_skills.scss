@@ -11,7 +11,9 @@
 	position: relative;
 	z-index: 1;
 	min-height: 100vh;
-	padding: vwmin(64) 0 vwmin(160);
+	/* padding-bottomは .careerFill の margin-top(-70vh)が#skills末尾のコンテンツ（prev/next・
+	   詳しくみる）に食い込んでクリックできなくなるのを防ぐ緩衝分。70vhを下回らないようにする */
+	padding: vwmin(64) 0 max(vwmin(160), 70vh);
 	background-color: var(--color-white);
 	/* 円が覆いきるまでは opacity:0 で隠す（白背景がせり上がって夜景との境目が直線で
 	   見える問題を防ぐ）。覆いきったら JS が .--covered を付け、白い円の上にフェードで現れる。 */
@@ -19,7 +21,7 @@
 	transition: opacity .3s ease;
 
 	@include sp {
-		padding: vw(80) 0 vw(160);
+		padding: vw(80) 0 max(vw(160), 70vh);
 	}
 }
 .skills.--covered {
@@ -163,18 +165,21 @@
 
 /**
  * skills__menu
- * 4列×2行の円形アイコンボタン。SPは2列×4行
+ * 円形アイコンボタンを1行目5個・2行目4個で折り返す（9個固定のためflex-wrap）。SPは2列×グリッド
  */
 .skills__menu {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: vwmin(32);
-	max-width: vwmin(760);
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: vwmin(24);
+	max-width: calc(#{vwmin(100)} * 5 + #{vwmin(24)} * 4);
 	margin: 0 auto vwmin(96);
 
 	@include sp {
+		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		gap: vw(48);
+		max-width: vw(400);
+		gap: vw(32);
 		margin-bottom: vw(96);
 	}
 }
@@ -183,8 +188,10 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-shrink: 0;
+	width: vwmin(100);
 	aspect-ratio: 1 / 1;
-	padding: vwmin(24);
+	padding: vwmin(16);
 	border: 2px solid rgba(20, 33, 61, .15);
 	border-radius: 50%;
 	background-color: #fff;
@@ -192,7 +199,8 @@
 	transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
 
 	@include sp {
-		padding: vw(32);
+		width: auto;
+		padding: vw(24);
 	}
 }
 .skills__menu--btn img {
