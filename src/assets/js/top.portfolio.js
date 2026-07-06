@@ -177,7 +177,7 @@ projectsSwiper.on('realIndexChange', function () {
 ScrollTrigger.create({
 	trigger: '#skills',
 	start: 'top bottom',
-	end: 'top top',
+	end: 'top 50%',
 	scrub: true,
 	invalidateOnRefresh: true,
 	pin: '.js-skillsCircle',
@@ -264,7 +264,7 @@ $('.js-skillsNext').on('click', function () {
 ScrollTrigger.create({
 	trigger: '#career',
 	start: 'top bottom',
-	end: 'top top',
+	end: 'top 50%',
 	scrub: true,
 	invalidateOnRefresh: true,
 	pin: '.js-careerCircle',
