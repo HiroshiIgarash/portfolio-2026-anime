@@ -3,7 +3,9 @@
 -------------------------------------------------*/
 const loadingBarFill = document.querySelector('.js-loadingBarFill');
 const loadingBarPercent = document.querySelector('.js-loadingBarPercent');
+const loadingFrameB = document.querySelector('.js-loadingFrameB');
 const loadingProgress = { value: 0 };
+const loadingFrameBDash = { value: 0 };
 
 function setLoadingProgress(value) {
 	loadingProgress.value = value;
@@ -28,10 +30,14 @@ loadingIntroTl.to(loadingProgress, {
 		duration: .6,
 		ease: 'power2.inOut',
 	}, .6)
-	.fromTo('.js-loadingFrameB', { strokeDashoffset: 50 }, {
-		strokeDashoffset: -50,
+	// frameBはoffset固定・dasharrayの線長だけを0→50に伸ばす(offset側を動かすと起点がAと同じ左上を経由してしまうため)
+	.fromTo(loadingFrameBDash, { value: 0 }, {
+		value: 50,
 		duration: .6,
 		ease: 'power2.inOut',
+		onUpdate: function () {
+			loadingFrameB.style.strokeDasharray = loadingFrameBDash.value + ' 1000';
+		},
 	}, .6)
 	.to('.js-loadingChar', {
 		opacity: 1,

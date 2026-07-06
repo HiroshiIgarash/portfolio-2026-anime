@@ -1,10 +1,4 @@
 <div class="p-loading js-loading">
-	<div class="p-loading__bar">
-		<div class="p-loading__bar--track">
-			<div class="p-loading__bar--fill js-loadingBarFill"></div>
-		</div>
-		<p class="p-loading__bar--percent"><span class="js-loadingBarPercent">0</span>%</p>
-	</div>
 	<div class="p-loading__logo">
 		<svg class="p-loading__logo--frame" viewBox="0 0 320 200">
 			<rect class="p-loading__logo--frameLine -a js-loadingFrameA" pathLength="100" x="4" y="4" width="312" height="192"></rect>
@@ -25,6 +19,12 @@
 			</span>
 		</p>
 	</div><!-- /.p-loading__logo -->
+	<div class="p-loading__bar">
+		<div class="p-loading__bar--track">
+			<div class="p-loading__bar--fill js-loadingBarFill"></div>
+		</div>
+		<p class="p-loading__bar--percent"><span class="js-loadingBarPercent">0</span>%</p>
+	</div>
 	<%
 	const loadingSparkles = [
 		{ x: 18, y: 22, size: 16, color: 'var(--color-teal)', delay: 0 },

@@ -91,7 +91,8 @@
 	stroke-dashoffset: 50;
 }
 .p-loading__logo--frameLine.-b {
-	stroke-dashoffset: 50;
+	stroke-dasharray: 0 1000;
+	stroke-dashoffset: -50;
 }
 .p-loading__logo--text {
 	position: absolute;
@@ -114,8 +115,7 @@
 	}
 }
 .p-loading__logo--textLine {
-	display: block;
-	white-space: nowrap;
+	display: flex;
 }
 .p-loading__logo--textChar {
 	display: inline-block;
