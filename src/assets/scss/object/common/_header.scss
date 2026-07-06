@@ -17,7 +17,7 @@
 .l-header__inner {
 	position: fixed;
 	inset: 0;
-	background-color: var(--color-cyan);
+	background-color: var(--color-offwhite);
 	pointer-events: none;
 	clip-path: circle(0% at calc(100% - vwmin(68)) vwmin(68));
 	transition: clip-path .6s ease;
@@ -159,19 +159,26 @@
 	overflow: hidden;
 	z-index: 0;
 }
+.l-header__beacon--track {
+	display: flex;
+	flex: 0 0 auto;
+	animation: ani_beaconScroll 48s linear infinite;
+
+	@include sp {
+		animation-duration: 32s;
+	}
+}
 .l-header__beacon--text {
 	flex: 0 0 auto;
 	white-space: nowrap;
 	font-family: var(--font-en);
 	font-weight: 900;
-	font-size: vwmin(80);
+	font-size: vwmin(110);
 	line-height: 1;
-	color: var(--color-navy);
-	animation: ani_beaconScroll 24s linear infinite;
+	color: var(--color-lightcyan);
 
 	@include sp {
-		font-size: vw(48);
-		animation-duration: 16s;
+		font-size: vw(64);
 	}
 }
 
@@ -180,7 +187,7 @@
 		transform: translateX(0);
 	}
 	to {
-		transform: translateX(-100%);
+		transform: translateX(-50%);
 	}
 }
 
