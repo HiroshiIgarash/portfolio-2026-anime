@@ -1,0 +1,28 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * PAGE TRANSITION
+-------------------------------------------------*/
+.p-pageTransition {
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	pointer-events: none;
+}
+.p-pageTransition__circle {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 250vmax;
+	height: 250vmax;
+	margin-top: -125vmax;
+	margin-left: -125vmax;
+	border-radius: 50%;
+	transform: scale(1);
+}
+.p-pageTransition__circle.-teal {
+	background-color: var(--color-teal);
+}
+.p-pageTransition__circle.-cyan {
+	background-color: var(--color-cyan);
+}
