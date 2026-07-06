@@ -109,8 +109,8 @@ let flowRightBound = 10;
 
 function computeFlowBound() {
 	// 最も奥(カメラから遠い)のレーンでも画面外になるよう、そのレーンの視野幅を基準にする
-	const maxZ = Math.max(...LANES.map((l) => l.z)) + 0.5; // ジッター分の余裕
-	const distance = camera.position.z - maxZ;
+	const minZ = Math.min(...LANES.map((l) => l.z)) - 0.5; // ジッター分の余裕(遠ざける方向)
+	const distance = camera.position.z - minZ;
 	const vFov = camera.fov * Math.PI / 180;
 	const visibleHeight = 2 * Math.tan(vFov / 2) * distance;
 	const visibleWidth = visibleHeight * camera.aspect;
