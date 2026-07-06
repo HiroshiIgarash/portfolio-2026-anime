@@ -1,46 +1,56 @@
 /*-----------------------------------------------
- * PRODUCTS - Fullscreen Snap Scroll (GSAP ScrollTrigger)
+ * PRODUCTS - Fullscreen Section Jump (wheel-driven, PC only)
 -------------------------------------------------*/
-gsap.registerPlugin(ScrollTrigger);
-
 const productsSections = document.querySelectorAll('.js-productsSnapItem');
 const productsSectionCount = productsSections.length;
 
-if (pcOnly.matches) {
-	ScrollTrigger.create({
-		trigger: '.js-productsSnap',
-		start: 'top top',
-		end: 'bottom bottom',
-		snap: {
-			snapTo: 1 / (productsSectionCount - 1),
-			duration: .6,
-			ease: 'power1.inOut',
-		},
-	});
+let productsCurrentIndex = 0;
+let productsIsAnimating = false;
+
+function setProductsCurrentIndex(index) {
+	productsCurrentIndex = index;
+	$('.js-productsDotNavBtn').removeClass('--is-current');
+	$('.js-productsDotNavBtn[data-snap-index="' + index + '"]').addClass('--is-current');
 }
 
-/*-----------------------------------------------
- * PRODUCTS - Dot Nav
--------------------------------------------------*/
-const productsDotObserver = new IntersectionObserver(function (entries) {
-	entries.forEach(function (entry) {
-		if (!entry.isIntersecting) return;
-		const index = $(entry.target).data('products-index');
-		$('.js-productsDotNavBtn').removeClass('--is-current');
-		$('.js-productsDotNavBtn[data-snap-index="' + index + '"]').addClass('--is-current');
+function goToProductsSection(index) {
+	index = Math.max(0, Math.min(index, productsSectionCount - 1));
+	if (index === productsCurrentIndex || productsIsAnimating) return;
+	productsIsAnimating = true;
+	lenis.scrollTo(productsSections[index], {
+		duration: 1,
+		force: true,
+		onComplete: function () {
+			productsIsAnimating = false;
+		},
 	});
-}, { threshold: .6 });
+	setProductsCurrentIndex(index);
+}
 
-productsSections.forEach(function (section) {
-	productsDotObserver.observe(section);
-});
+if (pcOnly.matches) {
+	lenis.stop();
+
+	window.addEventListener('wheel', function (e) {
+		if ($(e.target).closest('.productsItem__body').length) {
+			return;
+		}
+		if (productsIsAnimating) {
+			e.preventDefault();
+			return;
+		}
+		const direction = e.deltaY > 0 ? 1 : -1;
+		const nextIndex = productsCurrentIndex + direction;
+		if (nextIndex < 0 || nextIndex > productsSectionCount - 1) {
+			return;
+		}
+		e.preventDefault();
+		goToProductsSection(nextIndex);
+	}, { passive: false });
+}
 
 $('.js-productsDotNavBtn').on('click', function () {
 	const index = Number($(this).data('snap-index'));
-	const target = productsSections[index];
-	if (target) {
-		lenis.scrollTo(target, { duration: 1 });
-	}
+	goToProductsSection(index);
 });
 
 /*-----------------------------------------------
