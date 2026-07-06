@@ -131,6 +131,7 @@ let projectsSwiper = new Swiper('.js-projectsSwiper', {
 	effect: 'coverflow',
 	centeredSlides: true,
 	slidesPerView: 'auto',
+	spaceBetween: 30,
 	loop: true,
 	loopAdditionalSlides: 4,
 	autoplay: {

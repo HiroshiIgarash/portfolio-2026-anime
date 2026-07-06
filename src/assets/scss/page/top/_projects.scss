@@ -107,7 +107,7 @@
 	padding: vwmin(40) 0 vwmin(80);
 }
 .projects__slide {
-	width: vwmin(560);
+	width: vwmin(400);
 	aspect-ratio: 1200 / 630;
 	border-radius: vwmin(12);
 	overflow: hidden;
@@ -122,7 +122,7 @@
 }
 @include sp {
 	.projects__slide {
-		width: vw(560);
+		width: vw(480);
 	}
 }
 
