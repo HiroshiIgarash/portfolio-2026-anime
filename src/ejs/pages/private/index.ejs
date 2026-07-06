@@ -1,0 +1,103 @@
+<%
+const root = '../';
+const page = 'private';
+const pageCss = 'private';
+const pageJs = 'private';
+-%>
+<!doctype html>
+<html lang="ja">
+<%- include('../../_inc/_head', {
+	root: root,
+	page: page,
+	pageTitle: 'PRIVATE｜' + site.siteName,
+	pageDescription: site.description,
+	pageCss: pageCss,
+	pageJs: pageJs
+}) -%>
+<body id="top" data-page="<%= page %>" data-root="<%= root %>">
+<!-- BEGIN #fullWrap -->
+<div id="fullWrap">
+<%- include('../../_inc/_loading') -%>
+<%- include('../../_inc/_header', { root: root }) -%>
+<main class="l-main">
+	<article class="subArticle">
+		<h1 class="contTitle2">
+			<span class="contTitle2__en font-cinzel">PRIVATE</span>
+			<span class="contTitle2__ja">わたしのこと</span>
+		</h1>
+		<div class="private__ambient" aria-hidden="true">
+			<span class="private__ambient--orb -teal"></span>
+			<span class="private__ambient--orb -pink"></span>
+			<span class="private__ambient--orb -orange"></span>
+			<span class="private__ambient--orb -pink2"></span>
+			<span class="private__ambient--orb -teal2"></span>
+		</div><!-- /.private__ambient -->
+		<!-- BEGIN .private__list -->
+		<%
+		const privateList = [
+			{
+				name: 'akabeko',
+				title: '出身地は会津',
+				body: '福島県・会津若松で生まれ育ちました。山に囲まれた盆地で、冬はとにかく寒いです。',
+				alt: '会津の郷土玩具 赤べこのイラスト',
+			},
+			{
+				name: 'anime',
+				title: 'にじさんじ、推し活8年目',
+				body: 'VTuberグループ「にじさんじ」を2018年の始動時から推し続けて、気づけば8年目です。好きが高じてコレミナを作り、その技術的興味の延長でホロライブコメント検索も作りました。',
+				alt: 'VTuber配信を見ているイラスト',
+			},
+			{
+				name: 'walk',
+				title: '遠くまで、歩く',
+				body: '長距離の徒歩が趣味で、16時間かけて温泉に行ったり、3日間かけて日光東照宮まで歩いたこともあります。淡々と続ける時間が、考えごとには一番いい。',
+				alt: '散歩している後ろ姿のイラスト',
+			},
+			{
+				name: 'maimai',
+				title: 'maimai',
+				body: 'ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。',
+				alt: 'ゲームセンターの音楽ゲーム筐体のイラスト',
+			},
+			{
+				name: 'coding',
+				title: '個人開発',
+				body: 'ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。',
+				alt: 'デスクでコーディングしているイラスト',
+			},
+		];
+		-%>
+		<div class="private__list js-privateList">
+			<% privateList.forEach(function (p, i) { -%>
+			<div class="private__book -<%= i % 2 === 0 ? 'left' : 'right' %> js-privateBook">
+				<picture class="private__bookBg">
+					<source srcset="<%= root %>assets/img/private/book.webp" type="image/webp">
+					<img src="<%= root %>assets/img/private/book.jpg" alt="">
+				</picture>
+				<picture class="private__illust">
+					<source srcset="<%= root %>assets/img/private/<%= p.name %>.webp" type="image/webp">
+					<img src="<%= root %>assets/img/private/<%= p.name %>.jpg" alt="<%= p.alt %>">
+				</picture>
+				<div class="private__text">
+					<h2 class="private__text--title"><%= p.title %></h2>
+					<p class="private__text--body"><%= p.body %></p>
+				</div>
+			</div><!-- /.private__book -->
+			<% }); -%>
+		</div><!-- /.private__list -->
+		<!-- END .private__list -->
+		<a href="<%= root %>index.html" class="private__backLink js-pageTransitionLink">
+			<span class="private__backLink--arrow" aria-hidden="true"></span>
+			<span class="private__backLink--txt">TOPへ戻る</span>
+		</a><!-- /.private__backLink -->
+	</article>
+</main>
+<%- include('../../_inc/_footer', { root: root }) -%>
+</div>
+<!-- END #fullWrap -->
+
+<%- include('../../_inc/_page-transition') -%>
+<%- include('../../_inc/_modal', { root: root }) -%>
+<%- include('../../_inc/_scripts', { root: root, pageJs: pageJs }) -%>
+</body>
+</html>

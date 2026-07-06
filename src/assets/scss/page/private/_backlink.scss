@@ -1,0 +1,78 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * BACKLINK (PRIVATEページ限定 TOPへ戻るリンク)
+-------------------------------------------------*/
+/**
+ * private__backLink
+ */
+.private__backLink {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: vwmin(12);
+	width: fit-content;
+	margin: 0 auto vwmin(120);
+	padding: vwmin(20) vwmin(48);
+	border: 1px solid var(--color-navy);
+	border-radius: 999px;
+	color: var(--color-navy);
+	text-decoration: none;
+	font-size: vwmin(15);
+	font-weight: 700;
+	letter-spacing: .05em;
+	overflow: hidden;
+
+	@include sp {
+		gap: vw(16);
+		margin: 0 auto vw(160);
+		padding: vw(28) vw(64);
+		font-size: vw(24);
+	}
+}
+.private__backLink:before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: var(--color-teal);
+	transform: scaleX(0);
+	transform-origin: right center;
+}
+
+/* arrow */
+.private__backLink--arrow {
+	display: block;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: vwmin(5) vwmin(8) vwmin(5) 0;
+	border-color: transparent var(--color-navy) transparent transparent;
+
+	@include sp {
+		border-width: vw(8) vw(12) vw(8) 0;
+	}
+}
+
+/* text */
+.private__backLink--txt {
+	position: relative;
+}
+
+@include hover {
+	.private__backLink:before {
+		transition: transform .4s ease;
+	}
+	.private__backLink:hover:before {
+		transform: scaleX(1);
+		transform-origin: left center;
+	}
+	.private__backLink--arrow {
+		transition: transform .3s ease;
+	}
+	.private__backLink:hover .private__backLink--arrow {
+		transform: translateX(-6px);
+	}
+}

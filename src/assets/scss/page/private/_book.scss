@@ -1,0 +1,123 @@
+@use "../../global/mixins" as *;
+
+.private__list {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	gap: vwmin(80);
+	max-width: 960px;
+	margin: 0 auto;
+	padding: vwmin(40) vwmin(24) vwmin(120);
+
+	@include sp {
+		gap: vw(96);
+		padding: vw(40) vw(24) vw(160);
+	}
+}
+
+.private__book {
+	position: relative;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	width: 100%;
+	aspect-ratio: 1191 / 842;
+	padding: vwmin(64) vwmin(56);
+
+	@include sp {
+		grid-template-columns: 1fr;
+		aspect-ratio: auto;
+		min-height: vw(420);
+		padding: vw(32) vw(20);
+	}
+}
+.private__book.-left {
+	transform: rotate(-2deg);
+}
+.private__book.-right {
+	transform: rotate(2deg);
+}
+
+.private__bookBg {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	opacity: 0;
+	will-change: opacity;
+}
+.private__bookBg img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.private__illust {
+	position: relative;
+	z-index: 1;
+	align-self: start;
+	opacity: 0;
+	will-change: transform, opacity;
+	padding: vwmin(24);
+
+	@include sp {
+		padding: vw(16);
+		order: 1;
+	}
+}
+.private__illust img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 4px;
+}
+.private__book.-right .private__illust {
+	grid-column: 2;
+
+	@include sp {
+		grid-column: auto;
+	}
+}
+
+.private__text {
+	position: relative;
+	z-index: 1;
+	align-self: center;
+	padding: vwmin(24);
+
+	@include sp {
+		padding: vw(16);
+		order: 2;
+	}
+}
+.private__book.-right .private__text {
+	grid-column: 1;
+	grid-row: 1;
+
+	@include sp {
+		grid-column: auto;
+		grid-row: auto;
+	}
+}
+.private__text--title {
+	font-size: vwmin(24);
+	font-weight: 700;
+	margin-bottom: vwmin(16);
+	opacity: 0;
+	will-change: transform, opacity;
+
+	@include sp {
+		font-size: vw(32);
+		margin-bottom: vw(16);
+	}
+}
+.private__text--body {
+	font-size: vwmin(15);
+	line-height: 1.9;
+	opacity: 0;
+	will-change: transform, opacity;
+
+	@include sp {
+		font-size: vw(26);
+	}
+}

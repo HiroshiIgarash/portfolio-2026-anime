@@ -1,0 +1,102 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * AMBIENT (PRIVATEページ限定 背景グラデーション + 浮遊ライト)
+-------------------------------------------------*/
+body[data-page="private"] .subArticle {
+	position: relative;
+	background: linear-gradient(180deg, var(--color-offwhite) 0%, color-mix(in srgb, var(--color-lightcyan) 35%, var(--color-offwhite)) 100%);
+}
+
+/**
+ * private__ambient
+ */
+.private__ambient {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+/* orb */
+.private__ambient--orb {
+	position: absolute;
+	border-radius: 50%;
+	filter: blur(vwmin(40));
+	opacity: .4;
+	animation-name: ani_ambientFloat;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: none;
+	}
+}
+.private__ambient--orb.-teal {
+	top: 4%;
+	left: -6%;
+	width: vwmin(240);
+	height: vwmin(240);
+	background: radial-gradient(circle, var(--color-teal) 0%, transparent 70%);
+	animation-duration: 11s;
+	animation-delay: 0s;
+}
+.private__ambient--orb.-pink {
+	top: 22%;
+	right: -7%;
+	width: vwmin(200);
+	height: vwmin(200);
+	background: radial-gradient(circle, var(--color-pink) 0%, transparent 70%);
+	animation-duration: 13s;
+	animation-delay: 2s;
+}
+.private__ambient--orb.-orange {
+	top: 48%;
+	left: -5%;
+	width: vwmin(220);
+	height: vwmin(220);
+	background: radial-gradient(circle, var(--color-orange) 0%, transparent 70%);
+	animation-duration: 12s;
+	animation-delay: 4s;
+}
+.private__ambient--orb.-pink2 {
+	top: 70%;
+	right: -4%;
+	width: vwmin(180);
+	height: vwmin(180);
+	background: radial-gradient(circle, var(--color-pink) 0%, transparent 70%);
+	animation-duration: 14s;
+	animation-delay: 1s;
+
+	@include sp {
+		display: none;
+	}
+}
+.private__ambient--orb.-teal2 {
+	top: 90%;
+	left: -8%;
+	width: vwmin(260);
+	height: vwmin(260);
+	background: radial-gradient(circle, var(--color-teal) 0%, transparent 70%);
+	animation-duration: 10s;
+	animation-delay: 3s;
+
+	@include sp {
+		display: none;
+	}
+}
+
+@keyframes ani_ambientFloat {
+	0%, 100% {
+		transform: translate(0, 0);
+	}
+	50% {
+		transform: translate(3%, -6%);
+	}
+}
+
+body[data-page="private"] .contTitle2 {
+	position: relative;
+	z-index: 1;
+}
