@@ -24,6 +24,17 @@ $(function(){
 
 	set_scrani();
 
+	// Header Nav - Open/Close
+	$('.js-navBtn').on('click', function () {
+		const isActive = $('.js-header').toggleClass('is-active').hasClass('is-active');
+		$('body').css({ overflow: isActive ? 'hidden' : '' });
+		if (isActive) {
+			lenis.stop();
+		} else {
+			lenis.start();
+		}
+	});
+
 	// PROJECTS - Modal Open/Close
 	$('.js-projectsModalOpen').on('click', function () {
 		const modalID = $(this).data('modal');
