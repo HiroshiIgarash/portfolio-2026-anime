@@ -1,0 +1,49 @@
+<div class="p-loading js-loading">
+	<div class="p-loading__logo js-loadingLogo">
+		<svg class="p-loading__logo--frame" viewBox="0 0 320 200">
+			<rect class="p-loading__logo--frameLine -a js-loadingFrameA" pathLength="100" x="4" y="4" width="312" height="192"></rect>
+			<rect class="p-loading__logo--frameLine -b js-loadingFrameB" pathLength="100" x="4" y="4" width="312" height="192"></rect>
+		</svg>
+		<p class="p-loading__logo--text">
+			<span class="p-loading__logo--textLine">
+				<span class="p-loading__logo--textChar js-loadingChar">H</span>
+				<span class="p-loading__logo--textChar js-loadingChar">I</span>
+				<span class="p-loading__logo--textChar js-loadingChar">R</span>
+				<span class="p-loading__logo--textChar js-loadingChar">O</span>
+			</span>
+			<span class="p-loading__logo--textLine">
+				<span class="p-loading__logo--textChar js-loadingChar">S</span>
+				<span class="p-loading__logo--textChar js-loadingChar">H</span>
+				<span class="p-loading__logo--textChar js-loadingChar">I</span>
+				<span class="p-loading__logo--textChar js-loadingChar">.</span>
+			</span>
+		</p>
+	</div><!-- /.p-loading__logo -->
+	<div class="p-loading__bar">
+		<div class="p-loading__bar--track">
+			<div class="p-loading__bar--fill js-loadingBarFill"></div>
+		</div>
+		<p class="p-loading__bar--percent"><span class="js-loadingBarPercent">0</span>%</p>
+	</div>
+	<%
+	const loadingSparkles = [
+		{ x: 18, y: 22, size: 16, color: 'var(--color-teal)', delay: 0 },
+		{ x: 82, y: 18, size: 20, color: 'var(--color-pink)', delay: .4 },
+		{ x: 12, y: 68, size: 14, color: 'var(--color-orange)', delay: .8 },
+		{ x: 88, y: 72, size: 18, color: 'var(--color-cyan)', delay: 1.2 },
+		{ x: 50, y: 10, size: 12, color: 'var(--color-lightyellow)', delay: 1.6 },
+		{ x: 50, y: 90, size: 16, color: 'var(--color-teal)', delay: .2 },
+		{ x: 8, y: 45, size: 14, color: 'var(--color-cyan)', delay: 1 },
+		{ x: 92, y: 46, size: 20, color: 'var(--color-pink)', delay: .6 },
+	];
+	-%>
+	<div class="p-loading__sparkles js-loadingSparkles">
+		<% loadingSparkles.forEach(function (s) { -%>
+		<span class="p-loading__sparkles--item" style="--x:<%= s.x %>%; --y:<%= s.y %>%; --size:<%= s.size %>px; --sparkle-color:<%= s.color %>; --delay:<%= s.delay %>s;"></span>
+		<% }); -%>
+	</div><!-- /.p-loading__sparkles -->
+	<div class="p-loading__reveal">
+		<span class="p-loading__reveal--circle -teal js-loadingRevealA"></span>
+		<span class="p-loading__reveal--circle -cyan js-loadingRevealB"></span>
+	</div><!-- /.p-loading__reveal -->
+</div><!-- /.p-loading -->

@@ -17,7 +17,7 @@ const pageJs = 'top';
 <body id="top" data-page="<%= page %>" data-root="<%= root %>">
 <!-- BEGIN #fullWrap -->
 <div id="fullWrap">
-<%- include('../_inc/_loading') -%>
+<%- include('../_inc/_loading-top') -%>
 <%- include('../_inc/_header', { root: root }) -%>
 <header id="mv" class="mv">
 	<div class="mv__bg">
@@ -49,16 +49,28 @@ const pageJs = 'top';
 		<ul class="mv__visualThumbLists">
 			<li class="mv__visualThumbList">
 				<button type="button" class="btn_visualChange js-visualChange --is-current" data-visual="1">
+					<picture>
+						<source srcset="<%= root %>assets/img/top/mv1_thumb.webp" type="image/webp">
+						<img src="<%= root %>assets/img/top/mv1_thumb.jpg" alt="">
+					</picture>
 					<span class="hd">1枚目のビジュアルに切り替え</span>
 				</button>
 			</li>
 			<li class="mv__visualThumbList">
 				<button type="button" class="btn_visualChange js-visualChange" data-visual="2">
+					<picture>
+						<source srcset="<%= root %>assets/img/top/mv2_thumb.webp" type="image/webp">
+						<img src="<%= root %>assets/img/top/mv2_thumb.jpg" alt="">
+					</picture>
 					<span class="hd">2枚目のビジュアルに切り替え</span>
 				</button>
 			</li>
 			<li class="mv__visualThumbList">
 				<button type="button" class="btn_visualChange js-visualChange" data-visual="3">
+					<picture>
+						<source srcset="<%= root %>assets/img/top/mv3_thumb.webp" type="image/webp">
+						<img src="<%= root %>assets/img/top/mv3_thumb.jpg" alt="">
+					</picture>
 					<span class="hd">3枚目のビジュアルに切り替え</span>
 				</button>
 			</li>
@@ -174,10 +186,72 @@ const pageJs = 'top';
 			</div>
 		</section><!-- /#projects -->
 	</div><!-- /.aboutProjectsWrap -->
+	<div class="skillsFill">
+		<div class="skillsFill__bgTrack">
+			<div class="skillsFill__bg">
+				<div class="skillsFill__circle js-skillsCircle"></div>
+			</div>
+		</div>
+		<div class="skillsFill__spacer"></div>
 	<section id="skills" class="skills">
-		<div class="skills__circle js-skillsCircle"></div>
-		<!-- デザイン未確定のためプレースホルダ -->
+		<h2 class="skills__head">
+			<span class="skills__head--char"><span class="skills__head--charIn">S</span></span>
+			<span class="skills__head--char"><span class="skills__head--charIn">K</span></span>
+			<span class="skills__head--char"><span class="skills__head--charIn">I</span></span>
+			<span class="skills__head--char"><span class="skills__head--charIn">L</span></span>
+			<span class="skills__head--char"><span class="skills__head--charIn">L</span></span>
+			<span class="skills__head--char"><span class="skills__head--charIn">S</span></span>
+		</h2>
+		<%
+		const skillsList = [
+			{ slug: 'html5', name: 'HTML', text: 'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト。' },
+			{ slug: 'css', name: 'CSS', text: 'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト。' },
+			{ slug: 'sass', name: 'SCSS', text: 'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト。' },
+			{ slug: 'gsap', name: 'GSAP', text: 'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト。' },
+			{ slug: 'javascript', name: 'JavaScript', text: 'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト。' },
+			{ slug: 'typescript', name: 'TypeScript', text: 'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト。' },
+			{ slug: 'wordpress', name: 'WordPress(PHP)', text: 'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト。' },
+			{ slug: 'nextdotjs', name: 'Next.js', text: 'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト。' },
+			{ slug: 'react', name: 'React', text: 'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト。' },
+		];
+		-%>
+		<div class="skills__menu">
+			<% skillsList.forEach(function (s, i) { -%>
+			<button type="button" class="skills__menu--btn js-skillsMenuBtn<% if (i === 0) { -%> --is-current<% } -%>" data-skill-index="<%= i %>" data-name="<%= s.name %>" data-text="<%= s.text %>">
+				<img src="<%= root %>assets/img/top/skills/<%= s.slug %>.svg" alt="">
+				<span class="hd"><%= s.name %></span>
+			</button>
+			<% }); -%>
+		</div><!-- /.skills__menu -->
+		<div class="skills__detail">
+			<button type="button" class="skills__detail--prev js-skillsPrev">
+				<span class="hd">前のスキルへ</span>
+			</button>
+			<div class="skills__detail--main">
+				<div class="skills__detail--icon js-skillsDetailIcon">
+					<img src="<%= root %>assets/img/top/skills/<%= skillsList[0].slug %>.svg" alt="">
+				</div>
+				<div class="skills__detail--body">
+					<p class="skills__detail--name js-skillsDetailName js-scrani"><%= skillsList[0].name %></p>
+					<p class="skills__detail--text js-skillsDetailText js-scrani"><%= skillsList[0].text %></p>
+				</div>
+			</div><!-- /.skills__detail--main -->
+			<button type="button" class="skills__detail--next js-skillsNext">
+				<span class="hd">次のスキルへ</span>
+			</button>
+		</div><!-- /.skills__detail -->
+		<div class="skills__more">
+			<a href="<%= root %>skills" class="skills__more--btn"><span class="skills__more--btnTxt">詳しくみる</span></a>
+		</div>
 	</section><!-- /#skills -->
+	</div><!-- /.skillsFill -->
+	<div class="careerFill">
+		<div class="careerFill__bgTrack">
+			<div class="careerFill__bg">
+				<div class="careerFill__circle js-careerCircle"></div>
+			</div>
+		</div>
+		<div class="careerFill__spacer"></div>
 	<section id="career" class="career">
 		<h2 class="career__head js-scrani">
 			<span class="career__head--char"><span class="career__head--charIn">C</span></span>
@@ -237,11 +311,13 @@ const pageJs = 'top';
 			</ol>
 		</div><!-- /.career__timeline -->
 	</section><!-- /#career -->
+	</div><!-- /.careerFill -->
 </main>
 <%- include('../_inc/_footer', { root: root }) -%>
 </div>
 <!-- END #fullWrap -->
 
+<%- include('../_inc/_page-transition') -%>
 <%- include('../_inc/_modal', { root: root }) -%>
 <%- include('../_inc/_scripts', { root: root, pageJs: pageJs }) -%>
 </body>
