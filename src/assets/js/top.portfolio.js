@@ -168,30 +168,25 @@ projectsSwiper.on('realIndexChange', function () {
 });
 
 /*-----------------------------------------------
- * PROJECTS -> SKILLS - Blue Circle Transition
- * .js-skillsCircleをpinし、画面下中央に固定した状態で
- * scaleをスクラブ→そのまま青背景としてSKILLSへ接続する
- * #skillsは円が完全に覆いきるまで非表示にし、
- * セクション本体の縁が円の外側に透けないようにする
+ * PROJECTS -> SKILLS - White Circle Transition
+ * 参考実装に倣い、
+ * GSAP ScrollTriggerのpinは使わずCSSのposition:stickyで
+ * .js-skillsCircleを画面に留め、scrubでscaleだけをアニメーションする。
+ * #skillsは.skillsTransitionより前面（z-index）にあるため、
+ * 通常のスクロールフローで下から現れる円の拡大と
+ * セクションの出現が自然に同時進行する
+ * （pin解除タイミングのズレによる前後セクションの同時表示や
+ * 拡大しきった後の無反応区間が構造的に発生しない）
 -------------------------------------------------*/
-ScrollTrigger.create({
-	trigger: '#skills',
-	start: 'top bottom',
-	end: 'top top',
-	scrub: true,
-	invalidateOnRefresh: true,
-	pin: '.js-skillsCircle',
-	pinSpacing: false,
-	animation: gsap.timeline()
-		.to('.js-skillsCircle', { scale: 40, ease: 'none', duration: 1 })
-		.to({}, { duration: 1 }),
-	onLeave: function () {
-		$('#skills').css('opacity', 1);
-		$('.js-skillsCircle').css('visibility', 'hidden');
-	},
-	onEnterBack: function () {
-		$('#skills').css('opacity', 0);
-		$('.js-skillsCircle').css('visibility', 'visible');
+gsap.to('.js-skillsCircle', {
+	scale: 40,
+	ease: 'none',
+	scrollTrigger: {
+		trigger: '.skillsTransition__spacer',
+		start: 'top bottom',
+		end: 'bottom top',
+		scrub: true,
+		invalidateOnRefresh: true,
 	},
 });
 
@@ -255,28 +250,16 @@ $('.js-skillsNext').on('click', function () {
 
 /*-----------------------------------------------
  * SKILLS -> CAREER - White Circle Transition
- * .js-careerCircleをpinし、画面下中央に固定した状態で
- * scaleをスクラブ→そのまま白背景としてCAREERへ接続する
- * #careerは円が完全に覆いきるまで非表示にし、
- * セクション本体の縁が円の外側に透けないようにする
+ * .skillsTransitionと同じくpinを使わないposition:sticky方式
 -------------------------------------------------*/
-ScrollTrigger.create({
-	trigger: '#career',
-	start: 'top bottom',
-	end: 'top top',
-	scrub: true,
-	invalidateOnRefresh: true,
-	pin: '.js-careerCircle',
-	pinSpacing: false,
-	animation: gsap.timeline()
-		.to('.js-careerCircle', { scale: 40, ease: 'none', duration: 1 })
-		.to({}, { duration: 1 }),
-	onLeave: function () {
-		$('#career').css('opacity', 1);
-		$('.js-careerCircle').css('visibility', 'hidden');
-	},
-	onEnterBack: function () {
-		$('#career').css('opacity', 0);
-		$('.js-careerCircle').css('visibility', 'visible');
+gsap.to('.js-careerCircle', {
+	scale: 40,
+	ease: 'none',
+	scrollTrigger: {
+		trigger: '.careerTransition__spacer',
+		start: 'top bottom',
+		end: 'bottom top',
+		scrub: true,
+		invalidateOnRefresh: true,
 	},
 });

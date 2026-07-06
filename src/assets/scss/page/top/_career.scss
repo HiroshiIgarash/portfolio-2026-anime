@@ -6,48 +6,48 @@
 /**
  * career
  * デザイン未確定のためプレースホルダー
- * 円が画面全体を覆いきるまでは非表示にし、
- * SKILLSからのcareerCircleトランジション完了と同時にopacity:1へ切り替える
+ * 通常のスクロールフローに従うだけの要素。
+ * .careerTransition__circleStage（sticky）の下端がスクロールで
+ * 画面上端を過ぎた後に、続けて下から現れてくる
  */
 .career {
 	position: relative;
-	z-index: 2;
+	z-index: 1;
 	min-height: 100vh;
 	background-color: var(--color-white);
-	overflow: hidden;
-	opacity: 0;
 }
 
 /**
- * skillsCareerWrap
- * .careerCircleがSKILLS外側（下方向）にはみ出して表示されるよう、
- * overflow指定のないラッパーで#skillsを囲む（.aboutProjectsWrapと同じ役割）
+ * careerTransition
+ * SKILLS下端でスクロールすると画面下中央から円が広がり、
+ * CAREERセクションの白背景へ接続するトランジション
+ * .skillsTransitionと同じくGSAP ScrollTriggerのpinを使わず、
+ * CSSのposition:stickyで円を画面に留める構成にする
  */
-.skillsCareerWrap {
+.careerTransition {
 	position: relative;
 }
-
-/**
- * careerCircle
- * SKILLS下端でスクロールすると画面下中央から広がり、
- * CAREERセクションの白背景へ接続するトランジション
- * .skillsCareerWrap内・#skillsの外に配置し、
- * top:calc(100% + 45vh)で#skills下端（=CAREER開始位置）より
- * さらに下に中心を置き、緩やかな弧を描くようにする
- * JS側のScrollTriggerでpinし、pin中は画面下中央に固定した状態でscaleする
- * scale(40)まで拡大した状態がpin解除後も残るため、
- * pointer-events:noneがないとCAREERセクションのクリックを吸収してしまう
- */
-.careerCircle {
+.careerTransition__spacer {
+	height: 100vh;
+}
+.careerTransition__circleStage {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	overflow: hidden;
+	z-index: 0;
+	pointer-events: none;
+}
+.careerTransition__circle {
+	--circle-size: #{vwmin(100)};
 	position: absolute;
-	top: calc(100% + 45vh);
+	bottom: -50vh;
 	left: 50%;
-	width: vwmin(100);
-	height: vwmin(100);
+	width: var(--circle-size);
+	height: var(--circle-size);
+	margin-left: calc(var(--circle-size) / -2);
 	border-radius: 50%;
 	background-color: var(--color-white);
-	transform: translate(-50%, -50%) scale(0);
+	transform: scale(0);
 	transform-origin: center;
-	z-index: 5;
-	pointer-events: none;
 }
