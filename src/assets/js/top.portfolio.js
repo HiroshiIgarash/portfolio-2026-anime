@@ -584,3 +584,25 @@ ScrollTrigger.create({
 		});
 	},
 });
+
+/*-----------------------------------------------
+ * CAREER - deco parallax（PCのみ）
+-------------------------------------------------*/
+const careerDecoMM = gsap.matchMedia();
+careerDecoMM.add('(min-width: 769px)', () => {
+	document.querySelectorAll('.js-careerDeco').forEach((el) => {
+		gsap.fromTo(el,
+			{ yPercent: -14 },
+			{
+				yPercent: 14,
+				ease: 'none',
+				scrollTrigger: {
+					trigger: el.closest('.js-careerItem'),
+					start: 'top bottom',
+					end: 'bottom top',
+					scrub: 0.2,
+				},
+			}
+		);
+	});
+});
