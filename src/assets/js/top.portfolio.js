@@ -86,7 +86,7 @@ function playLoadingReveal() {
 
 	revealTl
 		.to('.js-loadingLogo', {
-			scale: 1.4,
+			scale: 2.2,
 			opacity: 0,
 			duration: .5,
 			ease: 'power2.in',
