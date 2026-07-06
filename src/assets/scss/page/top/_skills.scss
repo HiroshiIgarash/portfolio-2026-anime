@@ -26,6 +26,7 @@
 }
 .skills.--covered {
 	opacity: 1;
+	pointer-events: auto;
 }
 
 /**
@@ -42,10 +43,14 @@
 .skillsFill {
 	position: relative;
 	z-index: 2;
-	margin-top: -70vh;
+	margin-top: -100vh;
 	/* 横は clip（巨大な円で横スクロールを出さない）／縦は visible（円の上端を切らない） */
 	overflow-x: clip;
 	overflow-y: visible;
+	/* margin-top:-70vh で前セクション(PROJECTS)末尾に重なる分、__spacerや透明な#skillsが
+	   PROJECTSのnavボタン・詳しくみるボタンのクリックを奪ってしまう。
+	   覆いきる(#skills.--covered)までは配下すべてヒットテストから除外する */
+	pointer-events: none;
 }
 .skillsFill__bgTrack {
 	position: absolute;
@@ -83,8 +88,10 @@
 .skillsFill__spacer {
 	/* #skills を下に押し下げるスクロール距離。円が全画面を覆いきる（四隅が白くなる）まで
 	   #skills の白背景を画面外下に隠し、覆った後にせり上がらせる。短すぎると覆う前に
-	   #skills白が夜景の上に出て境目が直線で見える、長すぎると覆ってからSKILLSまで間延びする。 */
-	height: 50vh;
+	   #skills白が夜景の上に出て境目が直線で見える、長すぎると覆ってからSKILLSまで間延びする。
+	   circleのSKILLS_CIRCLE_GROW_VH(top.portfolio.js)と連動しており、値を変えたら
+	   coveredになる瞬間の#skillsの表示位置(だいぶ上に行き過ぎていないか)を実測で確認すること。 */
+	height: 290vh;
 }
 
 /**

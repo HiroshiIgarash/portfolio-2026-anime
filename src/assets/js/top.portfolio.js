@@ -218,14 +218,20 @@ $('.js-about__avatarChange').on('click', function () {
  * .bgStage を#about〜#projectsの区間ぶんpinし、
  * PROJECTSレイヤーのclip-pathをスクラブして
  * 背景そのものは動かさずに境界だけ上げていく
- * end は #skills（SKILLSへの円トランジション終了地点）まで延長し、
- * 円が広がりきるまで背景がスクロールで流れないようにする
+ * end は SKILLS円トランジションが覆いきる地点（.skillsFillのtopから
+ * SKILLS_CIRCLE_GROW_VH ぶん下）まで延長し、円が広がりきるまで
+ * 背景がスクロールで流れないようにする。
+ * この値は setupFillCircle('.skillsFill', ...) 側のscale計算と同じ
+ * 分母を使う必要がある（ズレると pin解除後もまだ円が覆いきってない
+ * 状態が続き、白円と夜景背景が同時に動く見た目になる）。
 -------------------------------------------------*/
+const SKILLS_CIRCLE_GROW_VH = 2.0;
+
 ScrollTrigger.create({
 	trigger: '.js-bgStage__wrap',
 	start: 'top top',
-	endTrigger: '#skills',
-	end: 'top top',
+	endTrigger: '.skillsFill',
+	end: () => 'top+=' + (window.innerHeight * SKILLS_CIRCLE_GROW_VH) + ' top',
 	pin: '.js-bgStage',
 	pinSpacing: false,
 	invalidateOnRefresh: true,
@@ -298,7 +304,7 @@ projectsSwiper.on('realIndexChange', function () {
  * 確実に 0→1（= 直径250vmax = 全画面被覆）まで拡大させる。
  * top が画面下端(vh)のとき scale0、画面上端(0)のとき scale1。上端を越えたら 1 で保持。
  */
-function setupFillCircle(fillSel, circleSel, revealSel) {
+function setupFillCircle(fillSel, circleSel, revealSel, growVh) {
 	const fill = document.querySelector(fillSel);
 	const circle = document.querySelector(circleSel);
 	const reveal = revealSel ? document.querySelector(revealSel) : null;
@@ -307,9 +313,9 @@ function setupFillCircle(fillSel, circleSel, revealSel) {
 		const vh = window.innerHeight;
 		const vw = window.innerWidth;
 		// .skillsFill の top が画面上端(0)を越えて上へスクロールした量で scale を決める。
-		// 分母を大きくするほどゆっくり育つ（0.4vh でゆったり）。
+		// 分母(growVh)を大きくするほどゆっくり育つ。
 		const top = fill.getBoundingClientRect().top;
-		const progress = Math.min(Math.max(-top / (vh * 0.4), 0), 1);
+		const progress = Math.min(Math.max(-top / (vh * growVh), 0), 1);
 		circle.style.transform = 'scale(' + progress + ')';
 		if (reveal) {
 			// 円が画面の四隅すべてを覆った瞬間に中身へ --covered を付けてフェード表示する。
@@ -330,7 +336,7 @@ function setupFillCircle(fillSel, circleSel, revealSel) {
 	window.addEventListener('resize', update);
 	update();
 }
-setupFillCircle('.skillsFill', '.js-skillsCircle', '#skills');
+setupFillCircle('.skillsFill', '.js-skillsCircle', '#skills', SKILLS_CIRCLE_GROW_VH);
 
 /*-----------------------------------------------
  * SKILLS - Menu Switching
@@ -409,4 +415,4 @@ $('.js-skillsNext').on('click', function () {
  * SKILLS -> CAREER - White Circle Transition
  * .skillsFill と同一。下から白円が湧き出て覆いきったら #career をフェード表示する
 -------------------------------------------------*/
-setupFillCircle('.careerFill', '.js-careerCircle', '#career');
+setupFillCircle('.careerFill', '.js-careerCircle', '#career', 0.4);
