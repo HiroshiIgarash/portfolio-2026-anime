@@ -608,11 +608,11 @@ function setupPrivateIntro() {
 
 	// walk: 左外→定位置（進捗 0.00-0.30）
 	tl.fromTo('.js-privateFloatA',
-		{ xPercent: -160, opacity: 0 },
+		{ xPercent: -280, opacity: 0 },
 		{ xPercent: 0, opacity: 1, ease: 'none', duration: 0.3 }, 0.0);
 	// toy: 右外→定位置（進捗 0.30-0.60）
 	tl.fromTo('.js-privateFloatB',
-		{ xPercent: 160, opacity: 0 },
+		{ xPercent: 280, opacity: 0 },
 		{ xPercent: 0, opacity: 1, ease: 'none', duration: 0.3 }, 0.3);
 	// coding: 中央で拡大して背景化（中央寄せはCSS側のflexに任せ、GSAPはscaleのみを与える）（進捗 0.60-1.00）
 	// coding.jpgは横長（16:9）のため、縦長のSPビューポートでは同じscaleでは画面上下が覆いきれない。
