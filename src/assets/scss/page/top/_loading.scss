@@ -34,14 +34,14 @@
 }
 .p-loading__bar--track {
 	width: vwmin(280);
-	height: 4px;
+	height: vwmin(4);
 	border-radius: 999px;
 	background-color: rgba(255, 255, 255, .2);
 	overflow: hidden;
 
 	@include sp {
 		width: vw(420);
-		height: 6px;
+		height: vw(6);
 	}
 }
 .p-loading__bar--fill {
@@ -87,10 +87,10 @@
 	stroke-width: 3;
 	stroke-dasharray: 50 100;
 }
-.p-loading__logo--frameLine.js-loadingFrameA {
+.p-loading__logo--frameLine.-a {
 	stroke-dashoffset: 50;
 }
-.p-loading__logo--frameLine.js-loadingFrameB {
+.p-loading__logo--frameLine.-b {
 	stroke-dashoffset: 50;
 }
 .p-loading__logo--text {

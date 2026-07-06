@@ -45,6 +45,8 @@ loadingIntroTl.to(loadingProgress, {
 	}, .2);
 
 function finishLoading() {
+	$('body').addClass('--is-loading');
+
 	gsap.to(loadingProgress, {
 		value: 100,
 		duration: .2,
@@ -60,6 +62,7 @@ function playLoadingReveal() {
 	const revealTl = gsap.timeline({
 		onComplete: function () {
 			gsap.set('.js-loading', { display: 'none' });
+			$('body').removeClass('--is-loading').addClass('--is-loaded');
 			playMvCatchAnimation();
 			ScrollTrigger.refresh();
 		},

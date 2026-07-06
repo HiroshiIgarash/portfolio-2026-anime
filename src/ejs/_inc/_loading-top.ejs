@@ -7,8 +7,8 @@
 	</div>
 	<div class="p-loading__logo">
 		<svg class="p-loading__logo--frame" viewBox="0 0 320 200">
-			<rect class="p-loading__logo--frameLine js-loadingFrameA" pathLength="100" x="4" y="4" width="312" height="192"></rect>
-			<rect class="p-loading__logo--frameLine js-loadingFrameB" pathLength="100" x="4" y="4" width="312" height="192"></rect>
+			<rect class="p-loading__logo--frameLine -a js-loadingFrameA" pathLength="100" x="4" y="4" width="312" height="192"></rect>
+			<rect class="p-loading__logo--frameLine -b js-loadingFrameB" pathLength="100" x="4" y="4" width="312" height="192"></rect>
 		</svg>
 		<p class="p-loading__logo--text">
 			<span class="p-loading__logo--textLine">
@@ -24,7 +24,7 @@
 				<span class="p-loading__logo--textChar js-loadingChar">.</span>
 			</span>
 		</p>
-	</div>
+	</div><!-- /.p-loading__logo -->
 	<%
 	const loadingSparkles = [
 		{ x: 18, y: 22, size: 16, color: 'var(--color-teal)', delay: 0 },
@@ -41,9 +41,9 @@
 		<% loadingSparkles.forEach(function (s) { -%>
 		<span class="p-loading__sparkles--item" style="--x:<%= s.x %>%; --y:<%= s.y %>%; --size:<%= s.size %>px; --sparkle-color:<%= s.color %>; --delay:<%= s.delay %>s;"></span>
 		<% }); -%>
-	</div>
+	</div><!-- /.p-loading__sparkles -->
 	<div class="p-loading__reveal">
 		<span class="p-loading__reveal--circle -teal js-loadingRevealA"></span>
 		<span class="p-loading__reveal--circle -cyan js-loadingRevealB"></span>
-	</div>
-</div>
+	</div><!-- /.p-loading__reveal -->
+</div><!-- /.p-loading -->
