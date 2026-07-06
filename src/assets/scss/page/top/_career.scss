@@ -355,6 +355,9 @@
 }
 .career__item--body {
 	grid-column: 3;
+	/* word-break:keep-all併用時、grid 1frトラックの既定min-width:autoがテキストの
+	   最小幅で押し広げられ、item毎に中央dotの位置がずれるのを防ぐ */
+	min-width: 0;
 
 	@include sp {
 		grid-column: 2;
