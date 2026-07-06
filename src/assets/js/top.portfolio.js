@@ -228,11 +228,30 @@ let skillDetailTl;
 function switchSkill(index) {
 	const $btns = $('.js-skillsMenuBtn');
 	const total = $btns.length;
+	const prevIndex = currentSkillIndex;
 	currentSkillIndex = (index + total) % total;
 
+	const $prev = $btns.eq(prevIndex);
 	const $target = $btns.eq(currentSkillIndex);
 	$btns.removeClass('--is-current');
 	$target.addClass('--is-current');
+
+	// メニュー上で切り替わったことが分かるよう、直前ボタンと選択ボタンを円ごとコインのようにY軸回転させる
+	// （CSSのtransition:transformがGSAPの毎フレーム書き換えと競合し回転が滑らかに出ないため、
+	//   回転中だけtransitionを止め、終わったら--is-currentのscale(1.1)に戻す）
+	if ($prev[0] !== $target[0]) {
+		const $rotateBtns = $prev.add($target);
+		$rotateBtns.css('transition', 'none');
+		gsap.fromTo($rotateBtns.toArray(), { rotationY: 0, transformPerspective: 600 }, {
+			rotationY: 360,
+			duration: .6,
+			ease: 'power2.out',
+			clearProps: 'transform,transformPerspective',
+			onComplete: function () {
+				$rotateBtns.css('transition', '');
+			}
+		});
+	}
 
 	const iconSrc = $target.find('img').attr('src');
 	const name = $target.data('name');
@@ -247,21 +266,17 @@ function switchSkill(index) {
 	}
 	const tl = gsap.timeline();
 	skillDetailTl = tl;
-	tl.to('.js-skillsDetailIcon img', { opacity: 0, duration: .2 })
+	// アイコン・名前・説明を一旦まとめてフェードアウトしてから内容を差し替え、時間差でフェードインする
+	tl.to('.js-skillsDetailIcon img, .js-skillsDetailName, .js-skillsDetailText', { opacity: 0, duration: .25 })
 		.call(function () {
 			$('.js-skillsDetailIcon img').attr('src', iconSrc);
-		})
-		.to('.js-skillsDetailIcon img', { opacity: 1, duration: .3 })
-		.set('.js-skillsDetailName', { opacity: 0, y: 20 })
-		.call(function () {
 			$('.js-skillsDetailName').text(name);
-		})
-		.to('.js-skillsDetailName', { opacity: 1, y: 0, duration: .4 }, '+=.1')
-		.set('.js-skillsDetailText', { opacity: 0, y: 20 })
-		.call(function () {
 			$('.js-skillsDetailText').text(text);
 		})
-		.to('.js-skillsDetailText', { opacity: 1, y: 0, duration: .4 }, '+=.1');
+		.set('.js-skillsDetailName, .js-skillsDetailText', { y: 20 })
+		.to('.js-skillsDetailIcon img', { opacity: 1, duration: .3 })
+		.to('.js-skillsDetailName', { opacity: 1, y: 0, duration: .4 }, '-=.1')
+		.to('.js-skillsDetailText', { opacity: 1, y: 0, duration: .4 }, '-=.2');
 }
 
 $('.js-skillsMenuBtn').on('click', function () {
