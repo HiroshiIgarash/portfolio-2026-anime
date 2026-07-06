@@ -52,7 +52,35 @@ function finishLoading() {
 		onUpdate: function () {
 			setLoadingProgress(loadingProgress.value);
 		},
+		onComplete: playLoadingReveal,
 	});
+}
+
+function playLoadingReveal() {
+	const revealTl = gsap.timeline({
+		onComplete: function () {
+			gsap.set('.js-loading', { display: 'none' });
+			playMvCatchAnimation();
+			ScrollTrigger.refresh();
+		},
+	});
+
+	revealTl
+		.fromTo('.js-loadingRevealA', { scale: 0 }, {
+			scale: 1,
+			duration: .5,
+			ease: 'power2.in',
+		}, 0)
+		.fromTo('.js-loadingRevealB', { scale: 0 }, {
+			scale: 1,
+			duration: .5,
+			ease: 'power2.in',
+		}, .12)
+		.to('.js-loading', {
+			opacity: 0,
+			duration: .5,
+			ease: 'power1.out',
+		}, .7);
 }
 
 $(window).on('load', finishLoading);
@@ -143,11 +171,6 @@ function playMvCatchAnimation() {
 		ease: 'power2.out',
 	}, '-=.2');
 }
-
-$(window).on('load', function () {
-	playMvCatchAnimation();
-	ScrollTrigger.refresh();
-});
 
 /*-----------------------------------------------
  * ABOUT - Avatar Change
