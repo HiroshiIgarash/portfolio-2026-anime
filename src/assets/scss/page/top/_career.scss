@@ -381,8 +381,9 @@
 .career__item--body {
 	grid-row: 1;
 	grid-column: 3;
-	/* word-break:keep-all併用時、grid 1frトラックの既定min-width:autoがテキストの
-	   最小幅で押し広げられ、item毎に中央dotの位置がずれるのを防ぐ */
+	/* .career__item--noBreak(white-space:nowrap)併用時、grid 1frトラックの既定
+	   min-width:autoがテキストの最小幅で押し広げられ、item毎に中央dotの位置が
+	   ずれるのを防ぐ */
 	min-width: 0;
 
 	@include sp {
@@ -442,6 +443,10 @@
 		transform: translateX(vw(40));
 	}
 }
+/**
+ * career__item--noBreak
+ * カタカナ語などtext-wrap: prettyでも途中改行を防げない語をピンポイントで保護する
+ */
 .career__item--noBreak {
 	white-space: nowrap;
 }
