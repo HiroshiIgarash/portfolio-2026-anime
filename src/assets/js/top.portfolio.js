@@ -178,3 +178,72 @@ ScrollTrigger.create({
 		ease: 'none',
 	}),
 });
+
+/*-----------------------------------------------
+ * CAREER - Item Text Stagger Reveal
+ * 見出し「CAREER」自体は既存の .js-scrani 監視対象のため追加実装不要
+-------------------------------------------------*/
+$('.js-careerItem').each(function () {
+	ScrollTrigger.create({
+		trigger: this,
+		start: 'top 75%',
+		toggleClass: { targets: this, className: '--is-ani' },
+		invalidateOnRefresh: true,
+	});
+});
+
+/*-----------------------------------------------
+ * CAREER - Line Growth + Orb Descent
+ * 同じtimelineの同じ位置(0)に両方のtweenを積むことで、
+ * 線の伸長とオーブの位置がスクロール量に対して常に一致する
+-------------------------------------------------*/
+gsap.timeline({
+	scrollTrigger: {
+		trigger: '.js-careerTimeline',
+		start: 'top center',
+		end: 'bottom center',
+		scrub: true,
+		invalidateOnRefresh: true,
+	},
+})
+	.to('.js-careerLineFill', { scaleY: 1, ease: 'none' }, 0)
+	.to('.js-careerOrb', { top: '100%', ease: 'none' }, 0);
+
+/*-----------------------------------------------
+ * CAREER - Dot Lighting
+ * オーブと同じ「画面中央通過」を基準にしているため、
+ * オーブが実際にその高さへ到達するタイミングとずれない
+-------------------------------------------------*/
+$('.js-careerDot').each(function () {
+	ScrollTrigger.create({
+		trigger: this,
+		start: 'center center',
+		toggleClass: '--is-lit',
+		invalidateOnRefresh: true,
+	});
+});
+
+/*-----------------------------------------------
+ * CAREER - Climax Burst (current/2026到達時)
+ * 巻き戻し時の二重発火を防ぐためonce:trueにする
+-------------------------------------------------*/
+ScrollTrigger.create({
+	trigger: '.js-careerItem.--is-current',
+	start: 'center center',
+	once: true,
+	onEnter: () => {
+		const tl = gsap.timeline();
+		tl.to('.js-careerOrb', { scale: 1.6, duration: .4, ease: 'power2.out' })
+			.to('.js-careerOrb', { scale: 1, duration: .6, ease: 'elastic.out(1, .4)' })
+			.set('.career__orb--particle', { x: 0, y: 0, scale: 0, opacity: 1 }, '<')
+			.to('.career__orb--particle', {
+				x: () => gsap.utils.random(-80, 80),
+				y: () => gsap.utils.random(-80, 80),
+				scale: 1,
+				opacity: 0,
+				duration: .8,
+				stagger: .03,
+				ease: 'power2.out',
+			}, '<');
+	},
+});
