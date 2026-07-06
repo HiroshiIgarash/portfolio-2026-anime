@@ -1,0 +1,53 @@
+@use "../../global/mixins" as *;
+
+/**
+ * subArticle
+ * 下層ページ共通ラッパー。固定ヘッダー分の余白を確保する
+ */
+.subArticle {
+	padding-top: vwmin(120);
+}
+@include sp {
+	.subArticle {
+		padding-top: vw(160);
+	}
+}
+
+/**
+ * contTitle2
+ * 下層ページタイトル。英語+日本語の2段構成
+ */
+.contTitle2 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: vwmin(12);
+	text-align: center;
+	padding: vwmin(64) 0;
+}
+.contTitle2__en {
+	font-family: var(--font-en);
+	font-size: vwmin(56);
+	font-weight: 900;
+	letter-spacing: .04em;
+	color: var(--color-navy);
+	line-height: 1;
+}
+.contTitle2__ja {
+	font-size: vwmin(16);
+	font-weight: 700;
+	letter-spacing: .3em;
+	color: var(--color-navy);
+}
+@include sp {
+	.contTitle2 {
+		gap: vw(16);
+		padding: vw(96) 0;
+	}
+	.contTitle2__en {
+		font-size: vw(64);
+	}
+	.contTitle2__ja {
+		font-size: vw(22);
+	}
+}
