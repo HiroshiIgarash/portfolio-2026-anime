@@ -203,6 +203,7 @@ ScrollTrigger.create({
  * 時間差でフェードイン+スライドインする
 -------------------------------------------------*/
 let currentSkillIndex = 0;
+let skillDetailTl;
 
 function switchSkill(index) {
 	const $btns = $('.js-skillsMenuBtn');
@@ -217,7 +218,11 @@ function switchSkill(index) {
 	const name = $target.data('name');
 	const text = $target.data('text');
 
+	if (skillDetailTl) {
+		skillDetailTl.kill();
+	}
 	const tl = gsap.timeline();
+	skillDetailTl = tl;
 	tl.to('.js-skillsDetailIcon img', { opacity: 0, duration: .2 })
 		.call(function () {
 			$('.js-skillsDetailIcon img').attr('src', iconSrc);

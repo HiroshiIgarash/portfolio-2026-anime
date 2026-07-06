@@ -284,11 +284,17 @@
 	color: var(--color-navy);
 	margin: 0;
 	opacity: 0;
-	transform: translateY(20px);
+	transform: translateY(vwmin(20));
+	transition: opacity .8s ease, transform .8s ease;
 
 	@include sp {
 		font-size: vw(48);
+		transform: translateY(vw(20));
 	}
+}
+.skills__detail--name.--is-ani {
+	opacity: 1;
+	transform: translateY(0);
 }
 .skills__detail--text {
 	font-size: vwmin(20);
@@ -296,11 +302,17 @@
 	color: var(--color-navy);
 	margin: 0;
 	opacity: 0;
-	transform: translateY(20px);
+	transform: translateY(vwmin(20));
+	transition: opacity .8s ease, transform .8s ease;
 
 	@include sp {
 		font-size: vw(28);
+		transform: translateY(vw(20));
 	}
+}
+.skills__detail--text.--is-ani {
+	opacity: 1;
+	transform: translateY(0);
 }
 
 /**
