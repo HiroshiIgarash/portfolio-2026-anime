@@ -218,7 +218,7 @@ if (footerBendPath && footerEl) {
 		gsap.to(bendState, {
 			v: 0,
 			duration: 1,
-			ease: 'elastic.out(1, 0.4)',
+			ease: 'elastic.out(1.4, 0.4)',
 			overwrite: true,
 			onUpdate: () => setBendPath(bendState.v),
 		});
@@ -245,6 +245,6 @@ if (footerBendPath && footerEl) {
 			overwrite: true,
 			onUpdate: () => setBendPath(bendState.v),
 		});
-		bendIdleTimer = setTimeout(releaseBend, 200);
+		bendIdleTimer = setTimeout(releaseBend, 100);
 	});
 }
