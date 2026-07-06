@@ -85,7 +85,7 @@ function handlePageTransitionLinkClick(e) {
 $(function(){
 
 	// Page Transition - Link Click
-	$('.l-header__logo--link, .headerNavLists__link').on('click', handlePageTransitionLinkClick);
+	$('.js-pageTransitionLink').on('click', handlePageTransitionLinkClick);
 
 	// Anchor Smooth Scroll
 	$('.js-anchor').on('click', function(){
