@@ -119,8 +119,14 @@
 }
 .p-loading__logo--textChar {
 	display: inline-block;
+	width: vwmin(48);
+	text-align: center;
 	opacity: 0;
 	transform: translateY(10px);
+
+	@include sp {
+		width: vw(62);
+	}
 }
 
 /**
