@@ -203,8 +203,8 @@ const footerEl = document.querySelector('.js-footer');
 let footerBendActive = false;
 
 if (footerBendPath && footerEl) {
-	const BEND_SENSITIVITY = 1.2;   // velocity -> 振幅の倍率（大きめ初期値。確認しながら弱める）
-	const BEND_MAX = 40;            // 振幅の最大値（px、viewBox座標系）
+	const BEND_SENSITIVITY = 1000;  // velocity -> 振幅の倍率（実測でLenisのvelocityが0.01〜0.1程度と判明。大きめ初期値、確認しながら弱める）
+	const BEND_MAX = 50;            // 振幅の最大値（px、viewBox座標系）
 	const bendState = { v: 0 };     // gsap.toのtween対象を固定オブジェクトにし、overwriteを確実に効かせる
 	let bendIdleTimer = null;
 
@@ -243,6 +243,6 @@ if (footerBendPath && footerEl) {
 			overwrite: true,
 			onUpdate: () => setBendPath(bendState.v),
 		});
-		bendIdleTimer = setTimeout(releaseBend, 120);
+		bendIdleTimer = setTimeout(releaseBend, 200);
 	});
 }
