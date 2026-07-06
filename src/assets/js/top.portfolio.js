@@ -13,9 +13,7 @@ function setLoadingProgress(value) {
 	loadingBarPercent.textContent = Math.round(value);
 }
 
-const loadingIntroTl = gsap.timeline();
-
-$('body').addClass('--is-loading');
+const loadingIntroTl = gsap.timeline({ paused: true });
 
 loadingIntroTl.to(loadingProgress, {
 	value: 90,
@@ -106,6 +104,17 @@ function playLoadingReveal() {
 			duration: .5,
 			ease: 'power1.out',
 		}, .7);
+}
+
+function startLoadingIntro() {
+	$('body').addClass('--is-loading');
+	loadingIntroTl.play();
+}
+
+if (window.__pageTransitionClosed) {
+	startLoadingIntro();
+} else {
+	document.addEventListener('pageTransitionClosed', startLoadingIntro, { once: true });
 }
 
 $(window).on('load', finishLoading);
