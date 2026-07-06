@@ -1,0 +1,348 @@
+<%
+const root = '../';
+const page = 'products';
+const pageCss = 'products';
+const pageJs = 'products';
+-%>
+<!doctype html>
+<html lang="ja">
+<%- include('../../_inc/_head', {
+	root: root,
+	page: page,
+	pageTitle: '制作実績｜' + site.siteName,
+	pageDescription: site.description,
+	pageCss: pageCss,
+	pageJs: pageJs
+}) -%>
+<body id="top" data-page="<%= page %>" data-root="<%= root %>">
+<!-- BEGIN #fullWrap -->
+<div id="fullWrap">
+<%- include('../../_inc/_loading') -%>
+<%- include('../../_inc/_header', { root: root }) -%>
+<main class="l-main">
+	<article class="subArticle -fullscreen">
+		<!-- BEGIN .productsSnap -->
+		<div class="productsSnap js-productsSnap">
+			<section class="productsIntro js-scrani js-productsSnapItem">
+				<p class="productsIntro__count">05 WORKS</p>
+				<h2 class="productsIntro__head">
+					<span class="productsIntro__head--char"><span class="productsIntro__head--charIn">P</span></span>
+					<span class="productsIntro__head--char"><span class="productsIntro__head--charIn">R</span></span>
+					<span class="productsIntro__head--char"><span class="productsIntro__head--charIn">O</span></span>
+					<span class="productsIntro__head--char"><span class="productsIntro__head--charIn">D</span></span>
+					<span class="productsIntro__head--char"><span class="productsIntro__head--charIn">U</span></span>
+					<span class="productsIntro__head--char"><span class="productsIntro__head--charIn">C</span></span>
+					<span class="productsIntro__head--char"><span class="productsIntro__head--charIn">T</span></span>
+					<span class="productsIntro__head--char"><span class="productsIntro__head--charIn">S</span></span>
+				</h2>
+				<p class="productsIntro__lead">個人開発と受託、5つのプロジェクトの記録</p>
+				<p class="productsIntro__scroll">
+					<span class="productsIntro__scroll--text">SCROLL</span>
+					<span class="productsIntro__scroll--line"></span>
+				</p>
+			</section><!-- /.productsIntro -->
+			<section class="productsItem -company js-scrani js-productsSnapItem">
+				<div class="productsItem__visual">
+					<p class="productsItem__num">01</p>
+					<div class="productsItem__gallery">
+						<div class="productsItem__placeholder">
+							<span class="productsItem__placeholder--text">準備中</span>
+						</div>
+					</div>
+					<p class="productsItem__badge -company">受託</p>
+					<h3 class="productsItem__title">タテマンガ投稿Webサービス・開発と保守</h3>
+					<p class="productsItem__subtitle">大手出版社のタテマンガ投稿サービス · Web開発会社の一員として受託開発</p>
+					<ul class="productsItem__meta">
+						<li class="productsItem__meta--item">業務 · 約1.5年</li>
+						<li class="productsItem__meta--item">受託開発</li>
+					</ul>
+				</div><!-- /.productsItem__visual -->
+				<div class="productsItem__body" data-lenis-prevent>
+					<div class="productsItem__text">
+						<p>所属していたWeb開発会社が大手出版社から受託したタテマンガ投稿サービスの開発に参画。リリース後のフェーズから機能拡張・運用改善を担当し、<strong>フロントエンドとバックエンドを横断</strong>して開発してきました。インフラ構成は<strong>バックエンドはAWS、フロントエンドはVercelにデプロイ</strong>。</p>
+						<ul>
+							<li><strong>URL限定公開機能の実装</strong> — URLを知っているユーザーのみ閲覧可能とする仕様で、設計から実装まで一貫して担当。DBに公開用キーのカラムを追加、GraphQL APIでキー検証してデータを返却制御、フロントはURLパラメータから取得しリクエストヘッダで連携。</li>
+							<li><strong>App Router化のリファクタリング</strong> — Pages Router から App Router への移行を実施。サーバーコンポーネントへの分離、データフェッチ戦略の見直し。</li>
+							<li><strong>漫画賞コンテストのLP・結果発表ページ制作</strong> — Contentful を活用して非エンジニアでも編集できる構造で構築。期間限定機能の応募フロー・管理画面の構築も担当。</li>
+							<li><strong>不正対策の実装</strong> — 同一IPアドレスからのいいね重複カウントを防ぐロジックを設計・実装。</li>
+							<li><strong>編集部おすすめ作品の表示ロジック改修</strong> — 既存のビジネスロジックを読み解き、運用課題に合わせて設計を見直した改修。</li>
+							<li>運用中サービスでのスキーマ変更・マイグレーション、不具合対応、パフォーマンス改善を継続的に実施。</li>
+						</ul>
+						<p class="productsItem__highlight"><strong>AIを組み込んだ業務開発：</strong>日々の開発にClaudeを組み込み、<strong>TDDのサイクルでテストファースト</strong>に進めるルールで運用。機能実装をagenticに任せる、設計・アーキテクチャの壁打ち、リファクタリング相談、バグ調査、テストコード作成まで、用途に応じて活用しています。</p>
+					</div><!-- /.productsItem__text -->
+					<div class="productsItem__block">
+						<p class="productsItem__block--label">TECH STACK</p>
+						<ul class="productsItem__techStack">
+							<li class="productsItem__techStack--item -hot">Next.js</li>
+							<li class="productsItem__techStack--item -hot">TypeScript</li>
+							<li class="productsItem__techStack--item">GraphQL</li>
+							<li class="productsItem__techStack--item">urql</li>
+							<li class="productsItem__techStack--item">Apollo Server</li>
+							<li class="productsItem__techStack--item">Prisma</li>
+							<li class="productsItem__techStack--item">PostgreSQL</li>
+							<li class="productsItem__techStack--item">Tailwind</li>
+							<li class="productsItem__techStack--item">shadcn/ui</li>
+							<li class="productsItem__techStack--item">Storybook</li>
+							<li class="productsItem__techStack--item">Chromatic</li>
+							<li class="productsItem__techStack--item">Vitest</li>
+							<li class="productsItem__techStack--item">Playwright</li>
+							<li class="productsItem__techStack--item">Contentful</li>
+							<li class="productsItem__techStack--item">AWS (CDK)</li>
+							<li class="productsItem__techStack--item">Vercel</li>
+							<li class="productsItem__techStack--item">Claude (TDD)</li>
+						</ul>
+					</div><!-- /.productsItem__block -->
+					<div class="productsItem__block">
+						<p class="productsItem__block--label">MY ROLE</p>
+						<p class="productsItem__block--text">フロント主担当 + GraphQLリゾルバ追加 + DBスキーマ設計変更 + 機能設計 + AI活用での開発 + CloudWatchでの監視・ログ調査 + AWS CDK Pipelinesによるデプロイ</p>
+					</div><!-- /.productsItem__block -->
+				</div><!-- /.productsItem__body -->
+			</section><!-- /.productsItem -->
+			<section class="productsItem -company js-scrani js-productsSnapItem">
+				<div class="productsItem__visual">
+					<p class="productsItem__num">02</p>
+					<div class="productsItem__gallery">
+						<div class="productsItem__placeholder">
+							<span class="productsItem__placeholder--text">準備中</span>
+						</div>
+					</div>
+					<p class="productsItem__badge -company">受託</p>
+					<h3 class="productsItem__title">在籍企業のコーポレートサイトリニューアル</h3>
+					<p class="productsItem__subtitle">所属していたWeb開発会社のコーポレートサイト制作 · 多言語化対応</p>
+					<ul class="productsItem__meta">
+						<li class="productsItem__meta--item">業務 · 並行案件</li>
+						<li class="productsItem__meta--item">社内案件</li>
+					</ul>
+				</div><!-- /.productsItem__visual -->
+				<div class="productsItem__body" data-lenis-prevent>
+					<div class="productsItem__text">
+						<p>メインプロジェクトの開発と並行して、<strong>所属していたWeb開発会社のコーポレートサイト</strong>リニューアルを担当。プロダクト開発と制作系の業務を行き来できる柔軟さを活かして関わりました。</p>
+						<ul>
+							<li>Headless CMS（Contentful）を採用し、<strong>非エンジニアでも更新できる運用</strong>を実現。</li>
+							<li><strong>多言語化(i18n)対応の実装</strong> — <code>next-intl</code> を採用し、ルーティング・コンテンツの両面で日本語・英語の出し分けを実装。</li>
+							<li>デザインの忠実な再現、レスポンシブ対応、表示パフォーマンスのチューニング。</li>
+							<li>Web制作で培ったマークアップ・ピクセルパーフェクトな実装力と、Webサービス開発で培ったコンポーネント設計を両立した実装。</li>
+						</ul>
+						<p class="productsItem__highlight">制作と開発、両方の文脈を持つ強みが活きた案件</p>
+					</div><!-- /.productsItem__text -->
+					<div class="productsItem__block">
+						<p class="productsItem__block--label">TECH STACK</p>
+						<ul class="productsItem__techStack">
+							<li class="productsItem__techStack--item -hot">Next.js</li>
+							<li class="productsItem__techStack--item -hot">TypeScript</li>
+							<li class="productsItem__techStack--item">next-intl</li>
+							<li class="productsItem__techStack--item">Contentful</li>
+							<li class="productsItem__techStack--item">Vercel</li>
+						</ul>
+					</div><!-- /.productsItem__block -->
+				</div><!-- /.productsItem__body -->
+			</section><!-- /.productsItem -->
+			<section class="productsItem -company js-scrani js-productsSnapItem">
+				<div class="productsItem__visual">
+					<p class="productsItem__num">03</p>
+					<div class="productsItem__gallery">
+						<div class="productsItem__placeholder">
+							<span class="productsItem__placeholder--text">準備中</span>
+						</div>
+					</div>
+					<p class="productsItem__badge -company">受託</p>
+					<h3 class="productsItem__title">Web制作期・コーポレートサイト多数</h3>
+					<p class="productsItem__subtitle">Web制作会社にて · 数十〜数百ページ規模の案件</p>
+					<ul class="productsItem__meta">
+						<li class="productsItem__meta--item">業務 · 2年半</li>
+						<li class="productsItem__meta--item">受託制作</li>
+					</ul>
+				</div><!-- /.productsItem__visual -->
+				<div class="productsItem__body" data-lenis-prevent>
+					<div class="productsItem__text">
+						<p>キャリア最初のエンジニア職として、<strong>Web制作会社で2年半</strong>従事。新規コーディング・保守改修・後輩指導を担当しました。</p>
+						<ul>
+							<li><strong>数十〜数百ページ規模のコーポレートサイト制作</strong>を多数担当。デザインの忠実な再現とアクセシビリティの両立。</li>
+							<li><strong>WordPress を含むサイト構築</strong> — テーマ開発、カスタム投稿タイプ設計、Docker を活用したローカル開発環境の整備。</li>
+							<li><strong>制作フローの効率化</strong> — EJS / Webpack / SCSS の構成でテンプレート化、複数案件で再利用可能な土台を作った。</li>
+							<li><strong>後輩指導</strong> — コードレビューや実装方針の助言、教える立場としての経験(塾講師時代の素地が活きた)。</li>
+						</ul>
+						<p class="productsItem__highlight">マークアップ・ピクセルパーフェクトな実装の地力を作った時期</p>
+					</div><!-- /.productsItem__text -->
+					<div class="productsItem__block">
+						<p class="productsItem__block--label">TECH STACK</p>
+						<ul class="productsItem__techStack">
+							<li class="productsItem__techStack--item -hot">HTML / CSS</li>
+							<li class="productsItem__techStack--item -hot">SCSS</li>
+							<li class="productsItem__techStack--item">JavaScript</li>
+							<li class="productsItem__techStack--item">EJS</li>
+							<li class="productsItem__techStack--item">Webpack</li>
+							<li class="productsItem__techStack--item">WordPress</li>
+							<li class="productsItem__techStack--item">Docker</li>
+						</ul>
+					</div><!-- /.productsItem__block -->
+				</div><!-- /.productsItem__body -->
+			</section><!-- /.productsItem -->
+			<section class="productsItem -personal js-scrani js-productsSnapItem">
+				<div class="productsItem__visual">
+					<p class="productsItem__num">04</p>
+					<div class="productsItem__gallery js-productsGallery">
+						<picture class="productsItem__gallery--pic js-productsGalleryImg --is-current">
+							<source srcset="<%= root %>assets/img/products/holo/01.webp" type="image/webp">
+							<img src="<%= root %>assets/img/products/holo/01.png" alt="ホロライブコメント検索・検索結果画面">
+						</picture>
+						<picture class="productsItem__gallery--pic js-productsGalleryImg">
+							<source srcset="<%= root %>assets/img/products/holo/02.webp" type="image/webp">
+							<img src="<%= root %>assets/img/products/holo/02.png" alt="ホロライブコメント検索・動画詳細画面">
+						</picture>
+						<picture class="productsItem__gallery--pic js-productsGalleryImg">
+							<source srcset="<%= root %>assets/img/products/holo/03.webp" type="image/webp">
+							<img src="<%= root %>assets/img/products/holo/03.png" alt="ホロライブコメント検索・チャット一覧画面">
+						</picture>
+					</div>
+					<p class="productsItem__badge -personal">個人開発</p>
+					<h3 class="productsItem__title">ホロライブコメント検索</h3>
+					<p class="productsItem__subtitle">配信ライブチャットの横断検索サービス · Claude Codeと協働で1週間</p>
+					<ul class="productsItem__meta">
+						<li class="productsItem__meta--item">個人開発 · 1 week</li>
+						<li class="productsItem__meta--item">公開・運用中</li>
+					</ul>
+				</div><!-- /.productsItem__visual -->
+				<div class="productsItem__body" data-lenis-prevent>
+					<div class="productsItem__text">
+						<p>ホロライブ所属メンバーのYouTube配信ライブチャットを横断キーワード検索できるファンメイドツール。<strong>Claude Codeとの協働で1週間で立ち上げ</strong>、運用中も改善を続けています。</p>
+						<ul>
+							<li><strong>AWS + Cloudflare 構成の設計と実装</strong> — バックエンドは OpenSearch を中心に Lambda + API Gateway で検索API・データ取得処理を構築、フロントエンドは Cloudflare にデプロイ。個人プロジェクトでもインフラまで自分で組んだ。</li>
+							<li><strong>検索パフォーマンス改善をAIと協働</strong> — レスポンスを早くするためのインデックス設計・クエリ最適化を、Claude Codeと議論しながら反復改善。</li>
+							<li><strong>盛り上がりハイライトの自動抽出</strong> — 配信ごとにコメント密度が最も集中した瞬間 TOP 5 を抽出する仕組み。</li>
+							<li><strong>コメント密度ヒートマップ</strong> — 配信全体の盛り上がりを時系列で可視化。</li>
+							<li>期間・チャンネル絞り込み、時刻クリックで該当箇所へジャンプ、独自ドメイン運用、支援導線の設計まで。</li>
+						</ul>
+						<p class="productsItem__highlight"><strong>AI協働開発のリアルケース：</strong>2年前の個人開発（コレミナ）と比較して、立ち上げ速度・実装範囲の両面で<strong>大幅な変化</strong>を実感したプロジェクト。AIをどう使うかの感覚を実プロダクトで養った。</p>
+					</div><!-- /.productsItem__text -->
+					<div class="productsItem__block">
+						<p class="productsItem__block--label">TECH STACK</p>
+						<ul class="productsItem__techStack">
+							<li class="productsItem__techStack--item -hot">Next.js</li>
+							<li class="productsItem__techStack--item -hot">TypeScript</li>
+							<li class="productsItem__techStack--item -hot">AWS</li>
+							<li class="productsItem__techStack--item">OpenSearch</li>
+							<li class="productsItem__techStack--item">Lambda</li>
+							<li class="productsItem__techStack--item">API Gateway</li>
+							<li class="productsItem__techStack--item">Cloudflare</li>
+							<li class="productsItem__techStack--item">YouTube API</li>
+							<li class="productsItem__techStack--item">Claude Code</li>
+						</ul>
+					</div><!-- /.productsItem__block -->
+					<div class="productsItem__block">
+						<p class="productsItem__block--label">LINKS</p>
+						<ul class="productsItem__links">
+							<li class="productsItem__links--item">
+								<a class="productsItem__links--link" href="https://www.holo-comment.com/" target="_blank" rel="noopener noreferrer">holo-comment.com</a>
+							</li>
+						</ul>
+					</div><!-- /.productsItem__block -->
+				</div><!-- /.productsItem__body -->
+			</section><!-- /.productsItem -->
+			<section class="productsItem -personal js-scrani js-productsSnapItem">
+				<div class="productsItem__visual">
+					<p class="productsItem__num">05</p>
+					<div class="productsItem__gallery js-productsGallery">
+						<picture class="productsItem__gallery--pic js-productsGalleryImg --is-current">
+							<source srcset="<%= root %>assets/img/products/koremina/01.webp" type="image/webp">
+							<img src="<%= root %>assets/img/products/koremina/01.png" alt="コレミナ・トップページ">
+						</picture>
+						<picture class="productsItem__gallery--pic js-productsGalleryImg">
+							<source srcset="<%= root %>assets/img/products/koremina/02.webp" type="image/webp">
+							<img src="<%= root %>assets/img/products/koremina/02.png" alt="コレミナ・動画詳細画面">
+						</picture>
+						<picture class="productsItem__gallery--pic js-productsGalleryImg">
+							<source srcset="<%= root %>assets/img/products/koremina/03.webp" type="image/webp">
+							<img src="<%= root %>assets/img/products/koremina/03.png" alt="コレミナ・マイページ画面">
+						</picture>
+					</div>
+					<p class="productsItem__badge -personal">個人開発</p>
+					<h3 class="productsItem__title">コレミナ</h3>
+					<p class="productsItem__subtitle">にじさんじ非公式・おすすめ動画共有サービス</p>
+					<ul class="productsItem__meta">
+						<li class="productsItem__meta--item">個人開発 · 2 months</li>
+						<li class="productsItem__meta--item">1,400件超の投稿</li>
+					</ul>
+				</div><!-- /.productsItem__visual -->
+				<div class="productsItem__body" data-lenis-prevent>
+					<div class="productsItem__text">
+						<p>にじさんじ所属ライバーのおすすめ動画を、ファン同士で共有するためのWebサービス。<strong>エンジニア歴1年半時点、AIなしで自力で2ヶ月かけて作りきった</strong>初の本格的な個人プロダクトです。</p>
+						<ul>
+							<li><strong>Auth.js (旧 NextAuth.js) でログイン機能を実装</strong>。投稿・リアクション・ブックマーク・推しライバーの設定等のユーザー固有機能を構築。</li>
+							<li>動画投稿、ライバーでの絞り込み、ワード検索、ランダム表示、リアクション機能、ブックマーク機能を実装。</li>
+							<li><strong>Pick Up!（12時間ごと更新）</strong>、誕生日ライバーの自動表示、新着投稿のメール通知など、運用視点の機能を継続追加。</li>
+							<li>当時は<strong>Next.js / Prisma / shadcn/ui を公式ドキュメントを読み込みながら独学</strong>。AIに頼らず自力で構築したことで、フレームワークの動作原理を深く理解できた。</li>
+							<li>公開後も継続運用中、コミュニティ内で利用され続けているプロダクト。</li>
+						</ul>
+					</div><!-- /.productsItem__text -->
+					<div class="productsItem__block">
+						<p class="productsItem__block--label">TECH STACK</p>
+						<ul class="productsItem__techStack">
+							<li class="productsItem__techStack--item -hot">Next.js</li>
+							<li class="productsItem__techStack--item -hot">TypeScript</li>
+							<li class="productsItem__techStack--item">Prisma</li>
+							<li class="productsItem__techStack--item">Neon (PostgreSQL)</li>
+							<li class="productsItem__techStack--item">Auth.js</li>
+							<li class="productsItem__techStack--item">shadcn/ui</li>
+							<li class="productsItem__techStack--item">Vercel</li>
+						</ul>
+					</div><!-- /.productsItem__block -->
+					<div class="productsItem__block">
+						<p class="productsItem__block--label">LINKS</p>
+						<ul class="productsItem__links">
+							<li class="productsItem__links--item">
+								<a class="productsItem__links--link" href="https://koremina.vercel.app/" target="_blank" rel="noopener noreferrer">koremina.vercel.app</a>
+							</li>
+							<li class="productsItem__links--item">
+								<a class="productsItem__links--link" href="https://github.com/HiroshiIgarash/koremina" target="_blank" rel="noopener noreferrer">github.com/HiroshiIgarash/koremina</a>
+							</li>
+						</ul>
+					</div><!-- /.productsItem__block -->
+				</div><!-- /.productsItem__body -->
+			</section><!-- /.productsItem -->
+		</div>
+		<!-- END .productsSnap -->
+	</article><!-- /.subArticle -->
+	<nav class="productsDotNav js-productsDotNav">
+		<ul class="productsDotNav__lists">
+			<li class="productsDotNav__item">
+				<button type="button" class="productsDotNav__link js-productsDotNavBtn --is-current" data-snap-index="0">
+					<span class="hd">イントロへ移動</span>
+				</button>
+			</li>
+			<li class="productsDotNav__item">
+				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="1">
+					<span class="hd">タテマンガ投稿Webサービスへ移動</span>
+				</button>
+			</li>
+			<li class="productsDotNav__item">
+				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="2">
+					<span class="hd">コーポレートサイトリニューアルへ移動</span>
+				</button>
+			</li>
+			<li class="productsDotNav__item">
+				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="3">
+					<span class="hd">Web制作期へ移動</span>
+				</button>
+			</li>
+			<li class="productsDotNav__item">
+				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="4">
+					<span class="hd">ホロライブコメント検索へ移動</span>
+				</button>
+			</li>
+			<li class="productsDotNav__item">
+				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="5">
+					<span class="hd">コレミナへ移動</span>
+				</button>
+			</li>
+		</ul>
+	</nav><!-- /.productsDotNav -->
+</main>
+<%- include('../../_inc/_footer', { root: root }) -%>
+</div>
+<!-- END #fullWrap -->
+
+<%- include('../../_inc/_modal', { root: root }) -%>
+<%- include('../../_inc/_scripts', { root: root, pageJs: pageJs }) -%>
+</body>
+</html>

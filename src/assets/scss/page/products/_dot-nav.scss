@@ -1,0 +1,45 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * PRODUCTS DOT NAV
+-------------------------------------------------*/
+/**
+ * productsDotNav
+ */
+.productsDotNav {
+	position: fixed;
+	top: 50%;
+	right: vwmin(32);
+	transform: translateY(-50%);
+	z-index: 100;
+	@include sp {
+		display: none;
+	}
+}
+.productsDotNav__lists {
+	display: flex;
+	flex-direction: column;
+	gap: vwmin(16);
+}
+.productsDotNav__link {
+	display: block;
+	width: vwmin(10);
+	height: vwmin(10);
+	padding: 0;
+	border: none;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, .35);
+	cursor: pointer;
+}
+.productsDotNav__link.--is-current {
+	background: var(--color-cyan);
+	transform: scale(1.4);
+}
+@include hover {
+	.productsDotNav__link {
+		transition: background-color .3s ease, transform .3s ease;
+	}
+	.productsDotNav__link:hover {
+		background: rgba(255, 255, 255, .7);
+	}
+}
