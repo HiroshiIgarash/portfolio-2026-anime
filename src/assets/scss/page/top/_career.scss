@@ -510,90 +510,34 @@
 	width: 100%;
 	height: 100%;
 	border-radius: 50%;
-	background-color: var(--color-purple);
-	clip-path: polygon(50% 50%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 50% 0%);
+	background-color: var(--color-blue);
+	clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 0% 100%, 0% 0%, 50% 0%);
 	box-shadow: 0 vwmin(8) vwmin(24) rgba(20, 33, 61, .12);
 }
 .career__item--deco[data-deco-shape="triangle"] {
-	width: vwmin(168);
-	height: vwmin(144);
+	width: vwmin(144);
+	height: vwmin(168);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 
 	@include sp {
-		width: vw(96);
-		height: vw(84);
+		width: vw(84);
+		height: vw(96);
 	}
 }
 .career__item--deco[data-deco-shape="triangle"]::before {
 	content: "";
 	width: 0;
 	height: 0;
-	border-left: vwmin(84) solid transparent;
-	border-right: vwmin(84) solid transparent;
-	border-bottom: vwmin(144) solid var(--color-violet);
+	border-top: vwmin(84) solid transparent;
+	border-bottom: vwmin(84) solid transparent;
+	border-left: vwmin(144) solid var(--color-skyblue);
 	filter: drop-shadow(0 vwmin(6) vwmin(12) rgba(20, 33, 61, .16));
 
 	@include sp {
-		border-left-width: vw(48);
-		border-right-width: vw(48);
-		border-bottom-width: vw(84);
-	}
-}
-/**
- * career__item--deco 常時ふわふわ浮遊
- * スクロール視差（GSAPが.js-careerDeco自体のtransformを操作）とは別レイヤーで
- * 常に上下に揺れ続けるアニメーションを子要素/疑似要素に付与する。
- * animation-delayは.career__item--deco自体に持たせ、子側はinheritで受け取ることで、
- * 同じ形状(circle/triangle等)が複数あっても項目ごとに位相をずらせる
- */
-@keyframes careerDecoFloat {
-	0%, 100% { transform: translateY(0); }
-	50% { transform: translateY(vwmin(-16)); }
-}
-@keyframes careerDecoFloatSp {
-	0%, 100% { transform: translateY(0); }
-	50% { transform: translateY(vw(-10)); }
-}
-.career__item--deco {
-	animation-delay: 0s;
-}
-.career__item:nth-child(2) .career__item--deco { animation-delay: -.6s; }
-.career__item:nth-child(3) .career__item--deco { animation-delay: -1.2s; }
-.career__item:nth-child(4) .career__item--deco { animation-delay: -1.8s; }
-.career__item:nth-child(5) .career__item--deco { animation-delay: -2.4s; }
-.career__item:nth-child(6) .career__item--deco { animation-delay: -3s; }
-
-.career__item--deco.-image:not([data-deco-panel]) picture {
-	animation: careerDecoFloat 3.6s ease-in-out infinite;
-	animation-delay: inherit;
-
-	@include sp {
-		animation-name: careerDecoFloatSp;
-	}
-}
-.career__item--deco[data-deco-panel] picture {
-	animation: careerDecoFloat 4.2s ease-in-out infinite;
-	animation-delay: inherit;
-
-	@include sp {
-		animation-name: careerDecoFloatSp;
-	}
-}
-.career__item--deco[data-deco-shape="circle"]::before {
-	animation: careerDecoFloat 3.8s ease-in-out infinite;
-	animation-delay: inherit;
-
-	@include sp {
-		animation-name: careerDecoFloatSp;
-	}
-}
-.career__item--deco[data-deco-shape="triangle"]::before {
-	animation: careerDecoFloat 4.4s ease-in-out infinite;
-	animation-delay: inherit;
-
-	@include sp {
-		animation-name: careerDecoFloatSp;
+		border-top-width: vw(48);
+		border-bottom-width: vw(48);
+		border-left-width: vw(96);
 	}
 }
