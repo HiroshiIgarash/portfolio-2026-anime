@@ -13,6 +13,8 @@ function setLoadingProgress(value) {
 
 const loadingIntroTl = gsap.timeline();
 
+$('body').addClass('--is-loading');
+
 loadingIntroTl.to(loadingProgress, {
 	value: 90,
 	duration: 1.5,
@@ -45,8 +47,14 @@ loadingIntroTl.to(loadingProgress, {
 	}, .2);
 
 function finishLoading() {
-	$('body').addClass('--is-loading');
+	if (loadingIntroTl.progress() < 1) {
+		loadingIntroTl.eventCallback('onComplete', snapProgressToComplete);
+	} else {
+		snapProgressToComplete();
+	}
+}
 
+function snapProgressToComplete() {
 	gsap.to(loadingProgress, {
 		value: 100,
 		duration: .2,
