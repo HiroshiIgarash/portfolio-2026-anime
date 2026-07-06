@@ -102,6 +102,67 @@ const pageJs = 'products';
 					</div><!-- /.productsItem__block -->
 				</div><!-- /.productsItem__body -->
 			</section>
+			<section class="productsItem -personal js-scrani js-productsSnapItem" data-products-index="4">
+				<div class="productsItem__visual">
+					<p class="productsItem__num">04</p>
+					<div class="productsItem__gallery js-productsGallery">
+						<picture class="productsItem__gallery--pic js-productsGalleryImg --is-current">
+							<source srcset="<%= root %>assets/img/products/holo/01.webp" type="image/webp">
+							<img src="<%= root %>assets/img/products/holo/01.png" alt="ホロライブコメント検索・検索結果画面">
+						</picture>
+						<picture class="productsItem__gallery--pic js-productsGalleryImg">
+							<source srcset="<%= root %>assets/img/products/holo/02.webp" type="image/webp">
+							<img src="<%= root %>assets/img/products/holo/02.png" alt="ホロライブコメント検索・動画詳細画面">
+						</picture>
+						<picture class="productsItem__gallery--pic js-productsGalleryImg">
+							<source srcset="<%= root %>assets/img/products/holo/03.webp" type="image/webp">
+							<img src="<%= root %>assets/img/products/holo/03.png" alt="ホロライブコメント検索・チャット一覧画面">
+						</picture>
+					</div>
+					<p class="productsItem__badge -personal">個人開発</p>
+					<h3 class="productsItem__title">ホロライブコメント検索</h3>
+					<p class="productsItem__subtitle">配信ライブチャットの横断検索サービス · Claude Codeと協働で1週間</p>
+					<ul class="productsItem__meta">
+						<li class="productsItem__meta--item">個人開発 · 1 week</li>
+						<li class="productsItem__meta--item">公開・運用中</li>
+					</ul>
+				</div><!-- /.productsItem__visual -->
+				<div class="productsItem__body">
+					<div class="productsItem__text">
+						<p>ホロライブ所属メンバーのYouTube配信ライブチャットを横断キーワード検索できるファンメイドツール。<strong>Claude Codeとの協働で1週間で立ち上げ</strong>、運用中も改善を続けています。</p>
+						<ul>
+							<li><strong>AWS + Cloudflare 構成の設計と実装</strong> — バックエンドは OpenSearch を中心に Lambda + API Gateway で検索API・データ取得処理を構築、フロントエンドは Cloudflare にデプロイ。個人プロジェクトでもインフラまで自分で組んだ。</li>
+							<li><strong>検索パフォーマンス改善をAIと協働</strong> — レスポンスを早くするためのインデックス設計・クエリ最適化を、Claude Codeと議論しながら反復改善。</li>
+							<li><strong>盛り上がりハイライトの自動抽出</strong> — 配信ごとにコメント密度が最も集中した瞬間 TOP 5 を抽出する仕組み。</li>
+							<li><strong>コメント密度ヒートマップ</strong> — 配信全体の盛り上がりを時系列で可視化。</li>
+							<li>期間・チャンネル絞り込み、時刻クリックで該当箇所へジャンプ、独自ドメイン運用、支援導線の設計まで。</li>
+						</ul>
+						<p class="productsItem__highlight"><strong>AI協働開発のリアルケース：</strong>2年前の個人開発（コレミナ）と比較して、立ち上げ速度・実装範囲の両面で<strong>大幅な変化</strong>を実感したプロジェクト。AIをどう使うかの感覚を実プロダクトで養った。</p>
+					</div><!-- /.productsItem__text -->
+					<div class="productsItem__block">
+						<p class="productsItem__block--label">TECH STACK</p>
+						<ul class="productsItem__techStack">
+							<li class="productsItem__techStack--item -hot">Next.js</li>
+							<li class="productsItem__techStack--item -hot">TypeScript</li>
+							<li class="productsItem__techStack--item -hot">AWS</li>
+							<li class="productsItem__techStack--item">OpenSearch</li>
+							<li class="productsItem__techStack--item">Lambda</li>
+							<li class="productsItem__techStack--item">API Gateway</li>
+							<li class="productsItem__techStack--item">Cloudflare</li>
+							<li class="productsItem__techStack--item">YouTube API</li>
+							<li class="productsItem__techStack--item">Claude Code</li>
+						</ul>
+					</div><!-- /.productsItem__block -->
+					<div class="productsItem__block">
+						<p class="productsItem__block--label">LINKS</p>
+						<ul class="productsItem__links">
+							<li class="productsItem__links--item">
+								<a href="https://www.holo-comment.com/" target="_blank" rel="noopener noreferrer">holo-comment.com</a>
+							</li>
+						</ul>
+					</div><!-- /.productsItem__block -->
+				</div><!-- /.productsItem__body -->
+			</section>
 		</div>
 		<!-- END .productsSnap -->
 	</article><!-- /.subArticle -->
@@ -115,6 +176,11 @@ const pageJs = 'products';
 			<li class="productsDotNav__item">
 				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="1">
 					<span class="hd">タテマンガ投稿Webサービスへ移動</span>
+				</button>
+			</li>
+			<li class="productsDotNav__item">
+				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="4">
+					<span class="hd">ホロライブコメント検索へ移動</span>
 				</button>
 			</li>
 		</ul>

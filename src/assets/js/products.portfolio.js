@@ -46,3 +46,17 @@ $('.js-productsDotNavBtn').on('click', function () {
 		lenis.scrollTo(target, { duration: 1 });
 	}
 });
+
+/*-----------------------------------------------
+ * PRODUCTS - Gallery Auto Fade
+-------------------------------------------------*/
+$('.js-productsGallery').each(function () {
+	const $pics = $(this).find('.js-productsGalleryImg');
+	if ($pics.length < 2) return;
+	let current = 0;
+	setInterval(function () {
+		$pics.eq(current).removeClass('--is-current');
+		current = (current + 1) % $pics.length;
+		$pics.eq(current).addClass('--is-current');
+	}, 3500);
+});
