@@ -205,9 +205,10 @@ let footerBendActive = false;
 if (footerBendPath && footerEl) {
 	const BEND_SENSITIVITY = 1000;  // velocity -> 振幅の倍率（実測でLenisのvelocityが0.01〜0.1程度と判明。大きめ初期値、確認しながら弱める）
 	const BEND_MAX = 50;            // 振幅の最大値（px、viewBox座標系）
-	const VELOCITY_IGNORE = 0.005;  // これ未満のvelocityは慣性の残り香とみなし無視する（releaseBendのelastic揺れを妨げないため）
+	const RELEASE_DELAY = 60;       // wheel/touch入力が止んでからreleaseBendを始めるまでの遅延(ms)。実際のwheelイベント間隔より短いと常に「止まった」と誤判定してしまう
 	const bendState = { v: 0 };     // gsap.toのtween対象を固定オブジェクトにし、overwriteを確実に効かせる
 	let bendIdleTimer = null;
+	let inputActive = false;        // Lenisの慣性減衰でなく実際のwheel/touch入力の有無で判定する
 
 	const setBendPath = (amount) => {
 		const y = 30 + amount;
@@ -233,10 +234,19 @@ if (footerBendPath && footerEl) {
 	}, { rootMargin: '0px 0px 200px 0px' });
 	bendObserver.observe(footerEl);
 
-	lenis.on('scroll', (e) => {
-		if (!footerBendActive) return;
-		if (Math.abs(e.velocity) < VELOCITY_IGNORE) return;
+	const onInputEvent = () => {
+		inputActive = true;
 		clearTimeout(bendIdleTimer);
+		bendIdleTimer = setTimeout(() => {
+			inputActive = false;
+			releaseBend();
+		}, RELEASE_DELAY);
+	};
+	window.addEventListener('wheel', onInputEvent, { passive: true });
+	window.addEventListener('touchmove', onInputEvent, { passive: true });
+
+	lenis.on('scroll', (e) => {
+		if (!footerBendActive || !inputActive) return;
 		const target = gsap.utils.clamp(-BEND_MAX, BEND_MAX, e.velocity * BEND_SENSITIVITY);
 		gsap.to(bendState, {
 			v: target,
@@ -245,6 +255,5 @@ if (footerBendPath && footerEl) {
 			overwrite: true,
 			onUpdate: () => setBendPath(bendState.v),
 		});
-		bendIdleTimer = setTimeout(releaseBend, 10);
 	});
 }
