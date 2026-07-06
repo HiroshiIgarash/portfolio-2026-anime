@@ -300,7 +300,7 @@ projectsSwiper.on('realIndexChange', function () {
 /**
  * 円のscaleを GSAP ScrollTrigger の自動 start/end 推定に任せると、手前の bgStage(pin) の
  * レイアウトや画面サイズの影響で scale が 1 まで届かず、円が最大まで拡大しないことがある。
- * そこで .skillsFill / .careerFill の実位置(getBoundingClientRect)から直接 scale を計算し、
+ * そこで .skillsFill の実位置(getBoundingClientRect)から直接 scale を計算し、
  * 確実に 0→1（= 直径250vmax = 全画面被覆）まで拡大させる。
  * top が画面下端(vh)のとき scale0、画面上端(0)のとき scale1。上端を越えたら 1 で保持。
  */
@@ -420,15 +420,9 @@ $('.js-skillsNext').on('click', function () {
 });
 
 /*-----------------------------------------------
- * SKILLS -> CAREER - White Circle Transition
- * .skillsFill と同一。下から白円が湧き出て覆いきったら #career をフェード表示する
--------------------------------------------------*/
-setupFillCircle('.careerFill', '.js-careerCircle', '#career', 0.4);
-
-/*-----------------------------------------------
- * CAREER - Item Text Stagger Reveal
- * career__head同様、career__itemも.js-scrani(既存のIntersectionObserver監視)で
- * --is-ani付与。個別ScrollTrigger実装は不要
+ * CAREER - Heading / Item Text Stagger Reveal
+ * career本体・career__head・career__itemはいずれも.js-scrani(既存の
+ * IntersectionObserver監視)で--is-ani付与。個別ScrollTrigger実装は不要
 -------------------------------------------------*/
 
 /*-----------------------------------------------

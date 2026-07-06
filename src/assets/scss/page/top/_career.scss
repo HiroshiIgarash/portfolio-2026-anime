@@ -5,69 +5,27 @@
 -------------------------------------------------*/
 /**
  * career
- * .careerFill 内で円（.careerFill__bgTrack, z-index:0）より手前（z-index:1）に置く下地。
+ * SKILLSの直後に続く通常セクション。見出し・各itemは他セクション同様
+ * .js-scrani(IntersectionObserver)でフェードインする。
+ * z-index:2は.skillsFill(z-index:2、PROJECTS→SKILLS白円が全画面被覆したまま
+ * position:absoluteで居座り続ける)より確実に手前に出すために必要
+ * （同値でもDOM順序で.skillsFillより後にあるため前面に出るが、明示しておく）。
  */
 .career {
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 	min-height: 100vh;
 	padding: vwmin(160) 0;
 	background-color: var(--color-white);
-	/* 円が覆いきるまでは opacity:0 で隠す。覆いきったらJSが.--coveredを付けフェード表示する */
 	opacity: 0;
-	transition: opacity .3s ease;
+	transition: opacity .6s ease;
 
 	@include sp {
 		padding: vw(160) 0;
 	}
 }
-.career.--covered {
+.career.--is-ani {
 	opacity: 1;
-}
-
-/**
- * careerFill
- * SKILLS→CAREERの白円トランジション（.skillsFillと同一構造）。
- */
-.careerFill {
-	position: relative;
-	z-index: 2;
-	margin-top: -70vh;
-	overflow-x: clip;
-	overflow-y: visible;
-}
-.careerFill__bgTrack {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	overflow-x: clip;
-	overflow-y: visible;
-	z-index: 0;
-	pointer-events: none;
-}
-.careerFill__bg {
-	position: sticky;
-	top: 0;
-	width: 100%;
-	height: 100vh;
-}
-.careerFill__circle {
-	position: absolute;
-	left: 50%;
-	top: 140%;
-	width: 250vmax;
-	height: 250vmax;
-	margin-left: -125vmax;
-	margin-top: -125vmax;
-	border-radius: 50%;
-	background-color: var(--color-white);
-	transform: scale(0);
-	transform-origin: center;
-}
-.careerFill__spacer {
-	height: 50vh;
 }
 
 /**
