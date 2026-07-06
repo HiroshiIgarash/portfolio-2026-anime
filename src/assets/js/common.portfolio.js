@@ -8,6 +8,32 @@ const spOnly = window.matchMedia('(max-width: 768px)');
 
 
 /*-----------------------------------------------
+ * PAGE TRANSITION
+-------------------------------------------------*/
+const pageTransitionCircleA = document.querySelector('.js-pageTransitionCircleA');
+const pageTransitionCircleB = document.querySelector('.js-pageTransitionCircleB');
+
+window.__pageTransitionClosed = false;
+
+gsap.timeline({
+	onComplete: function () {
+		window.__pageTransitionClosed = true;
+		document.dispatchEvent(new CustomEvent('pageTransitionClosed'));
+	},
+})
+	.to(pageTransitionCircleB, {
+		scale: 0,
+		duration: .5,
+		ease: 'power2.out',
+	}, 0)
+	.to(pageTransitionCircleA, {
+		scale: 0,
+		duration: .5,
+		ease: 'power2.out',
+	}, .12);
+
+
+/*-----------------------------------------------
  * COMMON
 -------------------------------------------------*/
 $(function(){
