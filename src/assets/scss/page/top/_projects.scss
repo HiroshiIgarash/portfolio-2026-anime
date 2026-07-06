@@ -320,7 +320,6 @@
 	text-decoration: none;
 	position: relative;
 	overflow: hidden;
-	transition: color .3s ease, transform .3s ease, box-shadow .3s ease;
 }
 .projects__more--btn::before {
 	content: "";
@@ -333,7 +332,6 @@
 	background-image: linear-gradient(#fff, #fff);
 	background-size: 0% 100%;
 	background-position: right bottom;
-	transition: background-size .4s ease;
 }
 .projects__more--btnTxt {
 	display: inline-block;
@@ -352,7 +350,6 @@
 	mask-composite: exclude;
 	opacity: 0;
 	pointer-events: none;
-	transition: opacity .3s ease;
 }
 @keyframes ani_rotate {
 	to {
@@ -360,6 +357,15 @@
 	}
 }
 @include hover {
+	.projects__more--btn {
+		transition: color .3s ease, transform .3s ease, box-shadow .3s ease;
+	}
+	.projects__more--btn::before {
+		transition: background-size .4s ease;
+	}
+	.projects__more--btn::after {
+		transition: opacity .3s ease;
+	}
 	.projects__more--btn:hover {
 		color: var(--color-navy);
 		transform: scale(1.05);

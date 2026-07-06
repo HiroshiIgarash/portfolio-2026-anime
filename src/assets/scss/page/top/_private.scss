@@ -1,0 +1,429 @@
+@use "../../global/mixins" as *;
+
+@property --private-more-border-angle {
+	syntax: '<angle>';
+	initial-value: 0deg;
+	inherits: false;
+}
+
+/*-----------------------------------------------
+ * PRIVATE
+-------------------------------------------------*/
+/**
+ * private
+ * CAREERの下に配置する趣味紹介セクション。導入シークエンス（pin）→Swiperギャラリーの2部構成
+ */
+.private {
+	position: relative;
+	background-color: var(--color-white);
+}
+
+/**
+ * private__pin
+ * ScrollTriggerでpinされる領域。導入シークエンス中はビューポート全体を占有する
+ */
+.private__pin {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100vh;
+}
+
+/**
+ * private__pinBg
+ * pin解除後に表示する固定背景レイヤー。拡大しきったzoomと同じcover形状のcoding画像を
+ * position:fixedのビューポート全面要素として持ち、pin終端でzoomと差し替える（差し替えはJS）。
+ * background-attachment:fixedでなく要素自体をfixedにするのは、GSAP pinのtransform配下では
+ * attachment:fixedが無効化（scroll扱いに退化）されるためと、iOSでも動作させるため。
+ * galleryがビューポートを覆いきったらJSが消灯し、後続コンテンツ（footer等）を隠さない
+ */
+.private__pinBg {
+	position: fixed;
+	inset: 0;
+	z-index: 1;
+	opacity: 0;
+	pointer-events: none;
+	background-image: url(../img/top/private/coding.jpg);
+	background-size: cover;
+	background-position: center;
+	/* 拡大しきったzoom（brightness .55）およびgalleryのオーバーレイ(rgba(0,0,0,.45))と同輝度に揃える */
+	filter: brightness(.55);
+}
+
+/**
+ * private__head
+ * career__head同様、1文字ずつのフェード+スライドイン（PRIVATEの7文字分をnth-childで手書き連番）。
+ * pinせず通常フローの見出し（スクロールでそのまま流れる）
+ */
+.private__head {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	font-family: var(--font-en);
+	font-size: vwmin(88);
+	line-height: 1;
+	font-weight: 900;
+	letter-spacing: 0;
+	color: var(--color-navy);
+	padding: vwmin(120) 0 0;
+
+	@include sp {
+		font-size: vw(72);
+		padding: vw(100) 0 0;
+	}
+}
+.private__head--char {
+	display: inline-block;
+	overflow: hidden;
+}
+.private__head--charIn {
+	display: inline-block;
+	transform: translateY(110%);
+	opacity: 0;
+	transition: transform .6s ease, opacity .6s ease;
+}
+.private__head.--is-ani .private__head--charIn {
+	transform: translateY(0);
+	opacity: 1;
+}
+.private__head--char:nth-child(1) .private__head--charIn {
+	transition-delay: .08s;
+}
+.private__head--char:nth-child(2) .private__head--charIn {
+	transition-delay: .16s;
+}
+.private__head--char:nth-child(3) .private__head--charIn {
+	transition-delay: .24s;
+}
+.private__head--char:nth-child(4) .private__head--charIn {
+	transition-delay: .32s;
+}
+.private__head--char:nth-child(5) .private__head--charIn {
+	transition-delay: .4s;
+}
+.private__head--char:nth-child(6) .private__head--charIn {
+	transition-delay: .48s;
+}
+.private__head--char:nth-child(7) .private__head--charIn {
+	transition-delay: .56s;
+}
+
+/**
+ * private__float
+ * 導入シークエンスで画面下方から上部へ通過する2画像（walk / akabeko=-toy）。
+ * transform/opacityはJS（GSAP ScrollTrigger scrub）が上書きするためtransitionは付けない
+ */
+.private__float {
+	position: absolute;
+	top: vwmin(140);
+	width: vwmax(456);
+	opacity: 0;
+	will-change: transform, opacity;
+	z-index: 2;
+
+	@include sp {
+		top: vw(160);
+		width: vw(525);
+	}
+}
+.private__float img,
+.private__zoom img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+.private__zoom img {
+	border-radius: 8px;
+}
+.private__float.-walk {
+	right: vwmin(64);
+
+	@include sp {
+		right: vw(32);
+	}
+}
+.private__float.-toy {
+	left: vwmin(64);
+
+	@include sp {
+		left: vw(32);
+	}
+}
+
+/**
+ * private__zoom
+ * 中央→拡大→背景化する3枚目の画像（coding）。
+ * 中央寄せは親.private__pinのflexに任せ、transformはscaleのみをJS（GSAP）が与える
+ */
+.private__zoom {
+	width: vwmax(480);
+	opacity: 0;
+	will-change: transform, opacity;
+	z-index: 1;
+
+	@include sp {
+		width: vw(540);
+	}
+}
+
+/**
+ * private__gallery
+ * 背景にcoding画像を固定表示（pinのzoomからの視覚的連続）し、Swiperで趣味カードを一覧する。
+ * 1画面ぶんの高さを確保して固定背景→空のswiper→スライド登場の間を作る
+ */
+.private__gallery {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-height: 100vh;
+	padding: vwmin(120) 0;
+	background-image: url(../img/top/private/coding.jpg);
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+
+	@include sp {
+		padding: vw(120) 0;
+		background-attachment: scroll;
+	}
+}
+.private__gallery::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-color: rgba(0, 0, 0, .45);
+}
+
+/**
+ * private__swiper / private__slide
+ * 通常Swiper（effect:slide）。登場時のみGSAPで.private__slide--innerをstagger演出する
+ */
+.private__swiper {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	max-width: vwmin(1000);
+	margin: 0 auto;
+	overflow: hidden;
+}
+.private__slide {
+	width: 60%;
+	max-width: vwmin(560);
+
+	@include sp {
+		width: 80%;
+	}
+}
+.private__slide--inner {
+	/* 初期の傾き・オフセットはJSがgsap.setで与えるためtransformは固定しない */
+	will-change: transform, opacity;
+}
+.private__slide--inner img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 10px;
+}
+.private__slide--caption {
+	margin-top: vwmin(16);
+	text-align: center;
+	color: #fff;
+	font-weight: 700;
+
+	@include sp {
+		margin-top: vw(24);
+	}
+}
+
+/**
+ * private__swiper--pagination
+ * Swiper標準のbullet構造をそのまま使い、色のみギャラリー配色に合わせる
+ */
+.private__swiper--pagination {
+	position: relative;
+	margin-top: vwmin(40);
+	text-align: center;
+
+	@include sp {
+		margin-top: vw(40);
+	}
+}
+.private__swiper--pagination .swiper-pagination-bullet {
+	width: vwmin(10);
+	height: vwmin(10);
+	margin: 0 vwmin(6);
+	background-color: rgba(255, 255, 255, .4);
+	opacity: 1;
+
+	@include sp {
+		width: vw(14);
+		height: vw(14);
+		margin: 0 vw(8);
+	}
+}
+.private__swiper--pagination .swiper-pagination-bullet-active {
+	background-color: var(--color-teal);
+}
+
+/**
+ * private__more
+ * swiper下の「詳しくみる」ボタン。projects__more--btnと同型（白枠→ホバーで白塗り+回転ボーダー）を
+ * ギャラリー暗背景向けにそのまま流用する
+ */
+.private__more {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	justify-content: center;
+	margin-top: vwmin(64);
+
+	@include sp {
+		margin-top: vw(64);
+	}
+}
+.private__more--btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: vwmin(280);
+	height: vwmin(72);
+	border: 1px solid #fff;
+	border-radius: vwmin(36);
+	color: #fff;
+	font-size: vwmin(20);
+	letter-spacing: .05em;
+	text-decoration: none;
+	position: relative;
+	overflow: hidden;
+
+	@include sp {
+		width: vw(400);
+		height: vw(96);
+		font-size: vw(28);
+	}
+}
+.private__more--btn::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-repeat: no-repeat;
+	background-image: linear-gradient(#fff, #fff);
+	background-size: 0% 100%;
+	background-position: right bottom;
+}
+.private__more--btnTxt {
+	display: inline-block;
+	position: relative;
+}
+.private__more--btn::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: vwmin(3);
+	background: conic-gradient(from var(--private-more-border-angle), var(--color-teal) 0deg, var(--color-teal) 230deg, #fff 300deg, var(--color-teal) 360deg);
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask-composite: exclude;
+	opacity: 0;
+	pointer-events: none;
+}
+@keyframes ani_privateMoreRotate {
+	to {
+		--private-more-border-angle: 360deg;
+	}
+}
+@include hover {
+	.private__more--btn {
+		transition: color .3s ease, transform .3s ease, box-shadow .3s ease;
+	}
+	.private__more--btn::before {
+		transition: background-size .4s ease;
+	}
+	.private__more--btn::after {
+		transition: opacity .3s ease;
+	}
+	.private__more--btn:hover {
+		color: var(--color-navy);
+		transform: scale(1.05);
+		box-shadow: 0 0 vwmin(32) color-mix(in srgb, var(--color-teal) 60%, transparent);
+	}
+	.private__more--btn:hover::before {
+		background-size: 100% 100%;
+		background-position: left bottom;
+	}
+	.private__more--btn:hover::after {
+		opacity: 1;
+		animation: ani_privateMoreRotate 1.6s linear infinite;
+	}
+}
+
+/**
+ * private__nav
+ * ギャラリー左右のprev/nextボタン。skills__detail--prev/nextと同型の三角矢印を白背景版で流用
+ */
+.private__nav {
+	position: absolute;
+	top: 50%;
+	left: vwmin(24);
+	z-index: 2;
+	width: vwmin(64);
+	height: vwmin(64);
+	padding: 0;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	background: none;
+	cursor: pointer;
+	transform: translateY(-50%);
+
+	@include sp {
+		left: vw(12);
+		width: vw(72);
+		height: vw(72);
+	}
+}
+.private__nav::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: vwmin(10);
+	height: vwmin(10);
+	border-top: 2px solid #fff;
+	border-right: 2px solid #fff;
+
+	@include sp {
+		width: vw(12);
+		height: vw(12);
+	}
+}
+.private__nav.-prev::before {
+	transform: translate(-30%, -50%) rotate(-135deg);
+}
+.private__nav.-next {
+	left: auto;
+	right: vwmin(24);
+
+	@include sp {
+		right: vw(12);
+	}
+}
+.private__nav.-next::before {
+	transform: translate(-70%, -50%) rotate(45deg);
+}
+@include hover {
+	.private__nav {
+		transition: background-color .3s ease;
+	}
+	.private__nav:hover {
+		background-color: rgba(255, 255, 255, .15);
+	}
+}
