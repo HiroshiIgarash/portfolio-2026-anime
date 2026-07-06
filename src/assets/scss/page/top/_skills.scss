@@ -1,11 +1,5 @@
 @use "../../global/mixins" as *;
 
-@property --skills-more-border-angle {
-	syntax: '<angle>';
-	initial-value: 0deg;
-	inherits: false;
-}
-
 /*-----------------------------------------------
  * SKILLS
 -------------------------------------------------*/
@@ -369,87 +363,4 @@
 .skills__detail--text.--is-ani {
 	opacity: 1;
 	transform: translateY(0);
-}
-
-/**
- * skills__more
- * .projects__more--btn と同一構造だが白背景上のためnavy基調に反転
- */
-.skills__more {
-	display: flex;
-	justify-content: center;
-}
-.skills__more--btn {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: vwmin(280);
-	height: vwmin(72);
-	border: 1px solid var(--color-navy);
-	border-radius: vwmin(36);
-	color: var(--color-navy);
-	font-size: vwmin(20);
-	letter-spacing: .05em;
-	text-decoration: none;
-	position: relative;
-	overflow: hidden;
-	transition: color .3s ease, transform .3s ease, box-shadow .3s ease;
-
-	@include sp {
-		width: vw(400);
-		height: vw(96);
-		font-size: vw(28);
-	}
-}
-.skills__more--btn::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-repeat: no-repeat;
-	background-image: linear-gradient(var(--color-navy), var(--color-navy));
-	background-size: 0% 100%;
-	background-position: right bottom;
-	transition: background-size .4s ease;
-}
-.skills__more--btnTxt {
-	display: inline-block;
-	position: relative;
-}
-.skills__more--btn::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	border-radius: inherit;
-	padding: vwmin(3);
-	background: conic-gradient(from var(--skills-more-border-angle), var(--color-teal) 0deg, var(--color-teal) 230deg, var(--color-navy) 300deg, var(--color-teal) 360deg);
-	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	-webkit-mask-composite: xor;
-	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	mask-composite: exclude;
-	opacity: 0;
-	pointer-events: none;
-	transition: opacity .3s ease;
-}
-@keyframes ani_rotate_skillsMore {
-	to {
-		--skills-more-border-angle: 360deg;
-	}
-}
-@include hover {
-	.skills__more--btn:hover {
-		color: #fff;
-		transform: scale(1.05);
-		box-shadow: 0 0 vwmin(32) color-mix(in srgb, var(--color-teal) 60%, transparent);
-	}
-	.skills__more--btn:hover::before {
-		background-size: 100% 100%;
-		background-position: left bottom;
-	}
-	.skills__more--btn:hover::after {
-		opacity: 1;
-		animation: ani_rotate_skillsMore 1.6s linear infinite;
-	}
 }
