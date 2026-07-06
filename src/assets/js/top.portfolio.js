@@ -584,3 +584,41 @@ ScrollTrigger.create({
 		});
 	},
 });
+
+/*-----------------------------------------------
+ * PRIVATE - 導入シークエンス（pin + scrub）
+ * walk: 左→定位置 / toy: 右→定位置 / coding: 中央で拡大して背景化。
+ * pin する .private__pin の中で3画像を scrub 制御する。
+-------------------------------------------------*/
+(function setupPrivateIntro() {
+	const stage = document.querySelector('.js-privateStage');
+	const pin = document.querySelector('.js-privatePin');
+	if (!stage || !pin) return;
+
+	const tl = gsap.timeline({
+		scrollTrigger: {
+			trigger: stage,
+			start: 'top top',
+			end: '+=200%', // pin 区間の長さ（3画像ぶんのスクロール量）
+			scrub: true,
+			pin: pin,
+			invalidateOnRefresh: true,
+		},
+	});
+
+	// walk: 左外→定位置
+	tl.fromTo('.js-privateFloatA',
+		{ xPercent: -160, opacity: 0 },
+		{ xPercent: 0, opacity: 1, ease: 'none' }, 0.0);
+	// toy: 右外→定位置
+	tl.fromTo('.js-privateFloatB',
+		{ xPercent: 160, opacity: 0 },
+		{ xPercent: 0, opacity: 1, ease: 'none' }, 0.3);
+	// coding: 中央で拡大して背景化（中央寄せはCSS側のflexに任せ、GSAPはscaleのみを与える）
+	tl.fromTo('.js-privateZoom',
+		{ scale: 0.35, opacity: 0 },
+		{ scale: 2.4, opacity: 1, ease: 'none' }, 0.6);
+	// A/B を coding の拡大に合わせてフェードアウト
+	tl.to('.js-privateFloatA', { opacity: 0, ease: 'none' }, 0.6);
+	tl.to('.js-privateFloatB', { opacity: 0, ease: 'none' }, 0.6);
+})();
