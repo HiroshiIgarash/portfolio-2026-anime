@@ -1,0 +1,288 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * PRIVATE
+-------------------------------------------------*/
+/**
+ * private
+ * CAREERの下に配置する趣味紹介セクション。導入シークエンス（pin）→Swiperギャラリーの2部構成
+ */
+.private {
+	position: relative;
+	background-color: var(--color-white);
+}
+
+/**
+ * private__pin
+ * ScrollTriggerでpinされる領域。導入シークエンス中はビューポート全体を占有する
+ */
+.private__pin {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+}
+
+/**
+ * private__head
+ * career__head同様、1文字ずつのフェード+スライドイン（PRIVATEの7文字分をnth-childで手書き連番）
+ */
+.private__head {
+	position: absolute;
+	top: 12vh;
+	left: 50%;
+	z-index: 3;
+	display: flex;
+	font-family: var(--font-en);
+	font-size: vwmin(88);
+	line-height: 1;
+	font-weight: 900;
+	letter-spacing: 0;
+	color: var(--color-navy);
+	transform: translateX(-50%);
+
+	@include sp {
+		font-size: vw(72);
+		top: vw(120);
+	}
+}
+.private__head--char {
+	display: inline-block;
+	overflow: hidden;
+}
+.private__head--charIn {
+	display: inline-block;
+	transform: translateY(110%);
+	opacity: 0;
+	transition: transform .6s ease, opacity .6s ease;
+}
+.private__head.--is-ani .private__head--charIn {
+	transform: translateY(0);
+	opacity: 1;
+}
+.private__head--char:nth-child(1) .private__head--charIn {
+	transition-delay: .08s;
+}
+.private__head--char:nth-child(2) .private__head--charIn {
+	transition-delay: .16s;
+}
+.private__head--char:nth-child(3) .private__head--charIn {
+	transition-delay: .24s;
+}
+.private__head--char:nth-child(4) .private__head--charIn {
+	transition-delay: .32s;
+}
+.private__head--char:nth-child(5) .private__head--charIn {
+	transition-delay: .4s;
+}
+.private__head--char:nth-child(6) .private__head--charIn {
+	transition-delay: .48s;
+}
+.private__head--char:nth-child(7) .private__head--charIn {
+	transition-delay: .56s;
+}
+
+/**
+ * private__float
+ * 導入シークエンスで画面外から定位置へ移動する2画像（walk / akabeko=-toy）。
+ * transform/opacityはJS（GSAP ScrollTrigger scrub）が上書きするためtransitionは付けない
+ */
+.private__float {
+	position: absolute;
+	width: 38vw;
+	max-width: 640px;
+	opacity: 0;
+	will-change: transform, opacity;
+	z-index: 2;
+
+	@include sp {
+		width: 70vw;
+	}
+}
+.private__float img,
+.private__zoom img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+.private__float.-walk {
+	top: 0;
+	left: 0;
+}
+.private__float.-toy {
+	top: 0;
+	right: 0;
+}
+
+/**
+ * private__zoom
+ * 中央→拡大→背景化する3枚目の画像（coding）。中央基準のtranslate+scaleはJSが上書きする
+ */
+.private__zoom {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 40vw;
+	max-width: 680px;
+	opacity: 0;
+	will-change: transform, opacity;
+	transform: translate(-50%, -50%) scale(.35);
+	z-index: 1;
+
+	@include sp {
+		width: 72vw;
+		transform: translate(-50%, -50%) scale(.45);
+	}
+}
+
+/**
+ * private__gallery
+ * 背景にcoding画像を固定表示（pinのzoomからの視覚的連続）し、Swiperで趣味カードを一覧する
+ */
+.private__gallery {
+	position: relative;
+	padding: vwmin(120) 0;
+	background-image: url(../img/top/private/coding.jpg);
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+
+	@include sp {
+		padding: vw(120) 0;
+		background-attachment: scroll;
+	}
+}
+.private__gallery::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-color: rgba(0, 0, 0, .45);
+}
+
+/**
+ * private__swiper / private__slide
+ * 通常Swiper（effect:slide）。登場時のみGSAPで.private__slide--innerをstagger演出する
+ */
+.private__swiper {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	max-width: vwmin(1000);
+	margin: 0 auto;
+	overflow: hidden;
+}
+.private__slide {
+	width: 60%;
+	max-width: vwmin(560);
+
+	@include sp {
+		width: 80%;
+	}
+}
+.private__slide--inner {
+	/* 初期の傾き・オフセットはJSがgsap.setで与えるためtransformは固定しない */
+	will-change: transform, opacity;
+}
+.private__slide--inner img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 10px;
+}
+.private__slide--caption {
+	margin-top: 1em;
+	text-align: center;
+	color: #fff;
+	font-weight: 700;
+}
+
+/**
+ * private__swiper--pagination
+ * Swiper標準のbullet構造をそのまま使い、色のみギャラリー配色に合わせる
+ */
+.private__swiper--pagination {
+	position: relative;
+	margin-top: vwmin(40);
+	text-align: center;
+
+	@include sp {
+		margin-top: vw(40);
+	}
+}
+.private__swiper--pagination .swiper-pagination-bullet {
+	width: vwmin(10);
+	height: vwmin(10);
+	margin: 0 vwmin(6);
+	background-color: rgba(255, 255, 255, .4);
+	opacity: 1;
+
+	@include sp {
+		width: vw(14);
+		height: vw(14);
+		margin: 0 vw(8);
+	}
+}
+.private__swiper--pagination .swiper-pagination-bullet-active {
+	background-color: var(--color-teal);
+}
+
+/**
+ * private__nav
+ * ギャラリー左右のprev/nextボタン。skills__detail--prev/nextと同型の三角矢印を白背景版で流用
+ */
+.private__nav {
+	position: absolute;
+	top: 50%;
+	left: vwmin(24);
+	z-index: 2;
+	width: vwmin(64);
+	height: vwmin(64);
+	padding: 0;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	background: none;
+	cursor: pointer;
+	transform: translateY(-50%);
+	transition: background-color .3s ease;
+
+	@include sp {
+		left: vw(12);
+		width: vw(72);
+		height: vw(72);
+	}
+}
+.private__nav::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: vwmin(10);
+	height: vwmin(10);
+	border-top: 2px solid #fff;
+	border-right: 2px solid #fff;
+
+	@include sp {
+		width: vw(12);
+		height: vw(12);
+	}
+}
+.private__nav.-prev::before {
+	transform: translate(-30%, -50%) rotate(-135deg);
+}
+.private__nav.-next {
+	left: auto;
+	right: vwmin(24);
+
+	@include sp {
+		right: vw(12);
+	}
+}
+.private__nav.-next::before {
+	transform: translate(-70%, -50%) rotate(45deg);
+}
+@include hover {
+	.private__nav:hover {
+		background-color: rgba(255, 255, 255, .15);
+	}
+}
