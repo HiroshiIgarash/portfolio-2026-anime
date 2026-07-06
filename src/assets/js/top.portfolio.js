@@ -188,9 +188,11 @@ ScrollTrigger.create({
 	}),
 	onLeave: function () {
 		$('#skills').css('opacity', 1);
+		$('.js-skillsCircle').css('visibility', 'hidden');
 	},
 	onEnterBack: function () {
 		$('#skills').css('opacity', 0);
+		$('.js-skillsCircle').css('visibility', 'visible');
 	},
 });
 
@@ -264,8 +266,10 @@ ScrollTrigger.create({
 	}),
 	onLeave: function () {
 		$('#career').css('opacity', 1);
+		$('.js-careerCircle').css('visibility', 'hidden');
 	},
 	onEnterBack: function () {
 		$('#career').css('opacity', 0);
+		$('.js-careerCircle').css('visibility', 'visible');
 	},
 });

@@ -31,6 +31,8 @@
  * top:calc(100% + 45vh)で.aboutProjectsWrap下端（=SKILLS開始位置）より
  * さらに下に中心を置き、緩やかな弧を描くようにする
  * JS側のScrollTriggerでpinし、pin中は画面下中央に固定した状態でscaleする
+ * scale(40)まで拡大した状態がpin解除後も残るため、
+ * pointer-events:noneがないとSKILLSセクションのクリックを吸収してしまう
  */
 .skillsCircle {
 	position: absolute;
@@ -43,6 +45,7 @@
 	transform: translate(-50%, -50%) scale(0);
 	transform-origin: center;
 	z-index: 5;
+	pointer-events: none;
 }
 
 /**
