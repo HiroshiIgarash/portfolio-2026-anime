@@ -37,7 +37,12 @@ loadingIntroTl.to(loadingProgress, {
 		duration: .4,
 		stagger: .05,
 		ease: 'power2.out',
-	}, 1.2);
+	}, 1.2)
+	.to('.js-loadingSparkles', {
+		opacity: 1,
+		duration: .3,
+		ease: 'power1.out',
+	}, .2);
 
 function finishLoading() {
 	gsap.to(loadingProgress, {

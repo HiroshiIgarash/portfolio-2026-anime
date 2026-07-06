@@ -142,6 +142,26 @@
 	height: var(--size);
 	background-color: var(--sparkle-color);
 	clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
+	animation: ani_loading-sparkleFloat 2.4s ease-in-out var(--delay) infinite alternate,
+		ani_loading-sparkleSpin 6s linear var(--delay) infinite;
+}
+
+@keyframes ani_loading-sparkleFloat {
+	from {
+		translate: 0 0;
+	}
+	to {
+		translate: 0 -12px;
+	}
+}
+
+@keyframes ani_loading-sparkleSpin {
+	from {
+		rotate: 0deg;
+	}
+	to {
+		rotate: 360deg;
+	}
 }
 
 /**
