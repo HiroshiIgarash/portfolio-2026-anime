@@ -645,7 +645,7 @@ function setupPrivateSwiper() {
 	const initialInners = gsap.utils.toArray('.private__slide--inner');
 	gsap.set(initialInners, { xPercent: 120, rotationY: 35, opacity: 0, transformOrigin: 'left center' });
 
-	const privateSwiper = new Swiper('.js-privateSwiper', {
+	new Swiper('.js-privateSwiper', {
 		slidesPerView: 'auto',
 		centeredSlides: true,
 		spaceBetween: 24,
