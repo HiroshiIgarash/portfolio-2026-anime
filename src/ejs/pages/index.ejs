@@ -301,6 +301,65 @@ const pageJs = 'top';
 			</ol>
 		</div><!-- /.career__timeline -->
 	</section><!-- /#career -->
+	<section id="private" class="private js-privateStage">
+		<div class="private__pin js-privatePin">
+			<h2 class="private__head js-scrani">
+				<span class="private__head--char"><span class="private__head--charIn">P</span></span>
+				<span class="private__head--char"><span class="private__head--charIn">R</span></span>
+				<span class="private__head--char"><span class="private__head--charIn">I</span></span>
+				<span class="private__head--char"><span class="private__head--charIn">V</span></span>
+				<span class="private__head--char"><span class="private__head--charIn">A</span></span>
+				<span class="private__head--char"><span class="private__head--charIn">T</span></span>
+				<span class="private__head--char"><span class="private__head--charIn">E</span></span>
+			</h2>
+			<figure class="private__float -walk js-privateFloatA">
+				<picture>
+					<source srcset="<%= root %>assets/img/top/private/walk.webp" type="image/webp">
+					<img src="<%= root %>assets/img/top/private/walk.jpg" alt="散歩中の風景">
+				</picture>
+			</figure>
+			<figure class="private__float -toy js-privateFloatB">
+				<picture>
+					<source srcset="<%= root %>assets/img/top/private/akabeko.webp" type="image/webp">
+					<img src="<%= root %>assets/img/top/private/akabeko.jpg" alt="会津の郷土玩具 赤べこ">
+				</picture>
+			</figure>
+			<figure class="private__zoom js-privateZoom">
+				<picture>
+					<source srcset="<%= root %>assets/img/top/private/coding.webp" type="image/webp">
+					<img src="<%= root %>assets/img/top/private/coding.jpg" alt="コーディング中のデスク">
+				</picture>
+			</figure>
+		</div><!-- /.private__pin -->
+		<%
+		const privateList = [
+			{ img: 'walk',    alt: '散歩中の風景',        caption: '散歩' },
+			{ img: 'akabeko', alt: '会津の郷土玩具 赤べこ', caption: '出身地は会津' },
+			{ img: 'anime',   alt: 'VTuber配信を観る',     caption: 'VTuber' },
+			{ img: 'coding',  alt: 'コーディング',         caption: '個人開発' },
+		];
+		-%>
+		<div class="private__gallery">
+			<div class="private__swiper swiper js-privateSwiper">
+				<ul class="swiper-wrapper">
+					<% privateList.forEach(function (p) { -%>
+					<li class="private__slide swiper-slide">
+						<div class="private__slide--inner">
+							<picture>
+								<source srcset="<%= root %>assets/img/top/private/<%= p.img %>.webp" type="image/webp">
+								<img src="<%= root %>assets/img/top/private/<%= p.img %>.jpg" alt="<%= p.alt %>">
+							</picture>
+							<p class="private__slide--caption"><%= p.caption %></p>
+						</div>
+					</li>
+					<% }); -%>
+				</ul>
+				<div class="private__swiper--pagination js-privateSwiperPagination"></div>
+			</div><!-- /.private__swiper -->
+			<button type="button" class="private__nav -prev js-privateSwiperPrev"><span class="hd">前へ</span></button>
+			<button type="button" class="private__nav -next js-privateSwiperNext"><span class="hd">次へ</span></button>
+		</div><!-- /.private__gallery -->
+	</section><!-- /#private -->
 </main>
 <%- include('../_inc/_footer', { root: root }) -%>
 </div>
