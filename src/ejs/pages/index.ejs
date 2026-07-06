@@ -134,35 +134,38 @@ const pageJs = 'top';
 				<span class="projects__head--char"><span class="projects__head--charIn">T</span></span>
 				<span class="projects__head--char"><span class="projects__head--charIn">S</span></span>
 			</h2>
+			<%
+			const projectsList = [
+				{ modal: 'projectModal01', img: 'koremina', alt: 'コレミナ' },
+				{ modal: 'projectModal02', img: 'holo-comment', alt: 'ホロライブコメント検索' },
+				{ modal: 'projectModal03', img: 'tategamanga', alt: 'タテマンガ投稿Webサービス' },
+				{ modal: 'projectModal04', img: 'corporate', alt: 'コーポレートサイトリニューアル' },
+			];
+			// Swiperのloopモードは実スライド数が少ないと自動的に無効化されるため、
+			// 4作品を3セット(12スライド)複製して実スライド数を確保する。
+			// 2セット目以降はaria-hiddenで補助技術から隠す。
+			-%>
 			<div class="projects__swiper swiper js-projectsSwiper">
 				<ul class="swiper-wrapper">
-					<li class="projects__slide swiper-slide js-projectsModalOpen" data-modal="projectModal01">
+					<% for (let rep = 0; rep < 3; rep++) { -%>
+					<% projectsList.forEach(function (p) { -%>
+					<li class="projects__slide swiper-slide js-projectsModalOpen" data-modal="<%= p.modal %>"<% if (rep > 0) { -%> aria-hidden="true"<% } -%>>
 						<picture>
-							<source srcset="<%= root %>assets/img/top/projects/koremina.webp" type="image/webp">
-							<img src="<%= root %>assets/img/top/projects/koremina.jpg" alt="コレミナ">
+							<source srcset="<%= root %>assets/img/top/projects/<%= p.img %>.webp" type="image/webp">
+							<img src="<%= root %>assets/img/top/projects/<%= p.img %>.jpg" alt="<%= p.alt %>">
 						</picture>
 					</li>
-					<li class="projects__slide swiper-slide js-projectsModalOpen" data-modal="projectModal02">
-						<picture>
-							<source srcset="<%= root %>assets/img/top/projects/holo-comment.webp" type="image/webp">
-							<img src="<%= root %>assets/img/top/projects/holo-comment.jpg" alt="ホロライブコメント検索">
-						</picture>
-					</li>
-					<li class="projects__slide swiper-slide js-projectsModalOpen" data-modal="projectModal03">
-						<picture>
-							<source srcset="<%= root %>assets/img/top/projects/tategamanga.webp" type="image/webp">
-							<img src="<%= root %>assets/img/top/projects/tategamanga.jpg" alt="タテマンガ投稿Webサービス">
-						</picture>
-					</li>
-					<li class="projects__slide swiper-slide js-projectsModalOpen" data-modal="projectModal04">
-						<picture>
-							<source srcset="<%= root %>assets/img/top/projects/corporate.webp" type="image/webp">
-							<img src="<%= root %>assets/img/top/projects/corporate.jpg" alt="コーポレートサイトリニューアル">
-						</picture>
-					</li>
+					<% }); -%>
+					<% } -%>
 				</ul>
-				<div class="projects__nav js-projectsNav"></div>
 			</div><!-- /.projects__swiper -->
+			<div class="projects__nav">
+				<% projectsList.forEach(function (p, i) { -%>
+				<button type="button" class="projects__nav--btn js-projectsNavBtn<% if (i === 0) { -%> --is-current<% } -%>" data-slide-index="<%= i %>">
+					<span class="hd"><%= p.alt %>へ移動</span>
+				</button>
+				<% }); -%>
+			</div><!-- /.projects__nav -->
 			<div class="projects__more">
 				<a href="<%= root %>products" class="projects__more--btn">詳しくみる</a>
 			</div>

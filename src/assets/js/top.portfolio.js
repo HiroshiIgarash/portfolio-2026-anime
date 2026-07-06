@@ -133,7 +133,7 @@ let projectsSwiper = new Swiper('.js-projectsSwiper', {
 	slidesPerView: 'auto',
 	spaceBetween: 30,
 	loop: true,
-	loopAdditionalSlides: 10,
+	loopAdditionalSlides: 2,
 	autoplay: {
 		delay: 4000,
 		disableOnInteraction: false,
@@ -144,10 +144,24 @@ let projectsSwiper = new Swiper('.js-projectsSwiper', {
 		modifier: 1,
 		slideShadows: false,
 	},
-	pagination: {
-		el: '.js-projectsNav',
-		clickable: true,
-	},
+});
+
+/**
+ * PROJECTS - Nav (円形ボタン)
+ * 実スライドは3セット複製しているため、実際の作品数(js-projectsNavBtnの数)で
+ * realIndexを割った余りが対応する作品のインデックスになる
+ */
+const projectsNavCount = $('.js-projectsNavBtn').length;
+
+$('.js-projectsNavBtn').on('click', function () {
+	const slideIndex = Number($(this).data('slide-index'));
+	projectsSwiper.slideToLoop(slideIndex);
+});
+
+projectsSwiper.on('realIndexChange', function () {
+	const activeIndex = projectsSwiper.realIndex % projectsNavCount;
+	$('.js-projectsNavBtn').removeClass('--is-current');
+	$('.js-projectsNavBtn[data-slide-index="' + activeIndex + '"]').addClass('--is-current');
 });
 
 /*-----------------------------------------------
