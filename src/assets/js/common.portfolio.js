@@ -205,6 +205,7 @@ let footerBendActive = false;
 if (footerBendPath && footerEl) {
 	const BEND_SENSITIVITY = 1000;  // velocity -> 振幅の倍率（実測でLenisのvelocityが0.01〜0.1程度と判明。大きめ初期値、確認しながら弱める）
 	const BEND_MAX = 50;            // 振幅の最大値（px、viewBox座標系）
+	const VELOCITY_IGNORE = 0.005;  // これ未満のvelocityは慣性の残り香とみなし無視する（releaseBendのelastic揺れを妨げないため）
 	const bendState = { v: 0 };     // gsap.toのtween対象を固定オブジェクトにし、overwriteを確実に効かせる
 	let bendIdleTimer = null;
 
@@ -216,8 +217,8 @@ if (footerBendPath && footerEl) {
 	const releaseBend = () => {
 		gsap.to(bendState, {
 			v: 0,
-			duration: 0.6,
-			ease: 'power2.out',
+			duration: 1,
+			ease: 'elastic.out(1, 0.4)',
 			overwrite: true,
 			onUpdate: () => setBendPath(bendState.v),
 		});
@@ -234,6 +235,7 @@ if (footerBendPath && footerEl) {
 
 	lenis.on('scroll', (e) => {
 		if (!footerBendActive) return;
+		if (Math.abs(e.velocity) < VELOCITY_IGNORE) return;
 		clearTimeout(bendIdleTimer);
 		const target = gsap.utils.clamp(-BEND_MAX, BEND_MAX, e.velocity * BEND_SENSITIVITY);
 		gsap.to(bendState, {
