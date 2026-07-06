@@ -32,11 +32,60 @@ gsap.timeline({
 		ease: 'power2.out',
 	}, .12);
 
+let pageTransitionLock = false;
+
+function isPlainLeftClick(e) {
+	return e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
+}
+
+function handlePageTransitionLinkClick(e) {
+	const link = e.currentTarget;
+
+	if (link.target === '_blank' || !isPlainLeftClick(e)) {
+		return;
+	}
+	if (link.href === location.href) {
+		e.preventDefault();
+		return;
+	}
+	if (pageTransitionLock) {
+		e.preventDefault();
+		return;
+	}
+
+	e.preventDefault();
+	pageTransitionLock = true;
+
+	[pageTransitionCircleA, pageTransitionCircleB].forEach(function (circle) {
+		circle.style.left = e.clientX + 'px';
+		circle.style.top = e.clientY + 'px';
+	});
+
+	gsap.timeline({
+		onComplete: function () {
+			location.href = link.href;
+		},
+	})
+		.fromTo(pageTransitionCircleA, { scale: 0 }, {
+			scale: 1,
+			duration: .5,
+			ease: 'power2.in',
+		}, 0)
+		.fromTo(pageTransitionCircleB, { scale: 0 }, {
+			scale: 1,
+			duration: .5,
+			ease: 'power2.in',
+		}, .12);
+}
+
 
 /*-----------------------------------------------
  * COMMON
 -------------------------------------------------*/
 $(function(){
+
+	// Page Transition - Link Click
+	$('.l-header__logo--link, .headerNavLists__link').on('click', handlePageTransitionLinkClick);
 
 	// Anchor Smooth Scroll
 	$('.js-anchor').on('click', function(){
