@@ -104,12 +104,13 @@
  */
 .projects__swiper {
 	width: 100%;
-	max-width: vwmin(1400);
+	max-width: vwmin(1340);
 	margin: 0 auto;
 	padding: vwmin(40) 0 vwmin(80);
+	overflow: hidden;
 }
 .projects__slide {
-	width: vwmin(400);
+	width: vwmin(560);
 	aspect-ratio: 1200 / 630;
 	border-radius: vwmin(12);
 	overflow: hidden;
@@ -124,7 +125,7 @@
 }
 @include sp {
 	.projects__slide {
-		width: vw(480);
+		width: vw(560);
 	}
 }
 
