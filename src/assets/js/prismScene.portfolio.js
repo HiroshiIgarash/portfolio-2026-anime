@@ -30,6 +30,8 @@ function resize() {
 	renderer.setSize(w, h, false);
 	camera.aspect = w / h;
 	camera.updateProjectionMatrix();
+	flowRightBound = computeFlowBound();
+	flowLeftBound = -flowRightBound;
 }
 
 const root = document.body.dataset.root;
@@ -99,6 +101,37 @@ const LANES = [
 	{ y: 0.1, z: 0.4 }
 ];
 
+// 画面外に出てから消したいが、固定値だとレーンによって(奥のレーンほど
+// 視野が広がるため)画面内でまだ見えているうちに消えてしまうことがある。
+// カメラの実際の視野幅から動的に計算して、常に画面外で切り替わるようにする
+let flowLeftBound = -10;
+let flowRightBound = 10;
+
+function computeFlowBound() {
+	// 最も奥(カメラから遠い)のレーンでも画面外になるよう、そのレーンの視野幅を基準にする
+	const maxZ = Math.max(...LANES.map((l) => l.z)) + 0.5; // ジッター分の余裕
+	const distance = camera.position.z - maxZ;
+	const vFov = camera.fov * Math.PI / 180;
+	const visibleHeight = 2 * Math.tan(vFov / 2) * distance;
+	const visibleWidth = visibleHeight * camera.aspect;
+	return visibleWidth / 2 + 2; // カード半幅+余白ぶん、画面外に確実に出す
+}
+
+function randomizeSpawn(userData, lane, { initial = false } = {}) {
+	userData.y = lane.y + (Math.random() - 0.5) * 0.4;
+	userData.z = lane.z + (Math.random() - 0.5) * 0.4;
+	userData.rotZ = (Math.random() - 0.5) * (Math.PI * 0.6);
+	// 厚み(側面)が見えるようにx軸方向にも軽く傾ける
+	userData.rotX = (Math.random() - 0.5) * (Math.PI * 0.3);
+	userData.scale = 0.7 + Math.random() * 0.7;
+	// 奥のレーンほどゆっくり、手前ほど速く流れる(視差)
+	userData.speed = 0.5 + (userData.z + 2.5) * 0.12 + Math.random() * 0.25;
+	userData.spinSpeed = 0.15 + Math.random() * 0.25;
+	userData.x = initial
+		? THREE.MathUtils.lerp(flowLeftBound, flowRightBound, Math.random())
+		: flowRightBound + Math.random() * 3;
+}
+
 const cards = [];
 cardSources.forEach((def, laneIndex) => {
 	const geo = new THREE.BoxGeometry(2.4, 1.5, 0.08);
@@ -146,17 +179,39 @@ cardSources.forEach((def, laneIndex) => {
 
 	// BoxGeometry の面順: +x, -x, +y, -y, +z(front), -z(back)
 	const mesh = new THREE.Mesh(geo, [glassSide, glassSide, glassSide, glassSide, frontMat, backMat]);
-	const lane = LANES[laneIndex];
 	mesh.userData = { expanded: false, paused: false };
-	mesh.position.set(0, lane.y, lane.z);
-	mesh.scale.setScalar(1);
+	randomizeSpawn(mesh.userData, LANES[laneIndex], { initial: true });
+	mesh.position.set(mesh.userData.x, mesh.userData.y, mesh.userData.z);
+	mesh.rotation.z = mesh.userData.rotZ;
+	mesh.rotation.x = mesh.userData.rotX;
+	mesh.scale.setScalar(mesh.userData.scale);
 
 	mainScene.add(mesh);
 	cards.push(mesh);
 });
 
+const clock = new THREE.Clock();
+
 function animate() {
 	requestAnimationFrame(animate);
+	const dt = Math.min(clock.getDelta(), 0.05);
+
+	cards.forEach((card, laneIndex) => {
+		const ud = card.userData;
+		if (ud.paused) return; // 拡大/縮小アニメーション中は流れる動きを止める(Task 5で使用)
+
+		// 右から左へ流れる。左端を越えたら右端からランダム属性で再登場(同じレーン内で)
+		ud.x -= ud.speed * dt;
+		if (ud.x < flowLeftBound) {
+			randomizeSpawn(ud, LANES[laneIndex]);
+		}
+		card.position.set(ud.x, ud.y, ud.z);
+		card.scale.setScalar(ud.scale);
+		card.rotation.z = ud.rotZ;
+		card.rotation.x = ud.rotX;
+		card.rotation.y += ud.spinSpeed * dt;
+	});
+
 	renderer.render(mainScene, camera);
 }
 
