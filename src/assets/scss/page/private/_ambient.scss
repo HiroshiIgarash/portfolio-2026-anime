@@ -91,3 +91,8 @@ body[data-page="private"] .subArticle {
 		transform: translate(3%, -6%);
 	}
 }
+
+body[data-page="private"] .contTitle2 {
+	position: relative;
+	z-index: 1;
+}
