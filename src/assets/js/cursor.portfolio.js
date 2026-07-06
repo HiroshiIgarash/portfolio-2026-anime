@@ -5,7 +5,7 @@ const cursorPointerFine = window.matchMedia('(pointer: fine)');
 
 const CURSOR_HOVER_SELECTOR = 'a, button, [role="button"]';
 const CURSOR_TEXT_SELECTOR = 'input, textarea, select, [contenteditable]';
-const CURSOR_RING_EASE = .2;
+const CURSOR_RING_EASE = .08;
 
 /**
  * elから上に辿り、リンク/ボタン相当 or 明示的にcursor:pointerが

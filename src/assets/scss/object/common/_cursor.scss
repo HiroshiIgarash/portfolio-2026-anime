@@ -30,12 +30,14 @@ body.--customCursor .cursor {
 
 /* dot */
 .cursor.-dot {
-	width: vwmin(8);
-	height: vwmin(8);
-	margin: calc(vwmin(4) * -1) 0 0 calc(vwmin(4) * -1);
+	width: vwmin(24);
+	height: vwmin(24);
+	margin: calc(vwmin(12) * -1) 0 0 calc(vwmin(12) * -1);
 }
 .cursor.-dot .cursor__body {
+	/* 暗い背景でも視認できるようborderでコントラストを確保 */
 	background-color: var(--color-teal);
+	border: 1px solid var(--color-white);
 }
 .cursor.-dot.is-hidden {
 	opacity: 0;
@@ -43,19 +45,38 @@ body.--customCursor .cursor {
 
 /* ring */
 .cursor.-ring {
-	width: vwmin(32);
-	height: vwmin(32);
-	margin: calc(vwmin(16) * -1) 0 0 calc(vwmin(16) * -1);
+	width: vwmin(64);
+	height: vwmin(64);
+	margin: calc(vwmin(32) * -1) 0 0 calc(vwmin(32) * -1);
 }
 .cursor.-ring .cursor__body {
+	position: relative;
 	border: 1px solid var(--color-teal);
 	/* 塗りつぶしなしの中抜きリングを半透明にするため要素ごとopacityを下げる */
 	opacity: .6;
 }
+.cursor.-ring .cursor__body::before {
+	/* ホバー時のスピナー用の切れ目付き円弧。通常時は非表示 */
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: 50%;
+	border: 1px solid transparent;
+	border-top-color: var(--color-teal);
+	border-right-color: var(--color-teal);
+	opacity: 0;
+}
 .cursor.-ring.is-active .cursor__body {
 	/* --max-percent は他コンポーネントの拡大許容トークン（1.6倍）を共用 */
 	transform: scale(var(--max-percent));
+	/* opacityで隠すと親のopacityが子孫::beforeの表示にも合成され
+	   スピナーごと消えるため、borderを透明化して通常の円だけ隠す */
+	border-color: transparent;
 	opacity: 1;
+}
+.cursor.-ring.is-active .cursor__body::before {
+	opacity: 1;
+	animation: ani_cursorSpin 1.2s linear infinite;
 }
 .cursor__label {
 	display: block;
@@ -64,7 +85,7 @@ body.--customCursor .cursor {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	font-family: var(--font-en);
-	font-size: vwmin(10);
+	font-size: vwmin(14);
 	font-weight: 700;
 	letter-spacing: .1em;
 	color: var(--color-teal);
@@ -102,4 +123,10 @@ body.--customCursor textarea,
 body.--customCursor select,
 body.--customCursor [contenteditable] {
 	cursor: auto !important;
+}
+
+@keyframes ani_cursorSpin {
+	to {
+		transform: rotate(360deg);
+	}
 }
