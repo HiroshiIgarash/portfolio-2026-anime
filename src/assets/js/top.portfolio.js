@@ -39,9 +39,12 @@ loadingIntroTl.to(loadingProgress, {
 			loadingFrameB.style.strokeDasharray = loadingFrameBDash.value + ' 1000';
 		},
 	}, .6)
-	.to('.js-loadingChar', {
-		opacity: 1,
+	// CSSのtransform初期値(translateX(-10px))をGSAPに読み取らせると、
+	// 文字幅が狭い文字("I"や".")だけ-50%相当の値に誤変換されることがあるため、
+	// fromToでfrom値を明示しCSSの値を読みに行かせない
+	.fromTo('.js-loadingChar', { x: -10, opacity: 0 }, {
 		x: 0,
+		opacity: 1,
 		duration: .4,
 		stagger: .05,
 		ease: 'power2.out',
