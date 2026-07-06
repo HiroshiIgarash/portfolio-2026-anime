@@ -1,4 +1,41 @@
 /*-----------------------------------------------
+ * LOADING
+-------------------------------------------------*/
+const loadingBarFill = document.querySelector('.js-loadingBarFill');
+const loadingBarPercent = document.querySelector('.js-loadingBarPercent');
+const loadingProgress = { value: 0 };
+
+function setLoadingProgress(value) {
+	loadingProgress.value = value;
+	loadingBarFill.style.width = value + '%';
+	loadingBarPercent.textContent = Math.round(value);
+}
+
+const loadingIntroTl = gsap.timeline();
+
+loadingIntroTl.to(loadingProgress, {
+	value: 90,
+	duration: 1.5,
+	ease: 'power2.out',
+	onUpdate: function () {
+		setLoadingProgress(loadingProgress.value);
+	},
+}, 0);
+
+function finishLoading() {
+	gsap.to(loadingProgress, {
+		value: 100,
+		duration: .2,
+		ease: 'power1.out',
+		onUpdate: function () {
+			setLoadingProgress(loadingProgress.value);
+		},
+	});
+}
+
+$(window).on('load', finishLoading);
+
+/*-----------------------------------------------
  * MV
 -------------------------------------------------*/
 /**
