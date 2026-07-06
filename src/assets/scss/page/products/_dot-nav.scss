@@ -1,5 +1,8 @@
 @use "../../global/mixins" as *;
 
+/*-----------------------------------------------
+ * PRODUCTS DOT NAV
+-------------------------------------------------*/
 /**
  * productsDotNav
  */
@@ -27,13 +30,15 @@
 	border-radius: 50%;
 	background: rgba(255, 255, 255, .35);
 	cursor: pointer;
-	transition: background-color .3s ease, transform .3s ease;
 }
 .productsDotNav__link.--is-current {
 	background: var(--color-cyan);
 	transform: scale(1.4);
 }
 @include hover {
+	.productsDotNav__link {
+		transition: background-color .3s ease, transform .3s ease;
+	}
 	.productsDotNav__link:hover {
 		background: rgba(255, 255, 255, .7);
 	}

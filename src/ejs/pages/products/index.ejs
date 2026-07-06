@@ -14,7 +14,7 @@ const pageJs = 'products';
 	pageCss: pageCss,
 	pageJs: pageJs
 }) -%>
-<body id="sub" data-page="<%= page %>" data-root="<%= root %>">
+<body id="top" data-page="<%= page %>" data-root="<%= root %>">
 <!-- BEGIN #fullWrap -->
 <div id="fullWrap">
 <%- include('../../_inc/_loading') -%>
@@ -44,7 +44,7 @@ const pageJs = 'products';
 					<span class="productsIntro__scroll--text">SCROLL</span>
 					<span class="productsIntro__scroll--line"></span>
 				</p>
-			</section>
+			</section><!-- /.productsIntro -->
 			<section class="productsItem -company js-scrani js-productsSnapItem" data-products-index="1">
 				<div class="productsItem__visual">
 					<p class="productsItem__num">01</p>
@@ -101,7 +101,7 @@ const pageJs = 'products';
 						<p class="productsItem__block--text">フロント主担当 + GraphQLリゾルバ追加 + DBスキーマ設計変更 + 機能設計 + AI活用での開発 + CloudWatchでの監視・ログ調査 + AWS CDK Pipelinesによるデプロイ</p>
 					</div><!-- /.productsItem__block -->
 				</div><!-- /.productsItem__body -->
-			</section>
+			</section><!-- /.productsItem -->
 			<section class="productsItem -company js-scrani js-productsSnapItem" data-products-index="2">
 				<div class="productsItem__visual">
 					<p class="productsItem__num">02</p>
@@ -140,7 +140,7 @@ const pageJs = 'products';
 						</ul>
 					</div><!-- /.productsItem__block -->
 				</div><!-- /.productsItem__body -->
-			</section>
+			</section><!-- /.productsItem -->
 			<section class="productsItem -company js-scrani js-productsSnapItem" data-products-index="3">
 				<div class="productsItem__visual">
 					<p class="productsItem__num">03</p>
@@ -181,7 +181,7 @@ const pageJs = 'products';
 						</ul>
 					</div><!-- /.productsItem__block -->
 				</div><!-- /.productsItem__body -->
-			</section>
+			</section><!-- /.productsItem -->
 			<section class="productsItem -personal js-scrani js-productsSnapItem" data-products-index="4">
 				<div class="productsItem__visual">
 					<p class="productsItem__num">04</p>
@@ -237,12 +237,12 @@ const pageJs = 'products';
 						<p class="productsItem__block--label">LINKS</p>
 						<ul class="productsItem__links">
 							<li class="productsItem__links--item">
-								<a href="https://www.holo-comment.com/" target="_blank" rel="noopener noreferrer">holo-comment.com</a>
+								<a class="productsItem__links--link" href="https://www.holo-comment.com/" target="_blank" rel="noopener noreferrer">holo-comment.com</a>
 							</li>
 						</ul>
 					</div><!-- /.productsItem__block -->
 				</div><!-- /.productsItem__body -->
-			</section>
+			</section><!-- /.productsItem -->
 			<section class="productsItem -personal js-scrani js-productsSnapItem" data-products-index="5">
 				<div class="productsItem__visual">
 					<p class="productsItem__num">05</p>
@@ -295,15 +295,15 @@ const pageJs = 'products';
 						<p class="productsItem__block--label">LINKS</p>
 						<ul class="productsItem__links">
 							<li class="productsItem__links--item">
-								<a href="https://koremina.vercel.app/" target="_blank" rel="noopener noreferrer">koremina.vercel.app</a>
+								<a class="productsItem__links--link" href="https://koremina.vercel.app/" target="_blank" rel="noopener noreferrer">koremina.vercel.app</a>
 							</li>
 							<li class="productsItem__links--item">
-								<a href="https://github.com/HiroshiIgarash/koremina" target="_blank" rel="noopener noreferrer">github.com/HiroshiIgarash/koremina</a>
+								<a class="productsItem__links--link" href="https://github.com/HiroshiIgarash/koremina" target="_blank" rel="noopener noreferrer">github.com/HiroshiIgarash/koremina</a>
 							</li>
 						</ul>
 					</div><!-- /.productsItem__block -->
 				</div><!-- /.productsItem__body -->
-			</section>
+			</section><!-- /.productsItem -->
 		</div>
 		<!-- END .productsSnap -->
 	</article><!-- /.subArticle -->

@@ -1,5 +1,8 @@
 @use "../../global/mixins" as *;
 
+/*-----------------------------------------------
+ * PRODUCTS ITEM
+-------------------------------------------------*/
 /**
  * productsItem
  * 2カラム: 左(sticky) + 右(内部スクロール)
@@ -121,7 +124,7 @@
 	flex-direction: column;
 	gap: vwmin(8);
 }
-.productsItem__links--item a {
+.productsItem__links--link {
 	font-family: var(--font-en);
 	font-size: vwmin(13);
 	color: #fff;

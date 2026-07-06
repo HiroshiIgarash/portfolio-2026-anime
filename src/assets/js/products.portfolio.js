@@ -1,10 +1,4 @@
 /*-----------------------------------------------
- * Root
--------------------------------------------------*/
-let root = $("body").data('root');
-let page = $("body").data('page');
-
-/*-----------------------------------------------
  * PRODUCTS - Fullscreen Snap Scroll (GSAP ScrollTrigger)
 -------------------------------------------------*/
 gsap.registerPlugin(ScrollTrigger);
