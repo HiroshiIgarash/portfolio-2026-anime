@@ -186,6 +186,81 @@ ScrollTrigger.create({
 -------------------------------------------------*/
 
 /*-----------------------------------------------
+ * CAREER - Line Path Build (蛇行パス生成)
+ * dotのY位置(コンテナ基準)と-left/-rightのX方向を制御点にし、
+ * Catmull-Rom→ベジェ変換でなめらかなS字パスを生成する。
+ * 初期化時・リサイズ時に再計算する
+-------------------------------------------------*/
+function vwminPx(px) {
+	const vwMin = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--vw-min')) || 1200;
+	return Math.min((px / vwMin) * window.innerWidth, px);
+}
+
+function catmullRomToBezierPath(points) {
+	if (points.length < 2) return '';
+	let d = `M ${points[0].x} ${points[0].y}`;
+	for (let i = 0; i < points.length - 1; i++) {
+		const p0 = points[i - 1] || points[i];
+		const p1 = points[i];
+		const p2 = points[i + 1];
+		const p3 = points[i + 2] || p2;
+		const cp1x = p1.x + (p2.x - p0.x) / 6;
+		const cp1y = p1.y + (p2.y - p0.y) / 6;
+		const cp2x = p2.x - (p3.x - p1.x) / 6;
+		const cp2y = p2.y - (p3.y - p1.y) / 6;
+		d += ` C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${p2.x} ${p2.y}`;
+	}
+	return d;
+}
+
+let careerLinePoints = [];
+
+function buildCareerLine() {
+	const timelineEl = document.querySelector('.js-careerTimeline');
+	const svgEl = document.querySelector('.js-careerLineSvg');
+	if (!timelineEl || !svgEl) return;
+
+	const containerWidth = timelineEl.offsetWidth;
+	const containerHeight = timelineEl.offsetHeight;
+	const containerTop = timelineEl.getBoundingClientRect().top;
+	const centerX = containerWidth / 2;
+	const amplitude = vwminPx(48);
+
+	const dots = [...document.querySelectorAll('.js-careerDot')];
+	const dotPoints = dots.map(function (dot) {
+		const item = dot.closest('.career__item');
+		const y = dot.getBoundingClientRect().top - containerTop + dot.offsetHeight / 2;
+		const x = item.classList.contains('-left') ? centerX - amplitude : centerX + amplitude;
+		return { x: x, y: y };
+	});
+
+	careerLinePoints = [
+		{ x: centerX, y: 0 },
+		...dotPoints,
+		{ x: dotPoints[dotPoints.length - 1].x, y: containerHeight },
+	];
+
+	const d = catmullRomToBezierPath(careerLinePoints);
+
+	svgEl.setAttribute('viewBox', `0 0 ${containerWidth} ${containerHeight}`);
+	document.querySelector('.js-careerLinePathDeco').setAttribute('d', d);
+	document.querySelector('.career__linePath--bg').setAttribute('d', d);
+	document.querySelector('.js-careerLinePathFill').setAttribute('d', d);
+}
+
+buildCareerLine();
+$(window).on('load', buildCareerLine);
+
+let careerLineResizeTimer;
+$(window).on('resize', function () {
+	clearTimeout(careerLineResizeTimer);
+	careerLineResizeTimer = setTimeout(function () {
+		buildCareerLine();
+		ScrollTrigger.refresh();
+	}, 200);
+});
+
+/*-----------------------------------------------
  * CAREER - Line Growth + Orb Descent + Dot Lighting + Climax Burst
  * 全て同一timelineのscrub progressから判定する。
  * CAREERはページ最終セクション(直後はfooterのみ)のため、'bottom center'/'center center'を
