@@ -475,7 +475,7 @@ function buildCareerLine() {
 	});
 
 	careerLinePoints = [
-		{ x: centerX, y: 0 },
+		{ x: dotPoints[0].x, y: 0 },
 		...dotPoints,
 		{ x: dotPoints[dotPoints.length - 1].x, y: containerHeight },
 	];
