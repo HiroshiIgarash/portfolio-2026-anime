@@ -1,7 +1,33 @@
-<header id="header" class="l-header">
+<header id="header" class="l-header js-header">
 	<h1 class="l-header__logo">
 		<a href="<%= root %>index.html" class="l-header__logo--link" title="トップページへ">
 			<img src="<%= root %>assets/img/common/logo.svg" alt="<%= site.siteName %>">
 		</a>
 	</h1>
+	<!-- BEGIN .l-header__inner -->
+	<div class="l-header__inner">
+		<div class="headerNav__beacon">
+			<p class="headerNav__beacon--text">HIROSHI IGARASHI 2026 PORTFORIO　/　HIROSHI IGARASHI 2026 PORTFORIO　/　HIROSHI IGARASHI 2026 PORTFORIO　/　</p>
+			<p class="headerNav__beacon--text">HIROSHI IGARASHI 2026 PORTFORIO　/　HIROSHI IGARASHI 2026 PORTFORIO　/　HIROSHI IGARASHI 2026 PORTFORIO　/　</p>
+		</div><!-- /.headerNav__beacon -->
+		<div class="headerNavWrap">
+			<nav class="headerNav">
+				<ul class="headerNavLists">
+					<li class="headerNavLists__item"><a href="<%= root %>index.html" class="headerNavLists__link">TOP</a></li>
+					<li class="headerNavLists__item"><a href="<%= root %>products/index.html" class="headerNavLists__link">PRODUCTS</a></li>
+					<li class="headerNavLists__item"><a href="<%= root %>skills/index.html" class="headerNavLists__link">SKILLS</a></li>
+					<li class="headerNavLists__item"><a href="<%= root %>off/index.html" class="headerNavLists__link">OFF</a></li>
+				</ul>
+			</nav>
+		</div><!-- /.headerNavWrap -->
+	</div>
+	<!-- END .l-header__inner -->
+	<div class="l-header__navBtnWrap">
+		<a href="javascript:;" class="l-header__navBtn js-navBtn">
+			<div class="l-header__navBtn__lineWrap">
+				<span class="l-header__navBtn--line"></span>
+				<span class="l-header__navBtn--line"></span>
+			</div>
+		</a>
+	</div><!-- /.l-header__navBtnWrap -->
 </header><!-- /#header -->
