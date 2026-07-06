@@ -242,7 +242,7 @@ function buildCareerLine() {
 	];
 
 	dots.forEach(function (dot, i) {
-		dot.style.transform = `translateX(${Math.round(dotPoints[i].x - centerX)}px)`;
+		dot.style.transform = pcOnly.matches ? `translateX(${Math.round(dotPoints[i].x - centerX)}px)` : '';
 	});
 
 	const d = catmullRomToBezierPath(careerLinePoints);
@@ -310,10 +310,16 @@ ScrollTrigger.create({
 		const orbEl = document.querySelector('.js-careerOrb');
 
 		fillPath.style.strokeDashoffset = careerLineTotalLength * (1 - self.progress);
+		document.querySelector('.js-careerLineFill').style.transform = `scaleY(${self.progress})`;
 
-		const point = fillPath.getPointAtLength(careerLineTotalLength * self.progress);
-		orbEl.style.left = `${point.x}px`;
-		orbEl.style.top = `${point.y}px`;
+		if (pcOnly.matches) {
+			const point = fillPath.getPointAtLength(careerLineTotalLength * self.progress);
+			orbEl.style.left = `${point.x}px`;
+			orbEl.style.top = `${point.y}px`;
+		} else {
+			orbEl.style.left = '';
+			orbEl.style.top = `${self.progress * 100}%`;
+		}
 
 		$('.js-careerDot').each(function () {
 			const $dot = $(this);
