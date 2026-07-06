@@ -214,6 +214,7 @@ function catmullRomToBezierPath(points) {
 }
 
 let careerLinePoints = [];
+let careerLineTotalLength = 0;
 
 function buildCareerLine() {
 	const timelineEl = document.querySelector('.js-careerTimeline');
@@ -250,6 +251,11 @@ function buildCareerLine() {
 	document.querySelector('.js-careerLinePathDeco').setAttribute('d', d);
 	document.querySelector('.career__linePath--bg').setAttribute('d', d);
 	document.querySelector('.js-careerLinePathFill').setAttribute('d', d);
+
+	const fillPath = document.querySelector('.js-careerLinePathFill');
+	careerLineTotalLength = fillPath.getTotalLength();
+	fillPath.style.strokeDasharray = careerLineTotalLength;
+	fillPath.style.strokeDashoffset = careerLineTotalLength;
 }
 
 buildCareerLine();
@@ -291,31 +297,35 @@ function playCareerClimaxBurst() {
 		}, '<');
 }
 
-gsap.timeline({
-	scrollTrigger: {
-		trigger: '.js-careerTimeline',
-		start: 'top center',
-		end: 'bottom bottom',
-		scrub: true,
-		invalidateOnRefresh: true,
-		onUpdate: (self) => {
-			const containerTop = self.trigger.getBoundingClientRect().top;
-			const containerHeight = self.trigger.offsetHeight;
+ScrollTrigger.create({
+	trigger: '.js-careerTimeline',
+	start: 'top center',
+	end: 'bottom bottom',
+	scrub: true,
+	invalidateOnRefresh: true,
+	onUpdate: (self) => {
+		const containerTop = self.trigger.getBoundingClientRect().top;
+		const containerHeight = self.trigger.offsetHeight;
+		const fillPath = document.querySelector('.js-careerLinePathFill');
+		const orbEl = document.querySelector('.js-careerOrb');
 
-			$('.js-careerDot').each(function () {
-				const $dot = $(this);
-				if ($dot.hasClass('--is-lit')) return;
+		fillPath.style.strokeDashoffset = careerLineTotalLength * (1 - self.progress);
 
-				const fraction = (this.getBoundingClientRect().top - containerTop) / containerHeight;
-				if (self.progress < fraction) return;
+		const point = fillPath.getPointAtLength(careerLineTotalLength * self.progress);
+		orbEl.style.left = `${point.x}px`;
+		orbEl.style.top = `${point.y}px`;
 
-				$dot.addClass('--is-lit');
-				if ($dot.hasClass('--is-current')) {
-					playCareerClimaxBurst();
-				}
-			});
-		},
+		$('.js-careerDot').each(function () {
+			const $dot = $(this);
+			if ($dot.hasClass('--is-lit')) return;
+
+			const fraction = (this.getBoundingClientRect().top - containerTop) / containerHeight;
+			if (self.progress < fraction) return;
+
+			$dot.addClass('--is-lit');
+			if ($dot.hasClass('--is-current')) {
+				playCareerClimaxBurst();
+			}
+		});
 	},
-})
-	.to('.js-careerLineFill', { scaleY: 1, ease: 'none' }, 0)
-	.to('.js-careerOrb', { top: '100%', ease: 'none' }, 0);
+});
