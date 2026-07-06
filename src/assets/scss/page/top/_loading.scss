@@ -67,6 +67,7 @@
  */
 .p-loading__logo {
 	position: relative;
+	z-index: 1;
 	width: vwmin(320);
 	height: vwmin(200);
 

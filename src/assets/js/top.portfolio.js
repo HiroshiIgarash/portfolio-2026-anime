@@ -85,6 +85,12 @@ function playLoadingReveal() {
 	});
 
 	revealTl
+		.to('.js-loadingLogo', {
+			scale: 1.4,
+			opacity: 0,
+			duration: .5,
+			ease: 'power2.in',
+		}, 0)
 		.fromTo('.js-loadingRevealA', { scale: 0 }, {
 			scale: 1,
 			duration: .5,
