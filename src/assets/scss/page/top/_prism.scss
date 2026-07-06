@@ -1,0 +1,33 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * PRISM
+-------------------------------------------------*/
+.prism {
+	position: relative;
+	height: 100vh;
+	overflow: hidden;
+	background: linear-gradient(135deg, #1c4f8f 0%, #4a8fd6 60%, #8fc4ef 100%);
+}
+
+.prism__canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.prism__fallback {
+	display: none;
+	position: absolute;
+	inset: 0;
+}
+
+.prism__fallback img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.prism__fallback.--is-visible {
+	display: block;
+}

@@ -8,3 +8,14 @@
 <% if (pageJs) { -%>
 <script src="<%= root %>assets/js/<%= pageJs %>.portfolio.js"></script>
 <% } -%>
+<% if (pageJs === 'top') { -%>
+<script type="importmap">
+{
+	"imports": {
+		"three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+		"three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+	}
+}
+</script>
+<script type="module" src="<%= root %>assets/js/prismScene.portfolio.js"></script>
+<% } -%>
