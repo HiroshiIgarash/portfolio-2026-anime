@@ -104,7 +104,21 @@ const pageJs = 'products';
 			</section>
 		</div>
 		<!-- END .productsSnap -->
-	</article>
+	</article><!-- /.subArticle -->
+	<nav class="productsDotNav js-productsDotNav">
+		<ul class="productsDotNav__lists">
+			<li class="productsDotNav__item">
+				<button type="button" class="productsDotNav__link js-productsDotNavBtn --is-current" data-snap-index="0">
+					<span class="hd">イントロへ移動</span>
+				</button>
+			</li>
+			<li class="productsDotNav__item">
+				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="1">
+					<span class="hd">タテマンガ投稿Webサービスへ移動</span>
+				</button>
+			</li>
+		</ul>
+	</nav><!-- /.productsDotNav -->
 </main>
 <%- include('../../_inc/_footer', { root: root }) -%>
 </div>

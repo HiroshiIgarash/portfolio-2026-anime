@@ -3,6 +3,8 @@
 /**
  * productsSnap
  * フルスクリーン・スクロールスナップのコンテナ
+ * スナップ吸着自体はGSAP ScrollTrigger(snap)で制御するため、
+ * ここではセクション区切りの視覚的な下地のみ持たせる
  */
 .productsSnap {
 	position: relative;
