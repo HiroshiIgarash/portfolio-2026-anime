@@ -6,16 +6,18 @@ gsap.registerPlugin(ScrollTrigger);
 const productsSections = document.querySelectorAll('.js-productsSnapItem');
 const productsSectionCount = productsSections.length;
 
-ScrollTrigger.create({
-	trigger: '.js-productsSnap',
-	start: 'top top',
-	end: 'bottom bottom',
-	snap: {
-		snapTo: 1 / (productsSectionCount - 1),
-		duration: .6,
-		ease: 'power1.inOut',
-	},
-});
+if (pcOnly.matches) {
+	ScrollTrigger.create({
+		trigger: '.js-productsSnap',
+		start: 'top top',
+		end: 'bottom bottom',
+		snap: {
+			snapTo: 1 / (productsSectionCount - 1),
+			duration: .6,
+			ease: 'power1.inOut',
+		},
+	});
+}
 
 /*-----------------------------------------------
  * PRODUCTS - Dot Nav
