@@ -182,7 +182,7 @@ const pageJs = 'top';
 				<% }); -%>
 			</div><!-- /.projects__nav -->
 			<div class="projects__more">
-				<a href="<%= root %>products" class="projects__more--btn"><span class="projects__more--btnTxt">詳しくみる</span></a>
+				<a href="<%= root %>products/index.html" class="projects__more--btn"><span class="projects__more--btnTxt">詳しくみる</span></a>
 			</div>
 		</section><!-- /#projects -->
 	</div><!-- /.aboutProjectsWrap -->
@@ -302,16 +302,16 @@ const pageJs = 'top';
 		</div><!-- /.career__timeline -->
 	</section><!-- /#career -->
 	<section id="private" class="private js-privateStage">
+		<h2 class="private__head js-scrani">
+			<span class="private__head--char"><span class="private__head--charIn">P</span></span>
+			<span class="private__head--char"><span class="private__head--charIn">R</span></span>
+			<span class="private__head--char"><span class="private__head--charIn">I</span></span>
+			<span class="private__head--char"><span class="private__head--charIn">V</span></span>
+			<span class="private__head--char"><span class="private__head--charIn">A</span></span>
+			<span class="private__head--char"><span class="private__head--charIn">T</span></span>
+			<span class="private__head--char"><span class="private__head--charIn">E</span></span>
+		</h2>
 		<div class="private__pin js-privatePin">
-			<h2 class="private__head js-scrani">
-				<span class="private__head--char"><span class="private__head--charIn">P</span></span>
-				<span class="private__head--char"><span class="private__head--charIn">R</span></span>
-				<span class="private__head--char"><span class="private__head--charIn">I</span></span>
-				<span class="private__head--char"><span class="private__head--charIn">V</span></span>
-				<span class="private__head--char"><span class="private__head--charIn">A</span></span>
-				<span class="private__head--char"><span class="private__head--charIn">T</span></span>
-				<span class="private__head--char"><span class="private__head--charIn">E</span></span>
-			</h2>
 			<figure class="private__float -walk js-privateFloatA">
 				<picture>
 					<source srcset="<%= root %>assets/img/top/private/walk.webp" type="image/webp">
@@ -331,6 +331,7 @@ const pageJs = 'top';
 				</picture>
 			</figure>
 		</div><!-- /.private__pin -->
+		<div class="private__pinBg js-privatePinBg"></div>
 		<%
 		const privateList = [
 			{ img: 'walk',    alt: '散歩中の風景',        caption: '散歩' },
@@ -339,12 +340,12 @@ const pageJs = 'top';
 			{ img: 'coding',  alt: 'コーディング',         caption: '個人開発' },
 		];
 		-%>
-		<div class="private__gallery">
+		<div class="private__gallery js-privateGallery">
 			<div class="private__swiper swiper js-privateSwiper">
 				<ul class="swiper-wrapper">
 					<% privateList.forEach(function (p) { -%>
 					<li class="private__slide swiper-slide">
-						<div class="private__slide--inner">
+						<div class="private__slide--inner js-privateSlideInner">
 							<picture>
 								<source srcset="<%= root %>assets/img/top/private/<%= p.img %>.webp" type="image/webp">
 								<img src="<%= root %>assets/img/top/private/<%= p.img %>.jpg" alt="<%= p.alt %>">
@@ -358,6 +359,9 @@ const pageJs = 'top';
 			</div><!-- /.private__swiper -->
 			<button type="button" class="private__nav -prev js-privateSwiperPrev"><span class="hd">前へ</span></button>
 			<button type="button" class="private__nav -next js-privateSwiperNext"><span class="hd">次へ</span></button>
+			<div class="private__more">
+				<a href="<%= root %>private/index.html" class="private__more--btn"><span class="private__more--btnTxt">詳しくみる</span></a>
+			</div>
 		</div><!-- /.private__gallery -->
 	</section><!-- /#private -->
 </main>

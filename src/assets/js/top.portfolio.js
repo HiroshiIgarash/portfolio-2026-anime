@@ -587,44 +587,117 @@ ScrollTrigger.create({
 
 /*-----------------------------------------------
  * PRIVATE - 導入シークエンス（pin + scrub）
- * walk: 左→定位置 / toy: 右→定位置 / coding: 中央で拡大して背景化。
+ * walk: 右側を左上へ通過 / toy: 左側を右上へ通過 / coding: 中央で拡大して背景化。
  * pin する .private__pin の中で3画像を scrub 制御する。
 -------------------------------------------------*/
 function setupPrivateIntro() {
 	const stage = document.querySelector('.js-privateStage');
 	const pin = document.querySelector('.js-privatePin');
-	if (!stage || !pin) return;
+	const walk = document.querySelector('.js-privateFloatA');
+	const zoom = document.querySelector('.js-privateZoom');
+	const pinBg = document.querySelector('.js-privatePinBg');
+	if (!stage || !pin || !walk || !zoom || !pinBg) return;
 
 	const tl = gsap.timeline({
 		scrollTrigger: {
-			trigger: stage,
+			// trigger は pin 自身。stage を trigger にすると見出しの高さぶん
+			// pin がビューポート上端より下で固定され、walk の退場距離(yPercent:-180)が
+			// 相殺されて画面上部に残ってしまう
+			trigger: pin,
 			start: 'top top',
 			end: '+=200%', // pin 区間の長さ（3画像ぶんのスクロール量）
 			scrub: true,
 			pin: pin,
 			invalidateOnRefresh: true,
+			// pin解除後、zoomはセクションと一緒に上へ流れてしまい「画像が動きながら
+			// 固定背景と二重に見える」ため、終端でzoomを同じcover形状の固定背景レイヤー
+			// (.private__pinBg / position:fixed)へ差し替える。画素が一致するので切替は見えない。
+			// zoomのopacityはscrubタイムライン専属のため、切替はvisibilityのみで行い競合を避ける
+			onLeave: function () {
+				gsap.set(zoom, { visibility: 'hidden' });
+				gsap.set(pinBg, { autoAlpha: 1 });
+			},
+			onEnterBack: function () {
+				gsap.set(zoom, { visibility: 'visible' });
+				gsap.set(pinBg, { autoAlpha: 0 });
+			},
 		},
 	});
 
-	// walk: 左外→定位置（進捗 0.00-0.30）
+	// walk: 画面中央やや下から上へ、パララックス的に画面を通過して抜けきる（横はわずかに左へ）。
+	// coding拡大(進捗0.6-)が始まる前(進捗0.55)に画面外上部へ退場させることで、
+	// 「coding拡大の完了(=タイムライン終端)と同時にwalkの移動も止まる」現象を避ける。
+	// 3画像が1本のpinタイムラインを共有しているため、walkのtweenをタイムライン全体に
+	// 広げると必然的にcoding拡大と同じ瞬間に終わってしまう。walkを前半で完結させて分離する。
+	// 横方向は開始xPercent:0(CSSのright位置そのまま)から左へシフトするだけにし、横スクロールバーを防ぐ。
+	// pin開始時の位置は「画面上部寄り(約25vh)」（導入で中央から上昇してきた続き）。
+	// yPercentは要素高基準のため、要素が小さいSPはPCより大きい値でないと同じ見た目にならない。
+	const walkStartY = pcOnly.matches ? 22 : 84;
 	tl.fromTo('.js-privateFloatA',
-		{ xPercent: -280, opacity: 0 },
-		{ xPercent: 0, opacity: 1, ease: 'none', duration: 0.3 }, 0.0);
-	// toy: 右外→定位置（進捗 0.30-0.60）
+		{ yPercent: walkStartY, xPercent: 0 },
+		{ yPercent: -180, xPercent: -18, ease: 'none', duration: 0.55 }, 0.0);
+	// toy: 画面内下方(左寄り)から右上へ、walkと左右対称のパララックスで画面外上部まで抜けきる（進捗 0.30-0.85）。
+	// walk同様、coding拡大の完了(進捗1.0)より前に退場を終わらせて「同時に止まる」現象を避ける。
 	tl.fromTo('.js-privateFloatB',
-		{ xPercent: 280, opacity: 0 },
-		{ xPercent: 0, opacity: 1, ease: 'none', duration: 0.3 }, 0.3);
+		{ yPercent: 90, xPercent: 0 },
+		{ yPercent: -180, xPercent: 18, ease: 'none', duration: 0.55 }, 0.3);
+	tl.fromTo('.js-privateFloatB',
+		{ opacity: 0 },
+		{ opacity: 1, ease: 'none', duration: 0.1 }, 0.3);
 	// coding: 中央で拡大して背景化（中央寄せはCSS側のflexに任せ、GSAPはscaleのみを与える）（進捗 0.60-1.00）
-	// coding.jpgは横長（16:9）のため、縦長のSPビューポートでは同じscaleでは画面上下が覆いきれない。
-	// SPのみ大きめのscaleにして拡大後に画面全体を覆うようにする。
-	const zoomScaleEnd = pcOnly.matches ? 2.4 : 5.4;
+	// 終値は「ビューポートを覆う最小倍率」を実測で求める（background-size:cover相当。リサイズ時は
+	// invalidateOnRefreshで再計算）。拡大後の見た目が .private__gallery の固定背景（同じcoding.jpgの
+	// cover表示）と一致するため、pin解除後も背景が途切れずつながって見える。
+	// brightnessは拡大と同時にギャラリーのオーバーレイ相当（rgba(0,0,0,.45)＝輝度0.55倍）まで
+	// 落とす。pinBg・gallery背景と同輝度になり、以降の切替や暗幕の境界が見えない
 	tl.fromTo('.js-privateZoom',
-		{ scale: 0.35, opacity: 0 },
-		{ scale: zoomScaleEnd, opacity: 1, ease: 'none', duration: 0.4 }, 0.6);
-	// A/B を coding の拡大に合わせてフェードアウト（進捗 0.60-1.00）
-	tl.to('.js-privateFloatA', { opacity: 0, ease: 'none', duration: 0.4 }, 0.6);
-	tl.to('.js-privateFloatB', { opacity: 0, ease: 'none', duration: 0.4 }, 0.6);
-	// タイムライン合計 duration = 0.3 + 0.3 + 0.4 = 1.0（scrub進捗0-1と一致）
+		{ scale: 0.35, opacity: 0, filter: 'brightness(1)' },
+		{
+			scale: () => Math.max(window.innerWidth / zoom.offsetWidth, window.innerHeight / zoom.offsetHeight),
+			opacity: 1,
+			filter: 'brightness(0.55)',
+			ease: 'none',
+			duration: 0.4,
+		}, 0.6);
+	// タイムライン終端 = 1.0（walk 0-0.55 / toy 0.3-0.85 / coding拡大 0.6-1.0。scrub進捗0-1と一致）
+
+	// walk 導入: PRIVATE見出しが画面上部(約17vh)に来た頃、画面中央やや下(約45vh)からフェードインし、
+	// 止まらずにゆっくり上昇し続けて pin開始時に約25vhへ到達する（そのままpin中の退場につながる）。
+	// pinが40vh上昇する間、y(px)を-20vh→0でスクラブ = 画面上はスクロールの約0.5倍速で上昇するパララックス。
+	// opacityは導入区間全体をかけて緩やかに上げ、pin開始でちょうど全開になる（急なフェードは唐突に見えるため）。
+	// 横も出現直後から左へ動かす。pin中のxPercent(-18/110vhぶん)と同じ速度になるよう、
+	// 導入40vhでは幅の6.5%(=18*40/110)だけ左へ進めておく（境界で速度も位置も連続する）。
+	// pinタイムラインとは動かすプロパティを分離（導入=x+y+opacity / pin中=xPercent+yPercent）して
+	// 同一要素に対する2トリガーの競合を避ける。境界(pin開始)で導入側の値が終端で止まり、
+	// そこへpin側のtransformが合成されるため位置が連続する。
+	const enter = gsap.timeline({
+		scrollTrigger: {
+			trigger: pin,
+			start: 'top 40%',
+			end: 'top top',
+			scrub: true,
+			invalidateOnRefresh: true,
+		},
+	});
+	enter.fromTo('.js-privateFloatA',
+		{ y: () => -window.innerHeight * 0.2, x: 0 },
+		{ y: 0, x: () => -walk.offsetWidth * 0.065, ease: 'none', duration: 1 }, 0);
+	enter.fromTo('.js-privateFloatA',
+		{ opacity: 0 },
+		{ opacity: 1, ease: 'none', duration: 1 }, 0);
+
+	// galleryがビューポートを覆いきったら固定背景レイヤーを消灯する。以降はgallery自身の
+	// 固定背景が同じ見た目を引き継ぐため切替は見えず、footer到達時に背景が残り続けるのも防ぐ
+	ScrollTrigger.create({
+		trigger: '.js-privateGallery',
+		start: 'top top',
+		onEnter: function () {
+			gsap.set(pinBg, { autoAlpha: 0 });
+		},
+		onLeaveBack: function () {
+			gsap.set(pinBg, { autoAlpha: 1 });
+		},
+	});
 }
 setupPrivateIntro();
 
@@ -642,7 +715,7 @@ function setupPrivateSwiper() {
 	// loop:true では複製スライドが実スライドの前後に挿入されるため、初期化後に
 	// gsap.utils.toArray で取得し直すと複製ぶんも対象に含まれるが、初期状態を
 	// 先に固定しておけば複製生成時にDOM複製されるスタイルにも反映され、ちらつきを防げる。
-	const initialInners = gsap.utils.toArray('.private__slide--inner');
+	const initialInners = gsap.utils.toArray('.js-privateSlideInner');
 	gsap.set(initialInners, { xPercent: 120, rotationY: 35, opacity: 0, transformOrigin: 'left center' });
 
 	new Swiper('.js-privateSwiper', {
@@ -664,12 +737,13 @@ function setupPrivateSwiper() {
 		},
 	});
 
-	// 登場演出: gallery が画面に入ったら一度だけ、複製ぶんも含む全innerを右から傾き→定位置へ。
+	// 登場演出: gallery が画面上部近く(top 30%)まで来たら一度だけ、複製ぶんも含む全innerを
+	// 右から傾き→定位置へ。固定背景と空のswiperをしばらく見せてからスライドが飛び込む段取り。
 	// loop複製はSwiper初期化(afterInit)までに生成済みのため、初期化後に再取得する。
-	const inners = gsap.utils.toArray('.private__slide--inner');
+	const inners = gsap.utils.toArray('.js-privateSlideInner');
 	ScrollTrigger.create({
-		trigger: '.private__gallery',
-		start: 'top 70%',
+		trigger: '.js-privateGallery',
+		start: 'top 30%',
 		once: true,
 		onEnter: function () {
 			gsap.to(inners, {
