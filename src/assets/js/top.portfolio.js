@@ -79,6 +79,7 @@ function playLoadingReveal() {
 			$('body').removeClass('--is-loading').addClass('--is-loaded');
 			playMvCatchAnimation();
 			ScrollTrigger.refresh();
+			ScrollTrigger.update();
 		},
 	});
 
@@ -497,17 +498,53 @@ function buildCareerLine() {
 	fillPath.style.strokeDashoffset = careerLineTotalLength;
 }
 
+/**
+ * 蛇行パス・dot位置を引き直し、ScrollTriggerの開始/終了位置も取り直す。
+ * オーブ位置はCAREER用ScrollTriggerのprogress(=セクションのドキュメント上の
+ * 開始/終了に対するスクロール量)から算出するため、
+ * (1)タイムライン自体の高さ変化(画像デコード/自区間の再フロー) だけでなく
+ * (2)CAREERより手前(#about〜#skills等)の遅延再フローでセクションが下へずれた場合も
+ * refreshしないとprogressが古い開始/終了基準のままになり、オーブが線上の別位置に描かれる。
+ */
+function recalcCareerLine() {
+	buildCareerLine();
+	ScrollTrigger.refresh();
+	ScrollTrigger.update();
+}
+
 buildCareerLine();
-$(window).on('load', buildCareerLine);
+$(window).on('load', recalcCareerLine);
 
 let careerLineResizeTimer;
 $(window).on('resize', function () {
 	clearTimeout(careerLineResizeTimer);
-	careerLineResizeTimer = setTimeout(function () {
-		buildCareerLine();
-		ScrollTrigger.refresh();
-	}, 200);
+	careerLineResizeTimer = setTimeout(recalcCareerLine, 200);
 });
+
+// webfont(Noto Sans JP等)はwindow.loadを待たずに遅れて差し替わり、
+// 本文の行高が変わってCAREERより手前のセクションが伸縮する。load後の再フローを取りこぼさない
+if (document.fonts && document.fonts.ready) {
+	document.fonts.ready.then(recalcCareerLine);
+}
+
+/**
+ * 画像のheight:autoデコードやwebfont読了は、window.loadより後にレイアウトを動かす。
+ * .js-careerTimeline自体の高さ変化に加え、手前セクションの再フローでページ全体の高さが
+ * 変わったとき(=CAREERの開始/終了位置がずれたとき)も取りこぼさないよう、
+ * body全体の高さもあわせて監視する。refresh前後で高さが同一なら再発火しないためループしない
+ */
+if (window.ResizeObserver) {
+	const careerTimelineEl = document.querySelector('.js-careerTimeline');
+	if (careerTimelineEl) {
+		let careerResizeObserverTimer;
+		const careerResizeObserver = new ResizeObserver(function () {
+			clearTimeout(careerResizeObserverTimer);
+			careerResizeObserverTimer = setTimeout(recalcCareerLine, 50);
+		});
+		careerResizeObserver.observe(careerTimelineEl);
+		careerResizeObserver.observe(document.body);
+	}
+}
 
 /*-----------------------------------------------
  * CAREER - Line Growth + Orb Descent + Dot Lighting + Climax Burst
@@ -590,17 +627,23 @@ ScrollTrigger.create({
 -------------------------------------------------*/
 const careerDecoMM = gsap.matchMedia();
 careerDecoMM.add('(min-width: 769px)', () => {
-	document.querySelectorAll('.js-careerDeco').forEach((el) => {
+	// 項目ごとに振れ幅・追従速度をずらし、全項目が同じ動きに見えないようにする
+	// （振れ幅は隣接itemのテキストと重ならない範囲に抑える）
+	const amplitudes = [16, 24, 18, 26, 20, 22];
+	const scrubs = [0.15, 0.35, 0.2, 0.4, 0.25, 0.3];
+	document.querySelectorAll('.js-careerDeco').forEach((el, i) => {
+		const amplitude = amplitudes[i % amplitudes.length];
+		const scrubValue = scrubs[i % scrubs.length];
 		gsap.fromTo(el,
-			{ yPercent: -14 },
+			{ yPercent: -amplitude },
 			{
-				yPercent: 14,
+				yPercent: amplitude,
 				ease: 'none',
 				scrollTrigger: {
 					trigger: el.closest('.js-careerItem'),
 					start: 'top bottom',
 					end: 'bottom top',
-					scrub: 0.2,
+					scrub: scrubValue,
 				},
 			}
 		);
