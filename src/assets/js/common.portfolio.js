@@ -13,26 +13,41 @@ const spOnly = window.matchMedia('(max-width: 768px)');
 const pageTransitionCircleA = document.querySelector('.js-pageTransitionCircleA');
 const pageTransitionCircleB = document.querySelector('.js-pageTransitionCircleB');
 
-window.__pageTransitionClosed = false;
-
-gsap.timeline({
-	onComplete: function () {
-		window.__pageTransitionClosed = true;
-		document.dispatchEvent(new CustomEvent('pageTransitionClosed'));
-	},
-})
-	.to(pageTransitionCircleB, {
-		scale: 0,
-		duration: .5,
-		ease: 'power2.out',
-	}, 0)
-	.to(pageTransitionCircleA, {
-		scale: 0,
-		duration: .5,
-		ease: 'power2.out',
-	}, .12);
-
 let pageTransitionLock = false;
+
+function playPageTransitionClose() {
+	gsap.set([pageTransitionCircleA, pageTransitionCircleB], { scale: 1, left: '50%', top: '50%' });
+
+	gsap.timeline({
+		onComplete: function () {
+			window.__pageTransitionClosed = true;
+			document.dispatchEvent(new CustomEvent('pageTransitionClosed'));
+		},
+	})
+		.to(pageTransitionCircleB, {
+			scale: 0,
+			duration: .5,
+			ease: 'power2.out',
+		}, 0)
+		.to(pageTransitionCircleA, {
+			scale: 0,
+			duration: .5,
+			ease: 'power2.out',
+		}, .12);
+}
+
+window.__pageTransitionClosed = false;
+playPageTransitionClose();
+
+// bfcache(戻る/進むでJSが再実行されないケース)復帰時、円が広がりきった
+// 状態のまま固まって見えるため、離脱前の状態に関わらず毎回closeし直す
+window.addEventListener('pageshow', function (e) {
+	if (!e.persisted) {
+		return;
+	}
+	pageTransitionLock = false;
+	playPageTransitionClose();
+});
 
 function isPlainLeftClick(e) {
 	return e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
