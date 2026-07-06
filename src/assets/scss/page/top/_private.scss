@@ -32,7 +32,7 @@
  */
 .private__head {
 	position: absolute;
-	top: 12vh;
+	top: vwmin(144);
 	left: 50%;
 	z-index: 3;
 	display: flex;
@@ -92,14 +92,13 @@
  */
 .private__float {
 	position: absolute;
-	width: 38vw;
-	max-width: 640px;
+	width: vwmax(456);
 	opacity: 0;
 	will-change: transform, opacity;
 	z-index: 2;
 
 	@include sp {
-		width: 70vw;
+		width: vw(525);
 	}
 }
 .private__float img,
@@ -124,14 +123,13 @@
  * 中央寄せは親.private__pinのflexに任せ、transformはscaleのみをJS（GSAP）が与える
  */
 .private__zoom {
-	width: 40vw;
-	max-width: 680px;
+	width: vwmax(480);
 	opacity: 0;
 	will-change: transform, opacity;
 	z-index: 1;
 
 	@include sp {
-		width: 72vw;
+		width: vw(540);
 	}
 }
 
@@ -190,10 +188,14 @@
 	border-radius: 10px;
 }
 .private__slide--caption {
-	margin-top: 1em;
+	margin-top: vwmin(16);
 	text-align: center;
 	color: #fff;
 	font-weight: 700;
+
+	@include sp {
+		margin-top: vw(16);
+	}
 }
 
 /**

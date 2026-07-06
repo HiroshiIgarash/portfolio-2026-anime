@@ -615,9 +615,12 @@ function setupPrivateIntro() {
 		{ xPercent: 160, opacity: 0 },
 		{ xPercent: 0, opacity: 1, ease: 'none', duration: 0.3 }, 0.3);
 	// coding: 中央で拡大して背景化（中央寄せはCSS側のflexに任せ、GSAPはscaleのみを与える）（進捗 0.60-1.00）
+	// coding.jpgは横長（16:9）のため、縦長のSPビューポートでは同じscaleでは画面上下が覆いきれない。
+	// SPのみ大きめのscaleにして拡大後に画面全体を覆うようにする。
+	const zoomScaleEnd = pcOnly.matches ? 2.4 : 5.4;
 	tl.fromTo('.js-privateZoom',
 		{ scale: 0.35, opacity: 0 },
-		{ scale: 2.4, opacity: 1, ease: 'none', duration: 0.4 }, 0.6);
+		{ scale: zoomScaleEnd, opacity: 1, ease: 'none', duration: 0.4 }, 0.6);
 	// A/B を coding の拡大に合わせてフェードアウト（進捗 0.60-1.00）
 	tl.to('.js-privateFloatA', { opacity: 0, ease: 'none', duration: 0.4 }, 0.6);
 	tl.to('.js-privateFloatB', { opacity: 0, ease: 'none', duration: 0.4 }, 0.6);
