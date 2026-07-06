@@ -17,9 +17,7 @@
 	position: relative;
 	z-index: 1;
 	min-height: 100vh;
-	/* padding-bottomは .careerFill の margin-top(-70vh)が#skills末尾のコンテンツ（prev/next・
-	   詳しくみる）に食い込んでクリックできなくなるのを防ぐ緩衝分。70vhを下回らないようにする */
-	padding: vwmin(64) 0 max(vwmin(160), 70vh);
+	padding: vwmin(64) 0 vwmin(160);
 	background-color: var(--color-white);
 	/* 円が覆いきるまでは opacity:0 で隠す（白背景がせり上がって夜景との境目が直線で
 	   見える問題を防ぐ）。覆いきったら JS が .--covered を付け、白い円の上にフェードで現れる。 */
@@ -27,7 +25,7 @@
 	transition: opacity .3s ease;
 
 	@include sp {
-		padding: vw(80) 0 max(vw(160), 70vh);
+		padding: vw(80) 0 vw(160);
 	}
 }
 .skills.--covered {
