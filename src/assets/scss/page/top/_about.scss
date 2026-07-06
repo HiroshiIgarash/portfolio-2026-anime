@@ -1,0 +1,181 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * ABOUT
+-------------------------------------------------*/
+.about {
+	position: relative;
+	z-index: 1;
+	display: flex;
+
+	@include sp {
+		flex-direction: column;
+	}
+}
+
+/**
+ * about__left
+ */
+.about__left {
+	width: vwmin(480);
+	flex-shrink: 0;
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	z-index: 3;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: vwmin(48);
+
+	@include sp {
+		width: 100%;
+		position: static;
+		height: auto;
+		gap: vw(48);
+		padding: vw(120) 0;
+	}
+}
+
+/**
+ * about__head
+ */
+.about__head {
+	display: flex;
+	position: relative;
+	font-family: var(--font-en);
+	font-size: vwmin(88);
+	line-height: 1;
+	font-weight: 900;
+	letter-spacing: 0;
+	color: #fff;
+	margin: 0;
+	padding-bottom: vwmin(24);
+
+	@include sp {
+		font-size: vw(96);
+		padding-bottom: vw(32);
+	}
+}
+.about__head::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 4px;
+	background-color: var(--color-teal);
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform .8s ease;
+	transition-delay: .5s;
+}
+.about__head.--is-ani::after {
+	transform: scaleX(1);
+}
+.about__head--char {
+	display: inline-block;
+	overflow: hidden;
+}
+.about__head--charIn {
+	display: inline-block;
+	transform: translateY(110%);
+	opacity: 0;
+	transition: transform .6s ease, opacity .6s ease;
+}
+.about__head.--is-ani .about__head--charIn {
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.about__head--char:nth-child(1) .about__head--charIn {
+	transition-delay: .08s;
+}
+.about__head--char:nth-child(2) .about__head--charIn {
+	transition-delay: .16s;
+}
+.about__head--char:nth-child(3) .about__head--charIn {
+	transition-delay: .24s;
+}
+.about__head--char:nth-child(4) .about__head--charIn {
+	transition-delay: .32s;
+}
+.about__head--char:nth-child(5) .about__head--charIn {
+	transition-delay: .4s;
+}
+
+/**
+ * about__avatar
+ */
+.about__avatar {
+	width: vwmin(240);
+	height: vwmin(240);
+
+	@include sp {
+		width: vw(320);
+		height: vw(320);
+	}
+}
+.about__avatar--btn {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	border: none;
+	background: none;
+	cursor: pointer;
+}
+.about__avatar--img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	opacity: 0;
+	transition: opacity .3s ease;
+}
+.about__avatar--img.--is-current {
+	opacity: 1;
+}
+
+/**
+ * about__right
+ */
+.about__right {
+	flex: 1;
+	min-width: 0;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	gap: vwmin(200);
+	padding: vwmin(240) vwmin(80);
+
+	@include sp {
+		gap: vw(160);
+		padding: vw(120) vw(32);
+	}
+}
+
+/* about__text */
+.about__text {
+	font-size: vwmin(28);
+	line-height: 1.9;
+	color: #fff;
+	margin: 0;
+	opacity: 0;
+	transform: translateY(vwmin(40));
+	transition: opacity .8s ease, transform .8s ease;
+
+	@include sp {
+		font-size: vw(32);
+		transform: translateY(vw(40));
+	}
+}
+.about__text.--is-ani {
+	opacity: 1;
+	transform: translateY(0);
+}
