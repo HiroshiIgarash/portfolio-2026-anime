@@ -22,17 +22,16 @@
 	clip-path: circle(0% at calc(100% - vwmin(68)) vwmin(68));
 	transition: clip-path .6s ease;
 	z-index: 1;
+
+	@include sp {
+		clip-path: circle(0% at calc(100% - vw(80)) vw(80));
+	}
 }
 .l-header.is-active .l-header__inner {
 	pointer-events: auto;
 	clip-path: circle(150% at calc(100% - vwmin(68)) vwmin(68));
-}
 
-@include sp {
-	.l-header__inner {
-		clip-path: circle(0% at calc(100% - vw(80)) vw(80));
-	}
-	.l-header.is-active .l-header__inner {
+	@include sp {
 		clip-path: circle(150% at calc(100% - vw(80)) vw(80));
 	}
 }
@@ -45,20 +44,18 @@
 	width: vwmin(160);
 	pointer-events: auto;
 	z-index: 2;
+
+	@include sp {
+		top: vw(24);
+		left: vw(24);
+		width: vw(200);
+	}
 }
 .l-header__logo--link {
 	display: block;
 }
 .l-header__logo--link img {
 	width: 100%;
-}
-
-@include sp {
-	.l-header__logo {
-		top: vw(24);
-		left: vw(24);
-		width: vw(200);
-	}
 }
 
 /**
@@ -72,9 +69,8 @@
 	height: vwmin(88);
 	pointer-events: auto;
 	z-index: 2;
-}
-@include sp {
-	.l-header__navBtnWrap {
+
+	@include sp {
 		top: vw(24);
 		right: vw(24);
 		width: vw(112);
@@ -107,6 +103,10 @@
 	width: 40%;
 	height: vwmin(16);
 	z-index: 1;
+
+	@include sp {
+		height: vw(20);
+	}
 }
 .l-header__navBtn--line {
 	position: absolute;
@@ -139,24 +139,19 @@
 	font-size: vwmin(10);
 	color: #fff;
 	z-index: 1;
+
+	@include sp {
+		font-size: vw(16);
+	}
 }
 .l-header.is-active .l-header__navBtn:after {
 	content: "CLOSE";
 }
 
-@include sp {
-	.l-header__navBtnLineWrap {
-		height: vw(20);
-	}
-	.l-header__navBtn:after {
-		font-size: vw(16);
-	}
-}
-
 /**
- * headerNav__beacon
+ * l-header__beacon
  */
-.headerNav__beacon {
+.l-header__beacon {
 	position: absolute;
 	inset: 0;
 	display: flex;
@@ -164,7 +159,7 @@
 	overflow: hidden;
 	z-index: 0;
 }
-.headerNav__beacon--text {
+.l-header__beacon--text {
 	flex: 0 0 auto;
 	white-space: nowrap;
 	font-family: var(--font-en);
@@ -173,6 +168,11 @@
 	line-height: 1;
 	color: var(--color-navy);
 	animation: ani_beaconScroll 24s linear infinite;
+
+	@include sp {
+		font-size: vw(48);
+		animation-duration: 16s;
+	}
 }
 
 @keyframes ani_beaconScroll {
@@ -181,13 +181,6 @@
 	}
 	to {
 		transform: translateX(-100%);
-	}
-}
-
-@include sp {
-	.headerNav__beacon--text {
-		font-size: vw(48);
-		animation-duration: 16s;
 	}
 }
 
@@ -215,6 +208,10 @@
 	flex-direction: column;
 	align-items: center;
 	gap: vwmin(32);
+
+	@include sp {
+		gap: vw(40);
+	}
 }
 .headerNavLists__link {
 	display: inline-block;
@@ -225,6 +222,10 @@
 	color: #fff;
 	text-decoration: none;
 	-webkit-text-stroke: 1px var(--color-navy);
+
+	@include sp {
+		font-size: vw(56);
+	}
 }
 
 @include hover {
@@ -233,14 +234,5 @@
 	}
 	.headerNavLists__link:hover {
 		color: var(--color-navy);
-	}
-}
-
-@include sp {
-	.headerNavLists {
-		gap: vw(40);
-	}
-	.headerNavLists__link {
-		font-size: vw(56);
 	}
 }
