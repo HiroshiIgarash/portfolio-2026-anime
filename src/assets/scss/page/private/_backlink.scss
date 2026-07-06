@@ -1,0 +1,147 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * BACKLINK (PRIVATEページ限定 TOPへ戻るリンク)
+-------------------------------------------------*/
+/**
+ * private__backLink
+ */
+.private__backLink {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: vwmin(12);
+	width: fit-content;
+	margin: 0 auto vwmin(120);
+	padding: vwmin(20) vwmin(48);
+	border: 1px solid var(--color-navy);
+	border-radius: 999px;
+	color: var(--color-navy);
+	text-decoration: none;
+	font-size: vwmin(15);
+	font-weight: 700;
+	letter-spacing: .05em;
+	overflow: hidden;
+
+	@include sp {
+		gap: vw(16);
+		margin: 0 auto vw(160);
+		padding: vw(28) vw(64);
+		font-size: vw(24);
+	}
+}
+.private__backLink:before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: var(--color-teal);
+	transform: scaleX(0);
+	transform-origin: left center;
+}
+
+/* arrow */
+.private__backLink--arrow {
+	display: block;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: vwmin(5) vwmin(8) vwmin(5) 0;
+	border-color: transparent var(--color-navy) transparent transparent;
+
+	@include sp {
+		border-width: vw(8) vw(12) vw(8) 0;
+	}
+}
+
+/* text */
+.private__backLink--txt {
+	position: relative;
+}
+
+/* orb */
+.private__backLink--orb {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border-radius: 50%;
+	opacity: 0;
+	pointer-events: none;
+}
+.private__backLink--orb.-teal {
+	width: vwmin(10);
+	height: vwmin(10);
+	background: var(--color-teal);
+	margin: vwmin(-30) 0 0 vwmin(-70);
+
+	@include sp {
+		width: vw(14);
+		height: vw(14);
+		margin: vw(-40) 0 0 vw(-90);
+	}
+}
+.private__backLink--orb.-pink {
+	width: vwmin(8);
+	height: vwmin(8);
+	background: var(--color-pink);
+	margin: vwmin(20) 0 0 vwmin(60);
+
+	@include sp {
+		width: vw(10);
+		height: vw(10);
+		margin: vw(26) 0 0 vw(76);
+	}
+}
+.private__backLink--orb.-orange {
+	width: vwmin(12);
+	height: vwmin(12);
+	background: var(--color-orange);
+	margin: vwmin(-10) 0 0 vwmin(90);
+
+	@include sp {
+		width: vw(16);
+		height: vw(16);
+		margin: vw(-14) 0 0 vw(114);
+	}
+}
+
+@include hover {
+	.private__backLink:before {
+		transition: transform .4s ease;
+	}
+	.private__backLink:hover:before {
+		transform: scaleX(1);
+	}
+	.private__backLink--arrow {
+		transition: transform .3s ease;
+	}
+	.private__backLink:hover .private__backLink--arrow {
+		transform: translateX(-6px);
+	}
+	.private__backLink:hover .private__backLink--orb {
+		animation: ani_backLinkOrbPop .6s ease-out;
+	}
+	.private__backLink:hover .private__backLink--orb.-pink {
+		animation-delay: .1s;
+	}
+	.private__backLink:hover .private__backLink--orb.-orange {
+		animation-delay: .2s;
+	}
+}
+
+@keyframes ani_backLinkOrbPop {
+	0% {
+		opacity: 0;
+		transform: scale(.3);
+	}
+	40% {
+		opacity: 1;
+		transform: scale(1.2);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(1.6);
+	}
+}
