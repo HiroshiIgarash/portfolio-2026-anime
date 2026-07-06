@@ -31,14 +31,19 @@ if (pcOnly.matches) {
 	lenis.stop();
 
 	window.addEventListener('wheel', function (e) {
-		if ($(e.target).closest('.productsItem__body').length) {
-			return;
+		const direction = e.deltaY > 0 ? 1 : -1;
+		const $body = $(e.target).closest('.productsItem__body');
+		if ($body.length) {
+			const el = $body[0];
+			const atTop = el.scrollTop <= 0;
+			const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+			if (direction > 0 && !atBottom) return;
+			if (direction < 0 && !atTop) return;
 		}
 		if (productsIsAnimating) {
 			e.preventDefault();
 			return;
 		}
-		const direction = e.deltaY > 0 ? 1 : -1;
 		const nextIndex = productsCurrentIndex + direction;
 		if (nextIndex < 0 || nextIndex > productsSectionCount - 1) {
 			return;
