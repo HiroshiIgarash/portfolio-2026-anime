@@ -78,6 +78,29 @@
 	}
 }
 
+.l-header__navBtn--blob {
+	position: absolute;
+	inset: -30%;
+	background-color: var(--color-offwhite);
+	border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+	z-index: 0;
+	opacity: .85;
+	animation: ani_blobMorph 6s ease-in-out infinite;
+	transition: opacity .4s ease;
+}
+.l-header.is-active .l-header__navBtn--blob {
+	opacity: 0;
+}
+
+@keyframes ani_blobMorph {
+	0%, 100% {
+		border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+	}
+	50% {
+		border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+	}
+}
+
 .l-header__navBtn {
 	display: flex;
 	align-items: center;
@@ -87,6 +110,7 @@
 	height: 100%;
 	border-radius: 50%;
 	text-decoration: none;
+	z-index: 1;
 }
 .l-header__navBtn:before {
 	content: "";
