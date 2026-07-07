@@ -1,0 +1,83 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * PRISM
+-------------------------------------------------*/
+
+/**
+ * prism
+ * PRIVATE→PRISMは通常のスクロールでそのまま入っていく（pinなし）。
+ * #prismが画面に入ってくる区間で prism__introOverlay（白背景）を
+ * opacity:1→0にフェードアウトさせ、後ろで動き続けているPRISM本編
+ * （three.jsのcanvas）を透けて見せる。同時に prism__introThanks--char が
+ * 文字ごとにフェードインする（詳細はtop.portfolio.jsのsetupPrismIntroを参照）
+ */
+.prism {
+	position: relative;
+	height: 100vh;
+	overflow: hidden;
+	background: linear-gradient(135deg, #1c4f8f 0%, #4a8fd6 60%, #8fc4ef 100%);
+}
+
+.prism__canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.prism__fallback {
+	display: none;
+	position: absolute;
+	inset: 0;
+}
+
+.prism__fallback img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.prism__fallback.--is-visible {
+	display: block;
+}
+
+/**
+ * prism__introOverlay
+ */
+.prism__introOverlay {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background-color: var(--color-white);
+	pointer-events: none;
+}
+
+/**
+ * prism__introThanks
+ * PRISM本編（#prism）に対して常に同じ位置（画面中央上部）に固定表示する
+ */
+.prism__introThanks {
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	z-index: 2;
+	transform: translate(-50%, -50%);
+	margin: 0;
+	white-space: nowrap;
+	text-align: center;
+	color: #fff;
+	font-family: var(--font-en);
+	font-size: vwmin(44);
+	font-weight: 700;
+	letter-spacing: .1em;
+	pointer-events: none;
+
+	@include sp {
+		font-size: vw(48);
+	}
+}
+
+.prism__introThanks--char {
+	display: inline-block;
+	opacity: 0;
+}
