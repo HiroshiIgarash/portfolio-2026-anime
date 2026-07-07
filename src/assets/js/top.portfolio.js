@@ -791,6 +791,35 @@ function setupPrivateIntro() {
 setupPrivateIntro();
 
 /*-----------------------------------------------
+ * PRIVATE→PRISM - イントロ演出
+ * pinは使わず、#prismが画面に入ってくる通常のスクロールの中で、白いoverlayを
+ * フェードアウトさせてPRISM本編（three.jsのcanvas。常時requestAnimationFrameで
+ * 動き続けているため最初から流れて見える）を透けさせる。同時に
+ * 「THANK YOU FOR WATCHING」を文字ごとにstaggerフェードインさせる
+ * （loading画面のjs-loadingCharと同じ手法。#prismに対して常に同じ位置に
+ * 固定表示し、overlayのフェードと連動させるためscrub進行を共有する）
+-------------------------------------------------*/
+function setupPrismIntro() {
+	const stage = document.querySelector('.js-prismStage');
+	const overlay = document.querySelector('.js-prismIntroOverlay');
+	const chars = gsap.utils.toArray('.js-prismIntroChar');
+	if (!stage || !overlay || !chars.length) return;
+
+	const tl = gsap.timeline({
+		scrollTrigger: {
+			trigger: stage,
+			start: 'top bottom',
+			end: 'top top',
+			scrub: true,
+		},
+	});
+
+	tl.fromTo(overlay, { opacity: 1 }, { opacity: 0, ease: 'none' }, 0)
+		.fromTo(chars, { y: 10, opacity: 0 }, { y: 0, opacity: 1, ease: 'none', stagger: 0.05 }, 0);
+}
+setupPrismIntro();
+
+/*-----------------------------------------------
  * PRIVATE - Swiper（通常）+ スライドの右から登場
  * 各スライドの内側 .private__slide--inner を、gallery が画面に入ったら
  * 右から傾きつつ定位置へ stagger 表示する。Swiper 本体の transform とは

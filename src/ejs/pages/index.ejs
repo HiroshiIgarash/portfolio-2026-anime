@@ -374,12 +374,18 @@ const pageJs = 'top';
 			</div>
 		</div><!-- /.private__gallery -->
 	</section><!-- /#private -->
-	<section id="prism" class="prism">
+	<section id="prism" class="prism js-prismStage">
 		<picture class="prism__fallback">
 			<source srcset="<%= root %>assets/img/top/mv1.webp" type="image/webp">
 			<img src="<%= root %>assets/img/top/mv1.jpg" alt="">
 		</picture>
 		<canvas class="prism__canvas js-prismCanvas"></canvas>
+		<div class="prism__introOverlay js-prismIntroOverlay"></div>
+		<p class="prism__introThanks js-prismIntroThanks">
+			<%_ 'THANK YOU FOR WATCHING!'.split('').forEach(function (ch) { _%>
+			<span class="prism__introThanks--char js-prismIntroChar"><%- ch === ' ' ? '&nbsp;' : ch %></span>
+			<%_ }); _%>
+		</p>
 	</section><!-- /#prism -->
 </main>
 <%- include('../_inc/_footer', { root: root }) -%>

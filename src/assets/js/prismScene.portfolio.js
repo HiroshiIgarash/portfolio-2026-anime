@@ -23,6 +23,9 @@ if (!isWebglAvailable()) {
 
 const canvas = document.querySelector('.js-prismCanvas');
 const stage = canvas.closest('.prism');
+// カード拡大時、画面中央上部に固定表示しているTHANK YOU（top.portfolio.jsのsetupPrismIntro）と
+// 重なって邪魔になるため、拡大中だけフェードアウトさせる
+const introThanks = document.querySelector('.js-prismIntroThanks');
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -273,6 +276,9 @@ function expandCard(card) {
 		duration: EXPAND_DURATION,
 		ease: 'power3.inOut'
 	});
+	if (introThanks) {
+		gsap.to(introThanks, { opacity: 0, duration: EXPAND_DURATION, ease: 'power3.inOut' });
+	}
 }
 
 function collapseCard(card) {
@@ -287,6 +293,9 @@ function collapseCard(card) {
 		duration: EXPAND_DURATION,
 		ease: 'power3.inOut'
 	});
+	if (introThanks) {
+		gsap.to(introThanks, { opacity: 1, duration: EXPAND_DURATION, ease: 'power3.inOut' });
+	}
 	// 同様に1周以上回りつつ、絶対角度としてぴったり表(0)に戻す
 	gsap.to(card.rotation, {
 		x: ud.rotX, y: nextExactAngle(card.rotation.y, 0), z: ud.rotZ,
