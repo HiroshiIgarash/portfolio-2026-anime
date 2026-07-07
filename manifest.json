@@ -1,0 +1,14 @@
+{
+	"name": "Hiroshi Igarashi Portfolio 2026",
+	"short_name": "Hiroshi Igarashi",
+	"icons": [
+		{
+			"src": "apple-touch-icon.png",
+			"sizes": "180x180",
+			"type": "image/png"
+		}
+	],
+	"theme_color": "#14213d",
+	"background_color": "#14213d",
+	"display": "standalone"
+}
