@@ -343,10 +343,23 @@ function onPointerClick(clientX, clientY) {
 	if (hits.length === 0) return;
 	expandCard(hits[0].object);
 }
-stage.addEventListener('click', (e) => onPointerClick(e.clientX, e.clientY));
+
+// タップ操作は touchstart 発火直後にブラウザが合成 click も発火するため、
+// 何もガードしないと1回のタップで onPointerClick が2回走ってしまう
+// (1回目で拡大開始→2回目が「拡大中カードへの再クリック」と誤判定され即座に collapse する)。
+// 同一ポインタ操作からの呼び出しを一定時間内は1回にまとめる。
+const POINTER_DEDUPE_MS = 500;
+let lastPointerHandledAt = -Infinity;
+function handlePointer(clientX, clientY) {
+	const now = performance.now();
+	if (now - lastPointerHandledAt < POINTER_DEDUPE_MS) return;
+	lastPointerHandledAt = now;
+	onPointerClick(clientX, clientY);
+}
+stage.addEventListener('click', (e) => handlePointer(e.clientX, e.clientY));
 stage.addEventListener('touchstart', (e) => {
 	const t = e.touches[0];
-	if (t) onPointerClick(t.clientX, t.clientY);
+	if (t) handlePointer(t.clientX, t.clientY);
 }, { passive: true });
 
 // マウス移動: カメラの軽いパララックスに反映
