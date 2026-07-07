@@ -208,13 +208,6 @@ function playMvCatchAnimation() {
 }
 
 /*-----------------------------------------------
- * ABOUT - Avatar Change
--------------------------------------------------*/
-$('.js-about__avatarChange').on('click', function () {
-	$(this).find('.about__avatar--img').toggleClass('--is-current');
-});
-
-/*-----------------------------------------------
  * ABOUT/PROJECTS - Fixed Background Stage
  * .bgStage を#about〜#projectsの区間ぶんpinし、
  * PROJECTSレイヤーのclip-pathをスクラブして
