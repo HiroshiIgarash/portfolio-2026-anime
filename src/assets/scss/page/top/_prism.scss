@@ -73,8 +73,15 @@
 	pointer-events: none;
 
 	@include sp {
+		width: 88%;
 		font-size: vw(48);
+		white-space: normal;
 	}
+}
+
+.prism__introThanks--word {
+	display: inline-block;
+	white-space: nowrap;
 }
 
 .prism__introThanks--char {
