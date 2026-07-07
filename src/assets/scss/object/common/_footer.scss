@@ -194,11 +194,13 @@
 	width: vwmin(230);
 	height: vwmin(230);
 
+	/* SPは flex-direction:column で縦積みになりフッター上部にロゴ・キャッチコピーが
+	   来るため、PCと同じ大きさ・位置のままだとそれらに重なる。右上に収まる大きさへ縮小する。 */
 	@include sp {
-		margin-top: vw(40);
-		margin-right: vw(40);
-		width: vw(272);
-		height: vw(272);
+		margin-top: calc(-1 * #{vw(100)});
+		margin-right: vw(24);
+		width: vw(140);
+		height: vw(140);
 	}
 }
 .l-footer__backTop--link {
@@ -217,7 +219,7 @@
 	animation: 18s ani_backTopRotate linear infinite;
 
 	@include sp {
-		--backtop-radius: #{vw(116)};
+		--backtop-radius: #{vw(56)};
 	}
 }
 .l-footer__backTop--circleChar {
@@ -231,7 +233,7 @@
 	color: var(--color-white);
 
 	@include sp {
-		font-size: vw(28);
+		font-size: vw(16);
 	}
 }
 .l-footer__backTop--circleChar:nth-child(1) {
@@ -293,8 +295,8 @@
 	mask: url(../img/common/icon_arrow_up.svg) no-repeat center / contain;
 
 	@include sp {
-		width: vw(56);
-		height: vw(56);
+		width: vw(28);
+		height: vw(28);
 	}
 }
 

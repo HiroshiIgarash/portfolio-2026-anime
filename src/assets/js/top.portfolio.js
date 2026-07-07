@@ -310,6 +310,12 @@ function setupFillCircle(fillSel, circleSel, revealSel, growVh, onCoveredChange)
 	const circle = document.querySelector(circleSel);
 	const reveal = revealSel ? document.querySelector(revealSel) : null;
 	if (!fill || !circle) return;
+	// 円が.skillsFill__bgのsticky範囲を抜けた後は__bgTrackの下端に押し出されて
+	// 画面外へ流れていくため、四隅の被覆判定だけだと一度trueになった直後にfalseへ
+	// 戻ってしまう（#skillsがopacity:0に巻き戻る）。一度覆いきったらそれ以降は
+	// #skills自体の白背景に途切れなく引き継がれるので維持し、progressが十分戻った
+	// （= #projectsへスクロールバックした）ときだけ判定をやり直す。
+	let hasCovered = false;
 	function update() {
 		const vh = window.innerHeight;
 		const vw = window.innerWidth;
@@ -327,12 +333,17 @@ function setupFillCircle(fillSel, circleSel, revealSel, growVh, onCoveredChange)
 			const cx = c.left + c.width / 2;
 			const cy = c.top + c.height / 2;
 			const r = c.width / 2;
-			const covered = [[0, 0], [vw, 0], [0, vh], [vw, vh]].every(function (p) {
+			const cornersCovered = [[0, 0], [vw, 0], [0, vh], [vw, vh]].every(function (p) {
 				return Math.hypot(p[0] - cx, p[1] - cy) <= r;
 			});
-			reveal.classList.toggle('--covered', covered);
+			if (cornersCovered) {
+				hasCovered = true;
+			} else if (progress < 0.5) {
+				hasCovered = false;
+			}
+			reveal.classList.toggle('--covered', hasCovered);
 			if (onCoveredChange) {
-				onCoveredChange(covered);
+				onCoveredChange(hasCovered);
 			}
 		}
 	}

@@ -9,16 +9,20 @@
  */
 .subArticle {
 	padding-top: vwmin(120);
+	padding-bottom: vwmin(120);
 
 	@include sp {
 		padding-top: vw(160);
+		padding-bottom: vw(160);
 	}
 }
 .subArticle.-fullscreen {
 	padding-top: 0;
+	padding-bottom: 0;
 
 	@include sp {
 		padding-top: 0;
+		padding-bottom: 0;
 	}
 }
 

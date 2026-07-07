@@ -82,6 +82,13 @@
 	background-color: var(--color-white);
 	transform: scale(0);
 	transform-origin: center;
+
+	/* SPは画面比率が縦長になりvmaxが高さ基準になるため、top:140%のままだと中心が
+	   画面下端よりさらに大きく下がり、直径250vmaxでも上の両隅まで届かなくなる
+	   （四隅を覆いきれず#skills.--coveredが安定して付かない）。中心を画面下端寄りに戻す。 */
+	@include sp {
+		top: 110%;
+	}
 }
 .skillsFill__spacer {
 	/* #skills を下に押し下げるスクロール距離。円が全画面を覆いきる（四隅が白くなる）まで
@@ -170,7 +177,8 @@
 
 /**
  * skills__menu
- * 円形アイコンボタンを1行目5個・2行目4個で折り返す（9個固定のためflex-wrap）。SPは2列×グリッド
+ * 円形アイコンボタンを1行目5個・2行目4個で折り返す（9個固定のためflex-wrap）。
+ * SPもgridの2列固定にはせず、ボタンを小さくしてPCと同じ5+4の折り返しにする。
  */
 .skills__menu {
 	display: flex;
@@ -181,10 +189,8 @@
 	margin: 0 auto vwmin(96);
 
 	@include sp {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		max-width: vw(400);
-		gap: vw(32);
+		gap: vw(20);
+		max-width: calc(#{vw(100)} * 5 + #{vw(20)} * 4);
 		margin-bottom: vw(96);
 	}
 }
@@ -201,12 +207,12 @@
 	border-radius: 50%;
 	background-color: #fff;
 	cursor: pointer;
-	transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
 
 	@include sp {
-		width: auto;
-		padding: vw(24);
+		width: vw(100);
+		padding: vw(16);
 	}
+	transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
 }
 .skills__menu--btn img {
 	width: 100%;

@@ -48,6 +48,14 @@
 	z-index: 2;
 	background: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .45) 50%);
 	pointer-events: none;
+
+	/* PCはキャッチコピーが右半分(.mv__catchWrapがwidth:50%)にしかないため右だけ暗くしているが、
+	   SPは.mv__catchWrapがwidth:100%になり画面全体にキャッチコピーが乗るため、左右で分ける
+	   グラデーションのままだと右半分の文字が読みにくい。上部（キャッチコピーがある範囲）を
+	   均一に暗くする形に切り替える。 */
+	@include sp {
+		background: linear-gradient(to bottom, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, 0) 45%);
+	}
 }
 
 /**
@@ -213,11 +221,14 @@
 		padding: 0 vw(32);
 	}
 	.mv__catch {
-		padding: vw(160) 0 vw(160);
+		padding: vw(240) 0 vw(160);
+		/* オーバーレイだけだと空・雲など明るい背景に重なった時に文字が読みにくいため、
+		   文字の縁を暗く沈めて背景の明暗によらず可読性を確保する。 */
+		text-shadow: 0 2px 16px rgba(0, 0, 0, .6), 0 1px 4px rgba(0, 0, 0, .5);
 	}
 	.mv__catch--main {
 		gap: vw(8);
-		font-size: vw(52);
+		font-size: vw(64);
 		margin: 0 0 vw(48);
 	}
 	.mv__catch--lists {

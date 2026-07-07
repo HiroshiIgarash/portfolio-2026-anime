@@ -44,6 +44,22 @@
 	z-index: 0;
 	opacity: 0;
 	will-change: opacity;
+
+	/* PCは.private__book自体が本の見開き比率(1191:842)なのでinset:0で全体に一致するが、
+	   SPは挿絵+本文が縦積みでカード自体が縦に伸びるため、inset:0のままだと本の折り目が
+	   本文テキストの途中にまで垂れ下がって重なる。挿絵エリアの高さに収まるよう、
+	   挿絵画像の比率(1672:941、全private画像共通)＋.private__illustのpadding(vw(48)上下)
+	   ぶんを足した比率にする（画像比率だけ合わせるとpadding分だけ挿絵がbookBgよりはみ出す）。
+	   750:454 は 941/1672 + (16*2)/750 の高さ比率をSPカンプ幅750基準で表した近似値。
+	   inset:0のtopのままだと.private__book自体のpadding-top(vw(32))ぶん、挿絵(.private__illust
+	   は通常フローでcontent-box基準)よりbookBg(absoluteでborder-box基準)が上に来てしまい、
+	   本の白いページ上端と挿絵の間に余分な余白ができるため、topをpadding-topに揃える。 */
+	@include sp {
+		inset: auto 0 auto 0;
+		top: vw(32);
+		aspect-ratio: 750 / 454;
+		height: auto;
+	}
 }
 .private__bookBg img {
 	display: block;
@@ -60,8 +76,11 @@
 	will-change: transform, opacity;
 	padding: vwmin(24);
 
+	/* book.jpgの白いページ部分は外枠の弧線ぶん画像全体より内側にあり、実測でおよそ
+	   画像高さの82%程度。paddingがvw(16)のままだと挿絵がその白い部分からはみ出て
+	   本の弧線の外に飛び出て見えるため、paddingを広げて挿絵を一回り小さくする。 */
 	@include sp {
-		padding: vw(16);
+		padding: vw(48);
 		order: 1;
 	}
 }
