@@ -72,11 +72,11 @@ const pageJs = 'private';
 			<div class="private__book -<%= i % 2 === 0 ? 'left' : 'right' %> js-privateBook">
 				<picture class="private__bookBg">
 					<source srcset="<%= root %>assets/img/private/book.webp" type="image/webp">
-					<img src="<%= root %>assets/img/private/book.jpg" alt="">
+					<img src="<%= root %>assets/img/private/book.jpg" alt="" width="1191" height="842">
 				</picture>
 				<picture class="private__illust">
 					<source srcset="<%= root %>assets/img/private/<%= p.name %>.webp" type="image/webp">
-					<img src="<%= root %>assets/img/private/<%= p.name %>.jpg" alt="<%= p.alt %>">
+					<img src="<%= root %>assets/img/private/<%= p.name %>.jpg" alt="<%= p.alt %>" width="1672" height="941">
 				</picture>
 				<div class="private__text">
 					<h2 class="private__text--title"><%= p.title %></h2>

@@ -26,19 +26,19 @@ const pageJs = 'top';
 				<li class="mv__bgSlideList swiper-slide" data-visual="1">
 					<picture>
 						<source srcset="<%= root %>assets/img/top/mv1.webp" type="image/webp">
-						<img src="<%= root %>assets/img/top/mv1.jpg" alt="空を見上げる少年と少女">
+						<img src="<%= root %>assets/img/top/mv1.jpg" alt="空を見上げる少年と少女" width="1672" height="941">
 					</picture>
 				</li>
 				<li class="mv__bgSlideList swiper-slide" data-visual="2">
 					<picture>
 						<source srcset="<%= root %>assets/img/top/mv2.webp" type="image/webp">
-						<img src="<%= root %>assets/img/top/mv2.jpg" alt="山頂へ続く道を歩く登山者">
+						<img src="<%= root %>assets/img/top/mv2.jpg" alt="山頂へ続く道を歩く登山者" width="1672" height="941">
 					</picture>
 				</li>
 				<li class="mv__bgSlideList swiper-slide" data-visual="3">
 					<picture>
 						<source srcset="<%= root %>assets/img/top/mv3.webp" type="image/webp">
-						<img src="<%= root %>assets/img/top/mv3.jpg" alt="バレーボールの試合の一場面">
+						<img src="<%= root %>assets/img/top/mv3.jpg" alt="バレーボールの試合の一場面" width="1672" height="941">
 					</picture>
 				</li>
 			</ul>
@@ -51,7 +51,7 @@ const pageJs = 'top';
 				<button type="button" class="btn_visualChange js-visualChange --is-current" data-visual="1">
 					<picture>
 						<source srcset="<%= root %>assets/img/top/mv1_thumb.webp" type="image/webp">
-						<img src="<%= root %>assets/img/top/mv1_thumb.jpg" alt="">
+						<img src="<%= root %>assets/img/top/mv1_thumb.jpg" alt="" width="160" height="160">
 					</picture>
 					<span class="hd">1枚目のビジュアルに切り替え</span>
 				</button>
@@ -60,7 +60,7 @@ const pageJs = 'top';
 				<button type="button" class="btn_visualChange js-visualChange" data-visual="2">
 					<picture>
 						<source srcset="<%= root %>assets/img/top/mv2_thumb.webp" type="image/webp">
-						<img src="<%= root %>assets/img/top/mv2_thumb.jpg" alt="">
+						<img src="<%= root %>assets/img/top/mv2_thumb.jpg" alt="" width="160" height="160">
 					</picture>
 					<span class="hd">2枚目のビジュアルに切り替え</span>
 				</button>
@@ -69,7 +69,7 @@ const pageJs = 'top';
 				<button type="button" class="btn_visualChange js-visualChange" data-visual="3">
 					<picture>
 						<source srcset="<%= root %>assets/img/top/mv3_thumb.webp" type="image/webp">
-						<img src="<%= root %>assets/img/top/mv3_thumb.jpg" alt="">
+						<img src="<%= root %>assets/img/top/mv3_thumb.jpg" alt="" width="160" height="160">
 					</picture>
 					<span class="hd">3枚目のビジュアルに切り替え</span>
 				</button>
@@ -102,13 +102,13 @@ const pageJs = 'top';
 			<div class="bgStage__layer -about">
 				<picture>
 					<source srcset="<%= root %>assets/img/top/about-bg.webp" type="image/webp">
-					<img src="<%= root %>assets/img/top/about-bg.jpg" alt="">
+					<img src="<%= root %>assets/img/top/about-bg.jpg" alt="" width="1672" height="941">
 				</picture>
 			</div><!-- /.bgStage__layer.-about -->
 			<div class="bgStage__layer -projects">
 				<picture>
 					<source srcset="<%= root %>assets/img/top/projects-bg.webp" type="image/webp">
-					<img src="<%= root %>assets/img/top/projects-bg.jpg" alt="">
+					<img src="<%= root %>assets/img/top/projects-bg.jpg" alt="" width="1672" height="941">
 				</picture>
 			</div><!-- /.bgStage__layer.-projects -->
 		</div><!-- /.bgStage -->
@@ -141,10 +141,10 @@ const pageJs = 'top';
 			</h2>
 			<%
 			const projectsList = [
-				{ modal: 'projectModal01', img: 'koremina', alt: 'コレミナ', label: '個人制作' },
-				{ modal: 'projectModal02', img: 'holo-comment', alt: 'ホロライブコメント検索', label: '個人制作' },
-				{ modal: 'projectModal03', img: 'tategamanga', alt: 'タテマンガ投稿Webサービス', label: 'Web開発会社' },
-				{ modal: 'projectModal04', img: 'corporate', alt: 'コーポレートサイトリニューアル', label: 'Web開発会社' },
+				{ modal: 'projectModal01', img: 'koremina', alt: 'コレミナ', label: '個人制作', width: 1200, height: 630 },
+				{ modal: 'projectModal02', img: 'holo-comment', alt: 'ホロライブコメント検索', label: '個人制作', width: 1200, height: 630 },
+				{ modal: 'projectModal03', img: 'tategamanga', alt: 'タテマンガ投稿Webサービス', label: 'Web開発会社', width: 1672, height: 941 },
+				{ modal: 'projectModal04', img: 'corporate', alt: 'コーポレートサイトリニューアル', label: 'Web開発会社', width: 1672, height: 941 },
 			];
 			// Swiperのloopモードは実スライド数が少ないと自動的に無効化されるため、
 			// 4作品を3セット(12スライド)複製して実スライド数を確保する。
@@ -159,7 +159,7 @@ const pageJs = 'top';
 						<span class="projects__slide--label<%= p.label === '個人制作' ? ' -personal' : ' -company' %>"><%= p.label %></span>
 						<picture>
 							<source srcset="<%= root %>assets/img/top/projects/<%= p.img %>.webp" type="image/webp">
-							<img src="<%= root %>assets/img/top/projects/<%= p.img %>.jpg" alt="<%= p.alt %>">
+							<img src="<%= root %>assets/img/top/projects/<%= p.img %>.jpg" alt="<%= p.alt %>" width="<%= p.width %>" height="<%= p.height %>">
 						</picture>
 						<p class="projects__slide--name"><%= p.alt %></p>
 					</li>
@@ -211,7 +211,7 @@ const pageJs = 'top';
 		<div class="skills__menu">
 			<% skillsList.forEach(function (s, i) { -%>
 			<button type="button" class="skills__menu--btn js-skillsMenuBtn<% if (i === 0) { -%> --is-current<% } -%>" data-skill-index="<%= i %>" data-name="<%= s.name %>" data-text="<%= s.text %>">
-				<img src="<%= root %>assets/img/top/skills/<%= s.slug %>.svg" alt="">
+				<img src="<%= root %>assets/img/top/skills/<%= s.slug %>.svg" alt="" width="24" height="24">
 				<span class="hd"><%= s.name %></span>
 			</button>
 			<% }); -%>
@@ -222,7 +222,7 @@ const pageJs = 'top';
 			</button>
 			<div class="skills__detail--main">
 				<div class="skills__detail--icon js-skillsDetailIcon">
-					<img src="<%= root %>assets/img/top/skills/<%= skillsList[0].slug %>.svg" alt="">
+					<img src="<%= root %>assets/img/top/skills/<%= skillsList[0].slug %>.svg" alt="" width="24" height="24">
 				</div>
 				<div class="skills__detail--body">
 					<p class="skills__detail--name js-skillsDetailName js-scrani"><%= skillsList[0].name %></p>
@@ -246,11 +246,11 @@ const pageJs = 'top';
 		</h2>
 		<%
 		const careerList = [
-			{ period: '2019 — 2022', title: '塾講師 · 2年半', text: '中3〜高2の数学を集団授業で担当。進路相談・三者面談も。人に教える経験は、その後のレビュー文化や後輩指導にも繋がっています。', deco: { type: 'image', src: 'juku' } },
-			{ period: '2022 — 2024', title: 'Web制作会社にて<span class="career__item--noBreak">コーディング</span> · 2年半', text: '数十〜数百ページ規模のコーポレートサイト制作、WordPress構築、後輩指導。マークアップとデザイン実装の地力を固めた時期。', deco: { type: 'image', src: 'web-shokunin' } },
+			{ period: '2019 — 2022', title: '塾講師 · 2年半', text: '中3〜高2の数学を集団授業で担当。進路相談・三者面談も。人に教える経験は、その後のレビュー文化や後輩指導にも繋がっています。', deco: { type: 'image', src: 'juku', width: 240, height: 228 } },
+			{ period: '2022 — 2024', title: 'Web制作会社にて<span class="career__item--noBreak">コーディング</span> · 2年半', text: '数十〜数百ページ規模のコーポレートサイト制作、WordPress構築、後輩指導。マークアップとデザイン実装の地力を固めた時期。', deco: { type: 'image', src: 'web-shokunin', width: 240, height: 197 } },
 			{ period: '2024', title: 'コレミナ 公開', text: 'Next.js + Prisma + Neonを独学で構築。AIなしで2ヶ月かけて作りきった、初の本格個人プロダクト。', deco: { type: 'css', shape: 'circle' } },
-			{ period: '2024 — 2026', title: 'Web開発会社にて · <span class="career__item--noBreak">タテマンガ</span>投稿サービス開発', text: '大手出版社のタテマンガ投稿サービスを受託開発・保守。フロント中心にバックエンドも横断。並行して在籍企業のコーポレートサイトリニューアル(多言語化対応)も担当。', deco: { type: 'image', src: 'tategamanga', panel: true } },
-			{ period: '2025', title: '応用情報技術者試験 合格', text: '基礎知識を体系化する目的で取得。実務との往復で土台を強くした。', deco: { type: 'image', src: 'goukaku' } },
+			{ period: '2024 — 2026', title: 'Web開発会社にて · <span class="career__item--noBreak">タテマンガ</span>投稿サービス開発', text: '大手出版社のタテマンガ投稿サービスを受託開発・保守。フロント中心にバックエンドも横断。並行して在籍企業のコーポレートサイトリニューアル(多言語化対応)も担当。', deco: { type: 'image', src: 'tategamanga', panel: true, width: 280, height: 373 } },
+			{ period: '2025', title: '応用情報技術者試験 合格', text: '基礎知識を体系化する目的で取得。実務との往復で土台を強くした。', deco: { type: 'image', src: 'goukaku', width: 240, height: 170 } },
 			{ period: '2026', title: 'ホロライブコメント検索 公開', text: 'Claude Codeとの協働開発を本格的に試した個人プロジェクト。1週間で公開、運用継続中。', deco: { type: 'css', shape: 'triangle' } },
 			{ period: 'NOW · 2026', title: '新しい環境を求めて', text: 'Web制作会社で、あっと驚くようなアニメーションや演出に挑戦できる環境を探しています。', current: true },
 		];
@@ -289,7 +289,7 @@ const pageJs = 'top';
 						<% if (c.deco.type === 'image') { -%>
 						<picture>
 							<source srcset="<%= root %>assets/img/top/career/<%= c.deco.src %>.webp" type="image/webp">
-							<img src="<%= root %>assets/img/top/career/<%= c.deco.src %>.<%= c.deco.src === 'tategamanga' ? 'jpg' : 'png' %>" alt="">
+							<img src="<%= root %>assets/img/top/career/<%= c.deco.src %>.<%= c.deco.src === 'tategamanga' ? 'jpg' : 'png' %>" alt="" width="<%= c.deco.width %>" height="<%= c.deco.height %>">
 						</picture>
 						<% } -%>
 					</div>
@@ -318,19 +318,19 @@ const pageJs = 'top';
 			<figure class="private__float -walk js-privateFloatA">
 				<picture>
 					<source srcset="<%= root %>assets/img/top/private/walk.webp" type="image/webp">
-					<img src="<%= root %>assets/img/top/private/walk.jpg" alt="散歩中の風景">
+					<img src="<%= root %>assets/img/top/private/walk.jpg" alt="散歩中の風景" width="1672" height="941">
 				</picture>
 			</figure>
 			<figure class="private__float -toy js-privateFloatB">
 				<picture>
 					<source srcset="<%= root %>assets/img/top/private/anime.webp" type="image/webp">
-					<img src="<%= root %>assets/img/top/private/anime.jpg" alt="VTuber配信を観る">
+					<img src="<%= root %>assets/img/top/private/anime.jpg" alt="VTuber配信を観る" width="1672" height="941">
 				</picture>
 			</figure>
 			<figure class="private__zoom js-privateZoom">
 				<picture>
 					<source srcset="<%= root %>assets/img/top/private/coding.webp" type="image/webp">
-					<img src="<%= root %>assets/img/top/private/coding.jpg" alt="コーディング中のデスク">
+					<img src="<%= root %>assets/img/top/private/coding.jpg" alt="コーディング中のデスク" width="1672" height="941">
 				</picture>
 			</figure>
 		</div><!-- /.private__pin -->
@@ -352,7 +352,7 @@ const pageJs = 'top';
 						<div class="private__slide--inner js-privateSlideInner">
 							<picture>
 								<source srcset="<%= root %>assets/img/top/private/<%= p.img %>.webp" type="image/webp">
-								<img src="<%= root %>assets/img/top/private/<%= p.img %>.jpg" alt="<%= p.alt %>">
+								<img src="<%= root %>assets/img/top/private/<%= p.img %>.jpg" alt="<%= p.alt %>" width="1672" height="941">
 							</picture>
 							<p class="private__slide--caption"><%= p.caption %></p>
 						</div>
@@ -371,7 +371,7 @@ const pageJs = 'top';
 	<section id="prism" class="prism js-prismStage">
 		<picture class="prism__fallback">
 			<source srcset="<%= root %>assets/img/top/mv1.webp" type="image/webp">
-			<img src="<%= root %>assets/img/top/mv1.jpg" alt="">
+			<img src="<%= root %>assets/img/top/mv1.jpg" alt="" width="1672" height="941">
 		</picture>
 		<canvas class="prism__canvas js-prismCanvas"></canvas>
 		<div class="prism__introOverlay js-prismIntroOverlay"></div>
