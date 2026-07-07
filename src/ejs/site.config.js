@@ -10,7 +10,6 @@ module.exports = {
   footerCatch: "わくわくに満ちた、体験を。",
   keywords: "ポートフォリオ,ウェブ制作,コーディング,フロントエンドエンジニア",
   ogpImage: "assets/og/ogp1.jpg",
-  twitterId: "@example_account",
   themeColor: "#fff",
   copyright: "&copy;2026 Hiroshi Igarashi",
 };

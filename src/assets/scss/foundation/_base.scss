@@ -60,3 +60,11 @@ html {
 	background: var(--color-navy);
 	border-radius: 0;
 }
+
+/**
+ * text selection
+ */
+::selection {
+	background: var(--color-teal);
+	color: var(--color-navy);
+}

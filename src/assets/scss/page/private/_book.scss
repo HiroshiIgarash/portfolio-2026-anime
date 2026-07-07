@@ -119,7 +119,7 @@
 	}
 }
 .private__text--title {
-	font-size: vwmin(24);
+	font-size: vwmin(34);
 	font-weight: 700;
 	margin-bottom: vwmin(16);
 	opacity: 0;
@@ -131,7 +131,7 @@
 	}
 }
 .private__text--body {
-	font-size: vwmin(15);
+	font-size: vwmin(21);
 	line-height: 1.9;
 	opacity: 0;
 	will-change: transform, opacity;
@@ -139,4 +139,10 @@
 	@include sp {
 		font-size: vw(26);
 	}
+}
+.private__text--marker {
+	background-image: linear-gradient(to right, var(--color-lightyellow), var(--color-lightyellow));
+	background-repeat: no-repeat;
+	background-position: 0 68%;
+	background-size: 0% 55%;
 }

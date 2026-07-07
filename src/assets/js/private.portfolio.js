@@ -16,6 +16,7 @@
 		const illust = book.querySelector('.private__illust');
 		const title = book.querySelector('.private__text--title');
 		const body = book.querySelector('.private__text--body');
+		const marker = book.querySelector('.js-marker');
 		const isRight = book.classList.contains('-right');
 		const illustFromX = isRight ? moveDistance : -moveDistance;
 
@@ -34,6 +35,9 @@
 				tl.to(illust, { opacity: 1, x: 0, scale: 1, duration: 0.6, ease: 'power2.out' }, '+=0.15');
 				tl.to(title, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '+=0.2');
 				tl.to(body, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '+=0.15');
+				if (marker) {
+					tl.to(marker, { backgroundSize: '100% 55%', duration: 0.5, ease: 'power2.out' }, '+=0.1');
+				}
 			},
 		});
 	});

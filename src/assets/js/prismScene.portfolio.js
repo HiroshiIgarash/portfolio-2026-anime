@@ -56,11 +56,16 @@ function resize() {
 const root = document.body.dataset.root;
 const textureLoader = new THREE.TextureLoader();
 const cardSources = [
-	{ src: root + 'assets/img/top/mv1.jpg', caption: 'KV 1 / 空を見上げる少年と少女' },
-	{ src: root + 'assets/img/top/mv2.jpg', caption: 'KV 2 / 山頂へ続く道' },
-	{ src: root + 'assets/img/top/mv3.jpg', caption: 'KV 3 / バレーボール' },
-	{ src: root + 'assets/img/top/about-bg.jpg', caption: 'ABOUT 背景' },
-	{ src: root + 'assets/img/top/projects-bg.jpg', caption: 'PROJECTS 背景' }
+	{ src: root + 'assets/img/top/mv1.jpg', caption: 'まだ見たことのない体験を、届けたい。' },
+	{ src: root + 'assets/img/top/mv2.jpg', caption: '登ったのは、まだ高尾山だけ。いつか富士山の頂に立ちたい。' },
+	{ src: root + 'assets/img/top/mv3.jpg', caption: '中学・高校はバレー部。去年までサークルでも続けていました。' },
+	{ src: root + 'assets/img/top/about-bg.jpg', caption: '長い散歩の日は、田んぼ道を歩くことも。自然の中はやっぱり気持ちいい。' },
+	{ src: root + 'assets/img/top/projects-bg.jpg', caption: '15時間かけて歩いた先にあるのは温泉。疲れた足を癒すこの時間が最高です。' },
+	{ src: root + 'assets/img/top/private/walk.jpg', caption: '毎週土曜は15時間の散歩デー。3日かけて日光東照宮まで歩いたこともあります。' },
+	{ src: root + 'assets/img/top/private/akabeko.jpg', caption: '福島県会津若松市出身。冬は雪深く、とにかく寒いです。' },
+	{ src: root + 'assets/img/top/private/anime.jpg', caption: 'にじさんじを設立当初から箱推し、今年で8年目。まだまだ推していきます。' },
+	{ src: root + 'assets/img/top/private/maimai.jpg', caption: '毎日の散歩のついでにmaimaiを数曲プレイ。プレイ目的でつい歩くので、ダイエットにもちょうどいいです。' },
+	{ src: root + 'assets/img/top/private/coding.jpg', caption: 'Claude Codeのおかげで個人開発がぐっと身近に。いつかマネタイズにも挑戦したいです。' }
 ];
 
 function makeCaptionTexture(text, image) {
@@ -117,7 +122,12 @@ const LANES = [
 	{ y: 0.6, z: -1.6 },
 	{ y: -0.5, z: 2.4 },
 	{ y: -1.7, z: -0.6 },
-	{ y: 0.1, z: 0.4 }
+	{ y: 0.1, z: 0.4 },
+	{ y: 2.3, z: 0.9 },
+	{ y: 1.1, z: -2.2 },
+	{ y: -0.1, z: 1.9 },
+	{ y: -1.1, z: -1.9 },
+	{ y: -2.3, z: 0.0 }
 ];
 
 // 画面外に出てから消したいが、固定値だとレーンによって(奥のレーンほど

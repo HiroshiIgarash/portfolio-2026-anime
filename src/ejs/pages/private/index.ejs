@@ -38,31 +38,31 @@ const pageJs = 'private';
 			{
 				name: 'akabeko',
 				title: '出身地は会津',
-				body: '福島県・会津若松で生まれ育ちました。山に囲まれた盆地で、冬はとにかく寒いです。',
+				body: '福島県・会津若松で生まれ育ちました。山に囲まれた盆地で、<span class="js-marker private__text--marker">冬はとにかく寒い</span>です。',
 				alt: '会津の郷土玩具 赤べこのイラスト',
 			},
 			{
 				name: 'anime',
 				title: 'にじさんじ、推し活8年目',
-				body: 'VTuberグループ「にじさんじ」を2018年の始動時から推し続けて、気づけば8年目です。好きが高じてコレミナを作り、その技術的興味の延長でホロライブコメント検索も作りました。',
+				body: 'VTuberグループ「にじさんじ」を2018年の始動時から推し続けて、<span class="js-marker private__text--marker">気づけば8年目</span>です。好きが高じてコレミナを作り、その技術的興味の延長でホロライブコメント検索も作りました。',
 				alt: 'VTuber配信を見ているイラスト',
 			},
 			{
 				name: 'walk',
 				title: '遠くまで、歩く',
-				body: '長距離の徒歩が趣味で、16時間かけて温泉に行ったり、3日間かけて日光東照宮まで歩いたこともあります。淡々と続ける時間が、考えごとには一番いい。',
+				body: '長距離の徒歩が趣味で、16時間かけて温泉に行ったり、<span class="js-marker private__text--marker">3日間かけて日光東照宮まで歩いた</span>こともあります。淡々と続ける時間が、考えごとには一番いい。',
 				alt: '散歩している後ろ姿のイラスト',
 			},
 			{
 				name: 'maimai',
-				title: 'maimai',
-				body: 'ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。',
+				title: '散歩のご褒美はmaimai',
+				body: '毎日の散歩のついでに、maimaiを数曲プレイするのが習慣。プレイしたい一心でつい歩いてしまうので、<span class="js-marker private__text--marker">ちょうどいいダイエットの仕組み</span>になっています。',
 				alt: 'ゲームセンターの音楽ゲーム筐体のイラスト',
 			},
 			{
 				name: 'coding',
-				title: '個人開発',
-				body: 'ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー。',
+				title: 'Claude Codeと、個人開発',
+				body: 'Claude Codeと一緒に手を動かすようになってから、<span class="js-marker private__text--marker">個人開発がぐっと身近</span>になりました。いつかは自分のプロダクトでマネタイズにも挑戦したいです。',
 				alt: 'デスクでコーディングしているイラスト',
 			},
 		];
@@ -80,7 +80,7 @@ const pageJs = 'private';
 				</picture>
 				<div class="private__text">
 					<h2 class="private__text--title"><%= p.title %></h2>
-					<p class="private__text--body"><%= p.body %></p>
+					<p class="private__text--body"><%- p.body %></p>
 				</div>
 			</div><!-- /.private__book -->
 			<% }); -%>

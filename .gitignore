@@ -1,5 +1,7 @@
 node_modules/
 .DS_Store
 *.css.map
-.claude/settings.local.json
+.claude/
 dist/
+docs/superpowers/
+CLAUDE.md
