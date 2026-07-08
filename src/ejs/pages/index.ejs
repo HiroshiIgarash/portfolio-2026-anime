@@ -141,10 +141,12 @@ const pageJs = 'top';
 			</h2>
 			<%
 			const projectsList = [
-				{ modal: 'projectModal01', img: 'koremina', alt: 'コレミナ', label: '個人制作', width: 1200, height: 630 },
-				{ modal: 'projectModal02', img: 'holo-comment', alt: 'ホロライブコメント検索', label: '個人制作', width: 1200, height: 630 },
-				{ modal: 'projectModal03', img: 'tategamanga', alt: 'タテマンガ投稿Webサービス', label: 'Web開発会社', width: 1672, height: 941 },
-				{ modal: 'projectModal04', img: 'corporate', alt: 'コーポレートサイトリニューアル', label: 'Web開発会社', width: 1672, height: 941 },
+				{ modal: 'projectModal01', img: 'hospital', alt: '総合病院コーポレートサイト制作', label: 'Web制作会社', type: 'agency', width: 1672, height: 941 },
+				{ modal: 'projectModal02', img: 'corporate', alt: 'Web制作期・コーポレートサイト多数', label: 'Web制作会社', type: 'agency', width: 1672, height: 941 },
+				{ modal: 'projectModal03', img: 'koremina', alt: 'コレミナ', label: '個人制作', type: 'personal', width: 1200, height: 630 },
+				{ modal: 'projectModal04', img: 'holo-comment', alt: 'ホロライブコメント検索', label: '個人制作', type: 'personal', width: 1200, height: 630 },
+				{ modal: 'projectModal05', img: 'tategamanga', alt: 'タテマンガ投稿Webサービス', label: 'Web開発会社', type: 'company', width: 1672, height: 941 },
+				{ modal: 'projectModal06', img: 'corporate', alt: 'コーポレートサイトリニューアル', label: 'Web開発会社', type: 'company', width: 1672, height: 941 },
 			];
 			// Swiperのloopモードは実スライド数が少ないと自動的に無効化されるため、
 			// 4作品を3セット(12スライド)複製して実スライド数を確保する。
@@ -156,7 +158,7 @@ const pageJs = 'top';
 					<% projectsList.forEach(function (p) { -%>
 					<li class="projects__slide swiper-slide js-projectsModalOpen" data-modal="<%= p.modal %>"<% if (rep > 0) { -%> aria-hidden="true"<% } -%>>
 						<span class="projects__slide--balloon">Click me!</span>
-						<span class="projects__slide--label<%= p.label === '個人制作' ? ' -personal' : ' -company' %>"><%= p.label %></span>
+						<span class="projects__slide--label -<%= p.type %>"><%= p.label %></span>
 						<picture>
 							<source srcset="<%= root %>assets/img/top/projects/<%= p.img %>.webp" type="image/webp">
 							<img src="<%= root %>assets/img/top/projects/<%= p.img %>.jpg" alt="<%= p.alt %>" width="<%= p.width %>" height="<%= p.height %>">

@@ -204,7 +204,7 @@
 
 /**
  * projects__slide--label
- * スライド右上に半分はみ出す楕円形ラベル。制作体制で2色に分ける
+ * スライド右上に半分はみ出す楕円形ラベル。制作体制で3色に分ける
  */
 .projects__slide--label {
 	display: inline-flex;
@@ -225,6 +225,10 @@
 }
 .projects__slide--label.-personal {
 	background: var(--color-pink);
+}
+.projects__slide--label.-agency {
+	background: var(--color-orange);
+	color: var(--color-navy);
 }
 .projects__slide--label.-company {
 	background: var(--color-teal);
