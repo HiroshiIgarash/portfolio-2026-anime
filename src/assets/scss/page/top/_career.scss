@@ -385,6 +385,9 @@
 	   min-width:autoがテキストの最小幅で押し広げられ、item毎に中央dotの位置が
 	   ずれるのを防ぐ */
 	min-width: 0;
+	/* period/title/textは登場アニメーションの初期状態でtranslateX(±vwmin(40))分
+	   ずれており、これがdocument全体の横スクロールを誘発するためここでクリップする */
+	overflow-x: hidden;
 
 	@include sp {
 		grid-column: 2;

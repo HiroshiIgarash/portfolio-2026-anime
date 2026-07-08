@@ -219,9 +219,20 @@
 }
 
 @include sp {
+	/* SPはキャッチコピー本文(3リスト)込みの高さがビューポート高さを超える端末があり、
+	   height:100vh + overflow:hiddenのままだと文末がクリップされ、画面下固定の
+	   .mv__visualThumbAreaとも重なっていた。.mv__catchWrapをrelativeにして通常フローへ
+	   乗せ、.mvの高さをコンテンツに追従させることで、はみ出た分はセクションごと伸びる形にする */
+	.mv {
+		height: auto;
+		min-height: 100vh;
+		overflow: visible;
+	}
 	.mv__catchWrap {
+		position: relative;
 		width: 100%;
 		padding: 0 vw(32);
+		overflow: visible;
 	}
 	.mv__catch {
 		padding: vw(240) 0 vw(160);
