@@ -4,6 +4,8 @@ Hiroshi Igarashi のポートフォリオサイト。EJS + Sass + webpack で構
 
 ## セットアップ
 
+Node.js 24 (LTS) を使用。バージョンは `.nvmrc` / `.mise.toml` を参照。
+
 ```bash
 npm install
 ```
