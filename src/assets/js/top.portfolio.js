@@ -787,11 +787,11 @@ function setupPrivateIntro() {
 		{ opacity: 0 },
 		{ opacity: 1, ease: 'none', duration: 1 }, 0);
 
-	// galleryがビューポートを覆いきったら固定背景レイヤーを消灯する。以降はgallery自身の
-	// 固定背景が同じ見た目を引き継ぐため切替は見えず、footer到達時に背景が残り続けるのも防ぐ
+	// gallery自身は背景を持たないため、pinBg（固定背景レイヤー）はgallery通過中も表示し続け、
+	// galleryを完全に抜けきったところで消灯する（以降のfooter等を隠さないため）
 	ScrollTrigger.create({
 		trigger: '.js-privateGallery',
-		start: 'top top',
+		start: 'bottom top',
 		onEnter: function () {
 			gsap.set(pinBg, { autoAlpha: 0 });
 		},

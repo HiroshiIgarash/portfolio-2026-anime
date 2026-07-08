@@ -40,7 +40,8 @@
  * position:fixedのビューポート全面要素として持ち、pin終端でzoomと差し替える（差し替えはJS）。
  * background-attachment:fixedでなく要素自体をfixedにするのは、GSAP pinのtransform配下では
  * attachment:fixedが無効化（scroll扱いに退化）されるためと、iOSでも動作させるため。
- * galleryがビューポートを覆いきったらJSが消灯し、後続コンテンツ（footer等）を隠さない
+ * gallery自身は背景を持たないため、gallery通過中もJSが表示し続け、抜けきったら消灯して
+ * 後続コンテンツ（footer等）を隠さないようにする
  */
 .private__pinBg {
 	position: fixed;
@@ -173,7 +174,8 @@
 
 /**
  * private__gallery
- * 背景にcoding画像を固定表示（pinのzoomからの視覚的連続）し、Swiperで趣味カードを一覧する。
+ * 背景は持たず、.private__pinBg（position:fixed）をgallery通過中もそのままJSが表示し続けることで
+ * pinのzoomからの視覚的連続を保つ。SPでbackground-attachment:fixedがiOSで機能しない問題も回避できる。
  * 1画面ぶんの高さを確保して固定背景→空のswiper→スライド登場の間を作る
  */
 .private__gallery {
@@ -184,21 +186,10 @@
 	justify-content: center;
 	min-height: 100vh;
 	padding: vwmin(120) 0;
-	background-image: url(../img/top/private/coding.jpg);
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
 
 	@include sp {
 		padding: vw(120) 0;
-		background-attachment: scroll;
 	}
-}
-.private__gallery::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background-color: rgba(0, 0, 0, .45);
 }
 
 /**
