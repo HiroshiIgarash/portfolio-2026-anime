@@ -106,7 +106,8 @@ module.exports = (env, argv) => {
 				{ directory: path.resolve(projectRoot, 'dist/assets/css'), publicPath: '/assets/css' },
 				{ directory: path.resolve(projectRoot, 'src/assets'), publicPath: '/assets' }
 			],
-			port: 8080,
+			// 複数worktree・複数セッションで同時に起動しても衝突しないよう自動割当にする
+			port: 'auto',
 			open: false,
 			hot: false
 		}
