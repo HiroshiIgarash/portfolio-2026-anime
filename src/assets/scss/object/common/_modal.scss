@@ -38,6 +38,9 @@
 }
 .oneModalIn__cont--img {
 	width: 100%;
+	/* height未指定だとimg要素のheight属性値がpxのまま優先されaspect-ratioと衝突するため、
+	   aspect-ratio側の計算を効かせるためにheight:autoを明示する */
+	height: auto;
 	aspect-ratio: 1200 / 630;
 	object-fit: cover;
 	border-radius: vwmin(12);
