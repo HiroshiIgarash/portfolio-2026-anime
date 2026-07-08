@@ -152,23 +152,31 @@ $('.js-visualChange').on('click', function () {
 -------------------------------------------------*/
 gsap.registerPlugin(ScrollTrigger);
 
-ScrollTrigger.create({
-	trigger: '#mv',
-	start: 'top top',
-	end: '+=100%',
-	pin: true,
-	pinSpacing: true,
-	scrub: true,
-	invalidateOnRefresh: true,
-	animation: gsap.to('.js-mv__catch', {
-		y: function () {
-			const wrap = document.querySelector('.js-mv__catchWrap');
-			const inner = document.querySelector('.js-mv__catch');
-			return -Math.max(inner.offsetHeight - wrap.offsetHeight, 0);
-		},
-		ease: 'none',
-	}),
-});
+// SPは.mv__catchWrapが100%幅になりキャッチコピーの折返しが変わって、内容高さがwrapと
+// ほぼ同じ(はみ出しが数十pxのみ)になる。pinで区間を作ると、その数十px分のためだけに
+// スクロールが長く足止めされ、かつ短い区間だとpin解除(fixed⇔static切替)がスワイプの
+// 途中で起きてガタつく。SPはpinせず、キャッチコピーは初回登場演出のみで静的表示にする。
+if (pcOnly.matches) {
+	function getMvCatchScrollDiff() {
+		const wrap = document.querySelector('.js-mv__catchWrap');
+		const inner = document.querySelector('.js-mv__catch');
+		return Math.max(inner.offsetHeight - wrap.offsetHeight, 0);
+	}
+
+	ScrollTrigger.create({
+		trigger: '#mv',
+		start: 'top top',
+		end: () => '+=' + getMvCatchScrollDiff(),
+		pin: true,
+		pinSpacing: true,
+		scrub: true,
+		invalidateOnRefresh: true,
+		animation: gsap.to('.js-mv__catch', {
+			y: () => -getMvCatchScrollDiff(),
+			ease: 'none',
+		}),
+	});
+}
 
 /*-----------------------------------------------
  * MV - Catch Animation

@@ -156,6 +156,9 @@
 	display: flex;
 	align-items: flex-start;
 	overflow: hidden;
+	/* SPはwidth:100%になり.mv__visualThumbArea(同z-index)の上に重なるため、
+	   クリックがテキスト側に奪われないようここ自体は素通しにする */
+	pointer-events: none;
 }
 .mv__catch {
 	width: 100%;
