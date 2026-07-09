@@ -70,8 +70,8 @@ const pageJs = 'products';
 					<div class="productsItem__block">
 						<p class="productsItem__block--label">TECH STACK</p>
 						<ul class="productsItem__techStack">
-							<li class="productsItem__techStack--item -hot">WordPress</li>
-							<li class="productsItem__techStack--item -hot">PHP</li>
+							<li class="productsItem__techStack--item">WordPress</li>
+							<li class="productsItem__techStack--item">PHP</li>
 							<li class="productsItem__techStack--item">Sass</li>
 							<li class="productsItem__techStack--item">JavaScript</li>
 							<li class="productsItem__techStack--item">EJS</li>
@@ -111,8 +111,8 @@ const pageJs = 'products';
 					<div class="productsItem__block">
 						<p class="productsItem__block--label">TECH STACK</p>
 						<ul class="productsItem__techStack">
-							<li class="productsItem__techStack--item -hot">WordPress</li>
-							<li class="productsItem__techStack--item -hot">PHP</li>
+							<li class="productsItem__techStack--item">WordPress</li>
+							<li class="productsItem__techStack--item">PHP</li>
 							<li class="productsItem__techStack--item">Sass</li>
 							<li class="productsItem__techStack--item">JavaScript</li>
 							<li class="productsItem__techStack--item">EJS</li>
@@ -155,7 +155,7 @@ const pageJs = 'products';
 					<div class="productsItem__block">
 						<p class="productsItem__block--label">TECH STACK</p>
 						<ul class="productsItem__techStack">
-							<li class="productsItem__techStack--item -hot">JavaScript</li>
+							<li class="productsItem__techStack--item">JavaScript</li>
 							<li class="productsItem__techStack--item">HTML / CSS</li>
 						</ul>
 					</div><!-- /.productsItem__block -->
@@ -192,8 +192,8 @@ const pageJs = 'products';
 					<div class="productsItem__block">
 						<p class="productsItem__block--label">TECH STACK</p>
 						<ul class="productsItem__techStack">
-							<li class="productsItem__techStack--item -hot">HTML / CSS</li>
-							<li class="productsItem__techStack--item -hot">SCSS</li>
+							<li class="productsItem__techStack--item">HTML / CSS</li>
+							<li class="productsItem__techStack--item">SCSS</li>
 							<li class="productsItem__techStack--item">JavaScript</li>
 							<li class="productsItem__techStack--item">EJS</li>
 							<li class="productsItem__techStack--item">Webpack</li>
@@ -208,6 +208,10 @@ const pageJs = 'products';
 					<p class="productsItem__num">05</p>
 					<div class="productsItem__gallery js-productsGallery">
 						<picture class="productsItem__gallery--pic js-productsGalleryImg --is-current">
+							<source srcset="<%= root %>assets/img/top/projects/koremina.webp" type="image/webp">
+							<img src="<%= root %>assets/img/top/projects/koremina.jpg" alt="コレミナ" width="1200" height="630">
+						</picture>
+						<picture class="productsItem__gallery--pic js-productsGalleryImg">
 							<source srcset="<%= root %>assets/img/products/koremina/01.webp" type="image/webp">
 							<img src="<%= root %>assets/img/products/koremina/01.png" alt="コレミナ・トップページ" width="1100" height="720">
 						</picture>
@@ -230,7 +234,7 @@ const pageJs = 'products';
 				</div><!-- /.productsItem__visual -->
 				<div class="productsItem__body" data-lenis-prevent>
 					<div class="productsItem__text">
-						<p>にじさんじ所属ライバーのおすすめ動画を、ファン同士で共有するためのWebサービス。<strong>エンジニア歴1年半時点、AIなしで自力で2ヶ月かけて作りきった</strong>初の本格的な個人プロダクトです。</p>
+						<p>にじさんじ所属ライバーのおすすめ動画を、ファン同士で共有するためのWebサービス。<strong>Web開発会社に入社する前、AIなしで自力で2ヶ月かけて作りきった</strong>初の本格的な個人プロダクトです。</p>
 						<ul>
 							<li><strong>Auth.js (旧 NextAuth.js) でログイン機能を実装</strong>。投稿・リアクション・ブックマーク・推しライバーの設定等のユーザー固有機能を構築。</li>
 							<li>動画投稿、ライバーでの絞り込み、ワード検索、ランダム表示、リアクション機能、ブックマーク機能を実装。</li>
@@ -242,8 +246,8 @@ const pageJs = 'products';
 					<div class="productsItem__block">
 						<p class="productsItem__block--label">TECH STACK</p>
 						<ul class="productsItem__techStack">
-							<li class="productsItem__techStack--item -hot">Next.js</li>
-							<li class="productsItem__techStack--item -hot">TypeScript</li>
+							<li class="productsItem__techStack--item">Next.js</li>
+							<li class="productsItem__techStack--item">TypeScript</li>
 							<li class="productsItem__techStack--item">Prisma</li>
 							<li class="productsItem__techStack--item">Neon (PostgreSQL)</li>
 							<li class="productsItem__techStack--item">Auth.js</li>
@@ -269,6 +273,10 @@ const pageJs = 'products';
 					<p class="productsItem__num">06</p>
 					<div class="productsItem__gallery js-productsGallery">
 						<picture class="productsItem__gallery--pic js-productsGalleryImg --is-current">
+							<source srcset="<%= root %>assets/img/top/projects/holo-comment.webp" type="image/webp">
+							<img src="<%= root %>assets/img/top/projects/holo-comment.jpg" alt="ホロライブコメント検索" width="1200" height="630">
+						</picture>
+						<picture class="productsItem__gallery--pic js-productsGalleryImg">
 							<source srcset="<%= root %>assets/img/products/holo/01.webp" type="image/webp">
 							<img src="<%= root %>assets/img/products/holo/01.png" alt="ホロライブコメント検索・検索結果画面" width="1100" height="720">
 						</picture>
@@ -304,9 +312,9 @@ const pageJs = 'products';
 					<div class="productsItem__block">
 						<p class="productsItem__block--label">TECH STACK</p>
 						<ul class="productsItem__techStack">
-							<li class="productsItem__techStack--item -hot">Next.js</li>
-							<li class="productsItem__techStack--item -hot">TypeScript</li>
-							<li class="productsItem__techStack--item -hot">AWS</li>
+							<li class="productsItem__techStack--item">Next.js</li>
+							<li class="productsItem__techStack--item">TypeScript</li>
+							<li class="productsItem__techStack--item">AWS</li>
 							<li class="productsItem__techStack--item">OpenSearch</li>
 							<li class="productsItem__techStack--item">Lambda</li>
 							<li class="productsItem__techStack--item">API Gateway</li>
@@ -356,8 +364,8 @@ const pageJs = 'products';
 					<div class="productsItem__block">
 						<p class="productsItem__block--label">TECH STACK</p>
 						<ul class="productsItem__techStack">
-							<li class="productsItem__techStack--item -hot">Next.js</li>
-							<li class="productsItem__techStack--item -hot">TypeScript</li>
+							<li class="productsItem__techStack--item">Next.js</li>
+							<li class="productsItem__techStack--item">TypeScript</li>
 							<li class="productsItem__techStack--item">next-intl</li>
 							<li class="productsItem__techStack--item">Contentful</li>
 							<li class="productsItem__techStack--item">Vercel</li>
@@ -398,8 +406,8 @@ const pageJs = 'products';
 					<div class="productsItem__block">
 						<p class="productsItem__block--label">TECH STACK</p>
 						<ul class="productsItem__techStack">
-							<li class="productsItem__techStack--item -hot">Next.js</li>
-							<li class="productsItem__techStack--item -hot">TypeScript</li>
+							<li class="productsItem__techStack--item">Next.js</li>
+							<li class="productsItem__techStack--item">TypeScript</li>
 							<li class="productsItem__techStack--item">GraphQL</li>
 							<li class="productsItem__techStack--item">urql</li>
 							<li class="productsItem__techStack--item">Apollo Server</li>
@@ -435,31 +443,41 @@ const pageJs = 'products';
 			</li>
 			<li class="productsDotNav__item">
 				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="1">
-					<span class="hd">総合病院コーポレートサイトへ移動</span>
+					<span class="hd">多角経営グループのコーポレートサイト制作へ移動</span>
 				</button>
 			</li>
 			<li class="productsDotNav__item">
 				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="2">
-					<span class="hd">Web制作期へ移動</span>
+					<span class="hd">総合病院コーポレートサイトへ移動</span>
 				</button>
 			</li>
 			<li class="productsDotNav__item">
 				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="3">
-					<span class="hd">コレミナへ移動</span>
+					<span class="hd">菓子ブランド公式サイトの保守・改修へ移動</span>
 				</button>
 			</li>
 			<li class="productsDotNav__item">
 				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="4">
-					<span class="hd">ホロライブコメント検索へ移動</span>
+					<span class="hd">Web制作期へ移動</span>
 				</button>
 			</li>
 			<li class="productsDotNav__item">
 				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="5">
-					<span class="hd">コーポレートサイトリニューアルへ移動</span>
+					<span class="hd">コレミナへ移動</span>
 				</button>
 			</li>
 			<li class="productsDotNav__item">
 				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="6">
+					<span class="hd">ホロライブコメント検索へ移動</span>
+				</button>
+			</li>
+			<li class="productsDotNav__item">
+				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="7">
+					<span class="hd">コーポレートサイトリニューアルへ移動</span>
+				</button>
+			</li>
+			<li class="productsDotNav__item">
+				<button type="button" class="productsDotNav__link js-productsDotNavBtn" data-snap-index="8">
 					<span class="hd">タテマンガ投稿Webサービスへ移動</span>
 				</button>
 			</li>
