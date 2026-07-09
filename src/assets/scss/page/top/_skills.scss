@@ -11,15 +11,17 @@
 	position: relative;
 	z-index: 1;
 	min-height: 100vh;
-	padding: vwmin(64) 0 vwmin(160);
-	background-color: var(--color-white);
-	/* 円が覆いきるまでは opacity:0 で隠す（白背景がせり上がって夜景との境目が直線で
-	   見える問題を防ぐ）。覆いきったら JS が .--covered を付け、白い円の上にフェードで現れる。 */
+	padding: vwmin(200) 0 vwmin(160);
+	/* 背景色は持たない（白は.skillsFill__circleだけが担当）。#skills自体に白背景を
+	   持たせると、円がまだ四隅に届いていない早出しタイミングで矩形の直線上辺が
+	   夜景に直接重なって見えてしまうため。中身（見出し・アイコン等）だけを
+	   JS(setupFillCircle, EARLY_REVEAL_RADIUS_FACTOR)が .--covered を付けたタイミングで
+	   フェードインさせる。 */
 	opacity: 0;
 	transition: opacity .3s ease;
 
 	@include sp {
-		padding: vw(80) 0 vw(160);
+		padding: vw(900) 0 vw(160);
 	}
 }
 .skills.--covered {
@@ -32,11 +34,12 @@
  * PROJECTS→SKILLSの白円トランジション。
  * ・__bgTrack(absolute) 内の __bg(sticky) が円の位置を留め、円のscaleは JS(setupFillCircle)が
  *   .skillsFill の実位置から直接算出する（GSAP ScrollTriggerのpinは使わない）
- * ・円は下端中央アンカーで下から湧き出て全画面を白く覆う
- * ・#skills は同wrap内 z-index:1 で、円が覆いきってから spacer ぶん後にせり上がる
+ * ・円は下端中央アンカーで下から湧き出て全画面を白く覆う（白背景は円だけが持つ。
+ *   #skills自体は背景色を持たず中身のみ）
+ * ・#skills は同wrap内 z-index:1 で、円がある程度育ってから spacer ぶん後にせり上がる
  * ・margin-top で前セクション(PROJECTS)に重ね、円が育ち始めるまでの待機を詰める
  * ・z-index:2 で pin中のbgStage(z-index:0)より前面。bgStageは #skills が上端に来るまで
- *   pinされ続けるので、覆う前に固定背景が流れて白との境目が直線で出ることはない
+ *   pinされ続けるので、背景が流れて円との境目がずれることはない
  */
 .skillsFill {
 	position: relative;
@@ -91,12 +94,12 @@
 	}
 }
 .skillsFill__spacer {
-	/* #skills を下に押し下げるスクロール距離。円が全画面を覆いきる（四隅が白くなる）まで
-	   #skills の白背景を画面外下に隠し、覆った後にせり上がらせる。短すぎると覆う前に
-	   #skills白が夜景の上に出て境目が直線で見える、長すぎると覆ってからSKILLSまで間延びする。
-	   circleのSKILLS_CIRCLE_GROW_VH(top.portfolio.js)と連動しており、値を変えたら
-	   coveredになる瞬間の#skillsの表示位置(だいぶ上に行き過ぎていないか)を実測で確認すること。 */
-	height: 290vh;
+	/* #skills を下に押し下げるスクロール距離。#skills自体は背景を持たないため直線境界の
+	   心配はないが、短すぎると円がまだ小さい段階で中身(見出し・アイコン)が画面に出てきて
+	   円の外側にはみ出る、長すぎると--covered後もSKILLSが見えるまで間延びする。
+	   circleのSKILLS_CIRCLE_GROW_VH・EARLY_REVEAL_RADIUS_FACTOR(top.portfolio.js)と連動して
+	   おり、値を変えたら中身が円の内側に収まっているか実測で確認すること。 */
+	height: 150vh;
 }
 
 /**

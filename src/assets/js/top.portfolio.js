@@ -228,6 +228,12 @@ function playMvCatchAnimation() {
  * 状態が続き、白円と夜景背景が同時に動く見た目になる）。
 -------------------------------------------------*/
 const SKILLS_CIRCLE_GROW_VH = 2.0;
+/**
+ * SKILLSの早出し係数。円が四隅を完全に覆いきる前（画面の8〜9割程度が白くなった時点）で
+ * #skillsをフェードインさせるため、cornersCovered判定に使う半径をこの倍率で広めに見積もる。
+ * 1.0だと四隅ぎりぎり覆いきった瞬間になる。setupFillCircle側で参照。
+ */
+const EARLY_REVEAL_RADIUS_FACTOR = 1.25;
 
 ScrollTrigger.create({
 	trigger: '.js-bgStage__wrap',
@@ -297,7 +303,8 @@ projectsSwiper.on('realIndexChange', function () {
  * .skillsFill__bg（position:sticky）が円を画面中央に留め、GSAPはscaleのみを
  * スクラブする（pinは使わない）。円は150vmax固定でscale(1)が全画面被覆。
  * .skillsFillのtopが画面下端→上端まで（=ちょうど1画面ぶん）でscale 0→1とし、
- * 覆いきった瞬間に、同wrap内で最初から円の手前にある#skillsへ遅延なく移る。
+ * 覆いきる少し手前（EARLY_REVEAL_RADIUS_FACTOR参照）で、同wrap内で最初から円の
+ * 手前にある#skillsへ移る。
 -------------------------------------------------*/
 /**
  * 円のscaleを GSAP ScrollTrigger の自動 start/end 推定に任せると、手前の bgStage(pin) の
@@ -326,14 +333,16 @@ function setupFillCircle(fillSel, circleSel, revealSel, growVh, onCoveredChange)
 		const progress = Math.min(Math.max(-top / (vh * growVh), 0), 1);
 		circle.style.transform = 'scale(' + progress + ')';
 		if (reveal) {
-			// 円が画面の四隅すべてを覆った瞬間に中身へ --covered を付けてフェード表示する。
-			// 「白い円が覆いきってから、その白の上に SKILLS が浮かび上がる」ので、
-			// #skills の白背景が夜景の上にせり上がって境目が直線で出る問題が起きない。
+			// 円が四隅を完全に覆いきるのを待たず、画面の大部分（8〜9割程度）が白くなった
+			// 時点で --covered を付けて中身をフェード表示する。実際の半径に
+			// EARLY_REVEAL_RADIUS_FACTOR を掛けて「覆ったとみなす」半径を広めに見積もることで
+			// 早出しする（値を大きくするほど早く出る）。四隅にわずかに夜景が残った状態で
+			// #skills の白背景と重なるが、円自体が白いため境目に直線は出ない。
 			// 覆い判定は円の実寸(getBoundingClientRect)で行うので画面比率に依存しない。
 			const c = circle.getBoundingClientRect();
 			const cx = c.left + c.width / 2;
 			const cy = c.top + c.height / 2;
-			const r = c.width / 2;
+			const r = (c.width / 2) * EARLY_REVEAL_RADIUS_FACTOR;
 			const cornersCovered = [[0, 0], [vw, 0], [0, vh], [vw, vh]].every(function (p) {
 				return Math.hypot(p[0] - cx, p[1] - cy) <= r;
 			});
