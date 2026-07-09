@@ -299,11 +299,19 @@
 	}
 }
 .skills__detail--main {
+	overflow: hidden;
+	width: 100%;
+	max-width: vwmin(760);
+}
+.skills__detail--track {
+	display: flex;
+}
+.skills__detail--slide {
 	display: flex;
 	align-items: center;
 	gap: vwmin(64);
 	width: 100%;
-	max-width: vwmin(760);
+	flex-shrink: 0;
 
 	@include sp {
 		flex-direction: column;

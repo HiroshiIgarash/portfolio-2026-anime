@@ -361,12 +361,17 @@ setupFillCircle('.skillsFill', '.js-skillsCircle', '#skills', SKILLS_CIRCLE_GROW
 
 /*-----------------------------------------------
  * SKILLS - Menu Switching
- * メニュー/前後ボタンクリックで同一のswitchSkill()を呼び、
- * アイコンがふんわり変わり→名前→説明の順に
- * 時間差でフェードイン+スライドインする
+ * メニュー/前後ボタンクリックで同一のswitchSkill()を呼ぶ。
+ * アイコン+名前+説明を1枚のスライドとしてトラックごと横に移動し、
+ * 到着後に名前→説明の順で時間差フェードインする
 -------------------------------------------------*/
 let currentSkillIndex = 0;
 let skillDetailTl;
+
+const $skillSlides = $('.js-skillsDetailSlide');
+// 初期表示（index0）以外は、初めてスライドしてきた瞬間にフェードインできるよう
+// あらかじめ名前・説明を透明にしておく
+$skillSlides.not(':eq(0)').find('.js-skillsDetailName, .js-skillsDetailText').css('opacity', 0);
 
 function switchSkill(index) {
 	const $btns = $('.js-skillsMenuBtn');
@@ -396,30 +401,26 @@ function switchSkill(index) {
 		});
 	}
 
-	const iconSrc = $target.find('img').attr('src');
-	const name = $target.data('name');
-	const text = $target.data('text');
+	const $prevText = $skillSlides.eq(prevIndex).find('.js-skillsDetailName, .js-skillsDetailText');
+	const $currentText = $skillSlides.eq(currentSkillIndex).find('.js-skillsDetailName, .js-skillsDetailText');
+	const trackX = -currentSkillIndex * $('.js-skillsDetailWindow').width();
 
 	// スクロールインの CSS transition が GSAP の毎フレーム inline style 書き換えにも
 	// 反応してしまい、狙った時間差アニメがにじむため無効化する（初回以降は GSAP のみが担当）
-	$('.js-skillsDetailName, .js-skillsDetailText').css('transition', 'none');
+	$prevText.add($currentText).css('transition', 'none');
 
 	if (skillDetailTl) {
 		skillDetailTl.kill();
 	}
 	const tl = gsap.timeline();
 	skillDetailTl = tl;
-	// アイコン・名前・説明を一旦まとめてフェードアウトしてから内容を差し替え、時間差でフェードインする
-	tl.to('.js-skillsDetailIcon img, .js-skillsDetailName, .js-skillsDetailText', { opacity: 0, duration: .25 })
-		.call(function () {
-			$('.js-skillsDetailIcon img').attr('src', iconSrc);
-			$('.js-skillsDetailName').text(name);
-			$('.js-skillsDetailText').text(text);
-		})
-		.set('.js-skillsDetailName, .js-skillsDetailText', { y: 20 })
-		.to('.js-skillsDetailIcon img', { opacity: 1, duration: .3 })
-		.to('.js-skillsDetailName', { opacity: 1, y: 0, duration: .4 }, '-=.1')
-		.to('.js-skillsDetailText', { opacity: 1, y: 0, duration: .4 }, '-=.2');
+	// 現在の名前・説明を先にフェードアウト → アイコンごとスライド全体をトラックで横移動 →
+	// 到着後に切り替え先の名前・説明を時間差でフェードインする
+	tl.to($prevText, { opacity: 0, duration: .2 })
+		.set($currentText, { y: 20 })
+		.to('.js-skillsDetailTrack', { x: trackX, duration: .5, ease: 'power2.inOut' })
+		.to($currentText.filter('.js-skillsDetailName'), { opacity: 1, y: 0, duration: .4 })
+		.to($currentText.filter('.js-skillsDetailText'), { opacity: 1, y: 0, duration: .4 }, '-=.2');
 }
 
 $('.js-skillsMenuBtn').on('click', function () {
@@ -430,6 +431,16 @@ $('.js-skillsPrev').on('click', function () {
 });
 $('.js-skillsNext').on('click', function () {
 	switchSkill(currentSkillIndex + 1);
+});
+
+// スライド幅はvwmin/vwベースでリサイズにより変わるため、現在選択中のindexに
+// 合わせてトラック位置を再計算し直す（アニメーションなしで即座に補正）
+let skillsIconResizeTimer;
+$(window).on('resize', function () {
+	clearTimeout(skillsIconResizeTimer);
+	skillsIconResizeTimer = setTimeout(function () {
+		gsap.set('.js-skillsDetailTrack', { x: -currentSkillIndex * $('.js-skillsDetailWindow').width() });
+	}, 200);
 });
 
 /*-----------------------------------------------

@@ -214,7 +214,7 @@ const pageJs = 'top';
 		-%>
 		<div class="skills__menu">
 			<% skillsList.forEach(function (s, i) { -%>
-			<button type="button" class="skills__menu--btn js-skillsMenuBtn<% if (i === 0) { -%> --is-current<% } -%>" data-skill-index="<%= i %>" data-name="<%= s.name %>" data-text="<%= s.text %>">
+			<button type="button" class="skills__menu--btn js-skillsMenuBtn<% if (i === 0) { -%> --is-current<% } -%>" data-skill-index="<%= i %>">
 				<img src="<%= root %>assets/img/top/skills/<%= s.slug %>.svg" alt="" width="24" height="24">
 				<span class="hd"><%= s.name %></span>
 			</button>
@@ -224,14 +224,20 @@ const pageJs = 'top';
 			<button type="button" class="skills__detail--prev js-skillsPrev">
 				<span class="hd">前のスキルへ</span>
 			</button>
-			<div class="skills__detail--main">
-				<div class="skills__detail--icon js-skillsDetailIcon">
-					<img src="<%= root %>assets/img/top/skills/<%= skillsList[0].slug %>.svg" alt="" width="24" height="24">
-				</div>
-				<div class="skills__detail--body">
-					<p class="skills__detail--name js-skillsDetailName js-scrani"><%= skillsList[0].name %></p>
-					<p class="skills__detail--text js-skillsDetailText js-scrani"><%= skillsList[0].text %></p>
-				</div>
+			<div class="skills__detail--main js-skillsDetailWindow">
+				<div class="skills__detail--track js-skillsDetailTrack">
+					<% skillsList.forEach(function (s, i) { -%>
+					<div class="skills__detail--slide js-skillsDetailSlide">
+						<div class="skills__detail--icon">
+							<img src="<%= root %>assets/img/top/skills/<%= s.slug %>.svg" alt="" width="24" height="24">
+						</div>
+						<div class="skills__detail--body">
+							<p class="skills__detail--name js-skillsDetailName<% if (i === 0) { -%> js-scrani<% } %>"><%= s.name %></p>
+							<p class="skills__detail--text js-skillsDetailText<% if (i === 0) { -%> js-scrani<% } %>"><%= s.text %></p>
+						</div>
+					</div>
+					<% }); -%>
+				</div><!-- /.skills__detail--track -->
 			</div><!-- /.skills__detail--main -->
 			<button type="button" class="skills__detail--next js-skillsNext">
 				<span class="hd">次のスキルへ</span>
