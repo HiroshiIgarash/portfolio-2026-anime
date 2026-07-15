@@ -6,8 +6,8 @@ module.exports = {
   siteName: "Hiroshi Igarashi Portfolio 2026",
   siteUrl: "https://igarashi-portfolio2026.vercel.app/",
   description:
-    "わくわくに満ちた、体験を。 Hiroshi Igarashiのポートフォリオサイト。",
-  footerCatch: "わくわくに満ちた、体験を。",
+    "丁寧な実装を、素早く仕上げる。 Hiroshi Igarashiのポートフォリオサイト。",
+  footerCatch: "丁寧な実装を、素早く仕上げる。",
   keywords: "ポートフォリオ,ウェブ制作,コーディング,フロントエンドエンジニア",
   ogpImage: "assets/og/ogp1.jpg",
   themeColor: "#fff",
