@@ -153,6 +153,28 @@
 }
 
 /**
+ * worksNote
+ */
+.worksNote {
+	padding: vwmin(40) vwmin(40) vwmin(64);
+	font-size: vwmin(14);
+	color: rgba(20, 33, 61, .65);
+	text-align: center;
+	opacity: 0;
+	transform: translateY(16px);
+	transition: opacity .6s ease, transform .6s ease;
+
+	@include sp {
+		padding: vw(48) vw(40) vw(72);
+		font-size: vw(22);
+	}
+}
+.worksNote.--is-ani {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/**
  * worksMore
  */
 .worksMore {
