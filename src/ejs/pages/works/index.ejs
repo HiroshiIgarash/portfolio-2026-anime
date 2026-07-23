@@ -2,7 +2,7 @@
 const root = '../';
 const page = 'works';
 const pageCss = 'works';
-const pageJs = null;
+const pageJs = 'works';
 -%>
 <!doctype html>
 <html lang="ja">
@@ -33,11 +33,39 @@ const pageJs = null;
 			</h1>
 			<p class="worksIntro__lead">Web制作会社時代に手がけたサイト一覧</p>
 		</section><!-- /.worksIntro -->
+		<%
+		// フィルタ選択肢はデータから自動生成（シートに項目が増えても追従する）
+		const worksFilterGroups = [
+			{ key: 'type', label: 'TYPE', values: [...new Set(worksList.map(function (w) { return w.type; }).filter(Boolean))] },
+			{ key: 'tech', label: 'TECH', values: [...new Set(worksList.flatMap(function (w) { return w.tech || []; }))] },
+			{ key: 'collab', label: 'COLLAB', values: [...new Set(worksList.flatMap(function (w) { return w.collab || []; }))] },
+		];
+		-%>
+		<!-- BEGIN .worksFilter -->
+		<div class="worksFilter js-scrani">
+			<% worksFilterGroups.forEach(function (g) { -%>
+			<div class="worksFilter__group js-worksFilterGroup" data-filter-key="<%= g.key %>">
+				<p class="worksFilter__label"><%= g.label %></p>
+				<ul class="worksFilter__lists">
+					<li class="worksFilter__item">
+						<button type="button" class="worksFilter__btn js-worksFilterBtn --is-current" data-filter-value="">ALL</button>
+					</li>
+					<% g.values.forEach(function (v) { -%>
+					<li class="worksFilter__item">
+						<button type="button" class="worksFilter__btn js-worksFilterBtn" data-filter-value="<%= v %>"><%= v %></button>
+					</li>
+					<% }); -%>
+				</ul>
+			</div><!-- /.worksFilter__group -->
+			<% }); -%>
+			<p class="worksFilter__count"><span class="worksFilter__count--num js-worksFilterCount"><%= worksList.length %></span> SITES</p>
+		</div><!-- /.worksFilter -->
+		<p class="worksFilterEmpty js-worksFilterEmpty">条件に合う案件がありません。フィルタを解除してください。</p>
 		<!-- BEGIN .worksList -->
 		<ol class="worksList">
-			<% worksList.forEach(function (w, i) { -%>
-			<li class="worksList__item js-scrani">
-				<p class="worksList__num"><%= String(i + 1).padStart(2, '0') %></p>
+			<% worksList.forEach(function (w) { -%>
+			<li class="worksList__item js-scrani js-worksItem" data-type="<%= w.type %>" data-tech="<%= (w.tech || []).join('|') %>" data-collab="<%= (w.collab || []).join('|') %>">
+				<p class="worksList__num" aria-hidden="true"></p>
 				<div class="worksList__body">
 					<h2 class="worksList__title"><%= w.title %></h2>
 					<ul class="worksMeta">
