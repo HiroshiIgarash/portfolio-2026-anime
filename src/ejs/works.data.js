@@ -2,7 +2,7 @@
 
 // Web制作会社時代に制作したサイト一覧（/works/ ページ用）
 // 受託案件のため実名は出さず、業種・規模で表記する
-// 原稿マスタは Google Sheets「portfolio-works-data-v4」。シート更新後にここへ反映する
+// 原稿マスタは Google Sheets「portfolio-works-data-v5」。シート更新後にここへ反映する
 // webpack の template-ejs-loader から data.worksList として全 EJS テンプレートに注入される
 // 注意: webpack config 評価時に require されるため、dev server 起動中の編集は反映されない（要再起動）
 module.exports = [
