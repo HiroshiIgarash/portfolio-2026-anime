@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const siteConfig = require('./src/ejs/site.config.js');
+const worksList = require('./src/ejs/works.data.js');
 
 const projectRoot = __dirname;
 const pagesDir = path.resolve(projectRoot, 'src/ejs/pages');
@@ -89,7 +90,8 @@ module.exports = (env, argv) => {
 							options: {
 								// サイト共通定数を `site` として全テンプレートに注入する。
 								data: {
-									site: siteConfig
+									site: siteConfig,
+									worksList: worksList
 								}
 							}
 						}
