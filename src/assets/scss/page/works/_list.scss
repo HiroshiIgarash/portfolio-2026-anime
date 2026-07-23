@@ -116,6 +116,10 @@
 .worksMeta__item.-pages {
 	font-family: var(--font-en);
 }
+.worksMeta__item.-collab {
+	background: rgba(20, 33, 61, .12);
+	color: var(--color-navy);
+}
 
 /**
  * worksTech

@@ -50,6 +50,9 @@ const pageJs = null;
 						<% if (w.team) { -%>
 						<li class="worksMeta__item -team"><%= w.team %></li>
 						<% } -%>
+						<% (w.collab || []).forEach(function (c) { -%>
+						<li class="worksMeta__item -collab"><%= c %></li>
+						<% }); -%>
 					</ul>
 					<ul class="worksTech">
 						<% w.tech.forEach(function (t) { -%>

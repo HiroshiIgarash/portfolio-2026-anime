@@ -20,6 +20,7 @@ module.exports = [
 		type: "新規制作",
 		pages: "10",
 		team: "単独",
+		collab: ["他社デザイン", "他社ディレクション"],
 		tech: ["HTML/CSS", "Sass", "JavaScript", "WordPress"],
 		description:
 			"グループ企業の採用サイトを新規制作。社員情報を先方が自分で更新できるWordPress構築とお問い合わせフォームを実装。他社デザイン・他社ディレクターとやりとりしながら進行。",
@@ -29,6 +30,7 @@ module.exports = [
 		type: "新規制作",
 		pages: "100+40",
 		team: "5人指揮",
+		collab: ["他社ディレクション"],
 		tech: ["Sass", "JavaScript", "PHP"],
 		description:
 			"診療科紹介だけで100ページを超える大規模案件。定型テンプレートを設計し、制作メンバー5名のディレクションも担当。",
@@ -37,6 +39,7 @@ module.exports = [
 		title: "菓子ブランド公式サイトの保守・改修",
 		type: "保守・運用",
 		team: "単独",
+		collab: ["他社制作サイト"],
 		tech: ["HTML/CSS", "JavaScript"],
 		description:
 			"他社制作のアニメーション多用サイトを保守。既存JSコードを解析し、新商品ページに同様の演出を再現。",
@@ -102,6 +105,7 @@ module.exports = [
 		type: "新規制作",
 		pages: "40",
 		team: "単独",
+		collab: ["他社と合同制作"],
 		tech: ["Sass", "JavaScript", "PHP"],
 		description:
 			"40ページ規模の大学サイトを他社と合同で制作。CMS組み込みは他社のため、組み込みやすさを意識したコンポーネント設計・コーディングを担当。",
@@ -111,6 +115,7 @@ module.exports = [
 		type: "新規制作",
 		pages: "20",
 		team: "3人・補佐",
+		collab: ["他社デザイン"],
 		tech: ["HTML/CSS", "Sass", "JavaScript"],
 		description:
 			"周年記念サイトを3人体制で制作。SVGアニメーションの実装を含むコーディングを担当。",
@@ -120,6 +125,7 @@ module.exports = [
 		type: "リニューアル",
 		pages: "20",
 		team: "単独",
+		collab: ["他社デザイン"],
 		tech: ["HTML/CSS", "Sass", "JavaScript"],
 		description:
 			"20ページのサイトリニューアル。他社デザインをもとにコーディングし、公開後の定期的なお知らせ更新も担当。",
@@ -128,6 +134,7 @@ module.exports = [
 		title: "住宅会社サイトの新規ページ制作・改修",
 		type: "改修",
 		team: "単独",
+		collab: ["他社制作サイト", "他社ディレクション"],
 		tech: ["Sass", "JavaScript", "PHP"],
 		description:
 			"他社制作のコーポレートサイトに新規ページ制作・改修。既存コードを読み取り、実装パターンに沿ったコーディング。他社ディレクターとやりとりしながら進行。",
@@ -137,6 +144,7 @@ module.exports = [
 		type: "リニューアル",
 		pages: "40",
 		team: "単独",
+		collab: ["他社デザイン"],
 		tech: ["HTML/CSS", "Sass", "JavaScript", "WordPress"],
 		description:
 			"40ページのサイトリニューアル。他社のデザインカンプをもとに全ページのコーディングを担当。メガメニュー、お知らせ・事例紹介のWordPress構築も実施。",
@@ -146,6 +154,7 @@ module.exports = [
 		type: "新規制作",
 		pages: "100",
 		team: "単独",
+		collab: ["他社デザイン", "他社ディレクション"],
 		tech: ["HTML/CSS", "Sass", "JavaScript", "PHP"],
 		description:
 			"100ページ規模の製品説明サイトを制作。他社デザイン・他社ディレクターとやりとりしながらコーディングを担当。",
@@ -194,6 +203,7 @@ module.exports = [
 		type: "新規制作",
 		pages: "10",
 		team: "2人・指揮",
+		collab: ["他社デザイン", "他社ディレクション"],
 		tech: ["HTML/CSS", "Sass", "JavaScript", "PHP"],
 		description:
 			"大学のオープンキャンパス特設サイトを2人共同で制作し、自分が指揮を担当。他社デザイナー・ディレクターとやりとりしながら進行。",
