@@ -470,6 +470,29 @@
 		transform: translateX(vw(40));
 	}
 }
+.career__item--link {
+	display: inline-block;
+	font-size: vwmin(14);
+	font-weight: 700;
+	color: var(--color-teal);
+	text-decoration: none;
+	margin-top: vwmin(12);
+	border-bottom: 1px solid currentColor;
+	padding-bottom: vwmin(2);
+
+	@include sp {
+		font-size: vw(22);
+		margin-top: vw(14);
+	}
+}
+@include hover {
+	.career__item--link {
+		transition: opacity .3s ease;
+	}
+	.career__item--link:hover {
+		opacity: .6;
+	}
+}
 .career__item--handNote {
 	display: inline-block;
 	margin-left: vwmin(12);

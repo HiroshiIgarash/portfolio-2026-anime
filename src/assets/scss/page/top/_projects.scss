@@ -308,7 +308,14 @@
 .projects__more {
 	display: flex;
 	justify-content: center;
+	gap: vwmin(24);
 	margin-top: vwmin(80);
+
+	@include sp {
+		flex-direction: column;
+		align-items: center;
+		gap: vw(24);
+	}
 }
 .projects__more--btn {
 	display: inline-flex;
