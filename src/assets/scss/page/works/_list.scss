@@ -79,6 +79,45 @@
 }
 
 /**
+ * worksMeta
+ */
+.worksMeta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: vwmin(8);
+	list-style: none;
+	margin-bottom: vwmin(10);
+
+	@include sp {
+		gap: vw(10);
+		margin-bottom: vw(14);
+	}
+}
+.worksMeta__item {
+	font-size: vwmin(12);
+	font-weight: 700;
+	letter-spacing: .05em;
+	line-height: 1;
+	color: #fff;
+	background: rgba(20, 33, 61, .55);
+	border-radius: vwmin(4);
+	padding: vwmin(5) vwmin(10);
+
+	@include sp {
+		font-size: vw(18);
+		border-radius: vw(4);
+		padding: vw(6) vw(12);
+	}
+}
+.worksMeta__item.-type {
+	background: var(--color-teal);
+	color: var(--color-navy);
+}
+.worksMeta__item.-pages {
+	font-family: var(--font-en);
+}
+
+/**
  * worksTech
  */
 .worksTech {

@@ -40,6 +40,17 @@ const pageJs = null;
 				<p class="worksList__num"><%= String(i + 1).padStart(2, '0') %></p>
 				<div class="worksList__body">
 					<h2 class="worksList__title"><%= w.title %></h2>
+					<ul class="worksMeta">
+						<% if (w.type) { -%>
+						<li class="worksMeta__item -type"><%= w.type %></li>
+						<% } -%>
+						<% if (w.pages) { -%>
+						<li class="worksMeta__item -pages"><%= w.pages %> PAGES</li>
+						<% } -%>
+						<% if (w.team) { -%>
+						<li class="worksMeta__item -team"><%= w.team %></li>
+						<% } -%>
+					</ul>
 					<ul class="worksTech">
 						<% w.tech.forEach(function (t) { -%>
 						<li class="worksTech__item"><%= t %></li>
