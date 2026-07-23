@@ -10,7 +10,7 @@ module.exports = [
 		title: "多角経営グループのコーポレートサイト制作",
 		type: "新規制作",
 		pages: "50+",
-		team: "3名体制",
+		team: "コーダー3人",
 		tech: ["HTML/CSS", "Sass", "JavaScript", "PHP", "WordPress"],
 		description:
 			"物流・アパレル・製造など複数事業を展開する企業のコーポレートサイト。静的50ページ超+WordPress動的ページのハイブリッド構成を3名体制で制作。",
@@ -19,7 +19,7 @@ module.exports = [
 		title: "ホールディングス企業の採用サイト制作",
 		type: "新規制作",
 		pages: "10",
-		team: "単独",
+		team: "単独コーディング",
 		collab: ["他社デザイン", "他社ディレクション"],
 		tech: ["HTML/CSS", "Sass", "JavaScript", "WordPress"],
 		description:
@@ -29,7 +29,7 @@ module.exports = [
 		title: "総合病院コーポレートサイト制作",
 		type: "新規制作",
 		pages: "100+40",
-		team: "5人指揮",
+		team: "コーダー5人指揮",
 		collab: ["他社ディレクション"],
 		tech: ["Sass", "JavaScript", "PHP"],
 		description:
@@ -38,7 +38,7 @@ module.exports = [
 	{
 		title: "菓子ブランド公式サイトの保守・改修",
 		type: "保守・運用",
-		team: "単独",
+		team: "単独コーディング",
 		collab: ["他社制作サイト"],
 		tech: ["HTML/CSS", "JavaScript"],
 		description:
@@ -48,7 +48,7 @@ module.exports = [
 		title: "食品商社サイトリニューアル",
 		type: "リニューアル",
 		pages: "40",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "Sass", "JavaScript", "WordPress"],
 		description:
 			"40ページ規模のコーポレートサイトリニューアル。多言語対応・メガメニューを含むWordPress構築を担当。",
@@ -57,7 +57,7 @@ module.exports = [
 		title: "食品商社の採用サイト制作",
 		type: "新規制作",
 		pages: "10",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "Sass", "JavaScript", "WordPress"],
 		description:
 			"食品商社の採用サイトを新規制作。お知らせをWordPressで更新できる構成で構築。",
@@ -65,14 +65,14 @@ module.exports = [
 	{
 		title: "リフォーム会社のLP制作",
 		type: "LP",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "Sass", "JavaScript", "PHP"],
 		description: "リフォーム会社のLPを制作。お問い合わせフォームの実装も担当。",
 	},
 	{
 		title: "コスメブランドのLP制作",
 		type: "LP",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "Sass", "JavaScript"],
 		description: "コスメブランドのLPをECプラットフォーム内に構築。",
 	},
@@ -80,7 +80,7 @@ module.exports = [
 		title: "ITシステム開発会社のコーポレートサイト制作",
 		type: "新規制作",
 		pages: "10",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "Sass", "JavaScript", "PHP", "WordPress"],
 		description:
 			"ITシステム開発会社のコーポレートサイトを新規制作。お知らせのWordPress化とお問い合わせフォームを実装。",
@@ -88,14 +88,14 @@ module.exports = [
 	{
 		title: "大手自動車メーカーの定期LP制作",
 		type: "LP",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "Sass", "JavaScript"],
 		description: "大手自動車メーカーのLPを定期的に制作。",
 	},
 	{
 		title: "電機メーカーサイトの新規ページ制作・改修",
 		type: "改修",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "Sass", "JavaScript", "PHP"],
 		description:
 			"長期リニューアルが進行中のサイトで、新規ページ制作と既存ページ改修を担当。新旧デザインが混在する複雑な状態でのコーディング。",
@@ -104,7 +104,7 @@ module.exports = [
 		title: "短期大学サイト制作",
 		type: "新規制作",
 		pages: "40",
-		team: "単独",
+		team: "単独コーディング",
 		collab: ["他社と合同制作"],
 		tech: ["Sass", "JavaScript", "PHP"],
 		description:
@@ -114,7 +114,7 @@ module.exports = [
 		title: "大手ホールディングスの周年記念コーポレートサイト制作",
 		type: "新規制作",
 		pages: "20",
-		team: "3人・補佐",
+		team: "コーダー3人・補佐",
 		collab: ["他社デザイン"],
 		tech: ["HTML/CSS", "Sass", "JavaScript"],
 		description:
@@ -124,7 +124,7 @@ module.exports = [
 		title: "ダイレクトマーケティング支援会社のサイトリニューアル",
 		type: "リニューアル",
 		pages: "20",
-		team: "単独",
+		team: "単独コーディング",
 		collab: ["他社デザイン"],
 		tech: ["HTML/CSS", "Sass", "JavaScript"],
 		description:
@@ -133,7 +133,7 @@ module.exports = [
 	{
 		title: "住宅会社サイトの新規ページ制作・改修",
 		type: "改修",
-		team: "単独",
+		team: "単独コーディング",
 		collab: ["他社制作サイト", "他社ディレクション"],
 		tech: ["Sass", "JavaScript", "PHP"],
 		description:
@@ -143,7 +143,7 @@ module.exports = [
 		title: "農業機械メーカーのサイトリニューアル",
 		type: "リニューアル",
 		pages: "40",
-		team: "単独",
+		team: "単独コーディング",
 		collab: ["他社デザイン"],
 		tech: ["HTML/CSS", "Sass", "JavaScript", "WordPress"],
 		description:
@@ -153,7 +153,7 @@ module.exports = [
 		title: "大手メーカーのスマートウォッチ製品サイト制作",
 		type: "新規制作",
 		pages: "100",
-		team: "単独",
+		team: "単独コーディング",
 		collab: ["他社デザイン", "他社ディレクション"],
 		tech: ["HTML/CSS", "Sass", "JavaScript", "PHP"],
 		description:
@@ -162,7 +162,7 @@ module.exports = [
 	{
 		title: "中学入試ポータルサイトの機能追加",
 		type: "保守・運用",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "Sass", "JavaScript", "WordPress"],
 		description:
 			"既存のWordPressサイトに、更新可能なコンテンツ機能を新規構築。",
@@ -170,7 +170,7 @@ module.exports = [
 	{
 		title: "ふるさと納税サイトの定期更新・制作",
 		type: "保守・運用",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "Sass", "JavaScript"],
 		description:
 			"ふるさと納税サイトの定期更新・ページ制作。提供されるCSVからEJSでHTMLを自動生成する仕組みを作り、制作を効率化。",
@@ -178,14 +178,14 @@ module.exports = [
 	{
 		title: "大手クレジットカード会社サイトの新規ページ制作",
 		type: "保守・運用",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "Sass", "JavaScript"],
 		description: "既存のコーポレートサイトへ、定期的に新規ページを制作。",
 	},
 	{
 		title: "信用金庫サイトの改修",
 		type: "保守・運用",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "JavaScript", "PHP"],
 		description: "信用金庫指定のCMSを用いた既存サイトの改修・運用。",
 	},
@@ -193,7 +193,7 @@ module.exports = [
 		title: "音楽関連企業のコーポレートサイト制作",
 		type: "新規制作",
 		pages: "10",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "Sass", "JavaScript", "GSAP"],
 		description:
 			"10ページ規模のコーポレートサイトを新規制作。GSAPを用いたリッチなスクロールアニメーションを実装。",
@@ -202,7 +202,7 @@ module.exports = [
 		title: "大学のオープンキャンパスサイト",
 		type: "新規制作",
 		pages: "10",
-		team: "2人・指揮",
+		team: "コーダー2人・指揮",
 		collab: ["他社デザイン", "他社ディレクション"],
 		tech: ["HTML/CSS", "Sass", "JavaScript", "PHP"],
 		description:
@@ -212,7 +212,7 @@ module.exports = [
 		title: "システム開発会社のコーポレートサイト制作",
 		type: "新規制作",
 		pages: "10",
-		team: "単独",
+		team: "単独コーディング",
 		tech: ["HTML/CSS", "Sass", "JavaScript", "three.js"],
 		description:
 			"10ページ規模のコーポレートサイトを新規制作。three.jsによるインタラクティブな3Dアニメーションを実装。",
