@@ -86,21 +86,3 @@
 	opacity: 1;
 	transform: translateY(0);
 }
-
-/* note */
-.worksIntro__note {
-	font-size: vwmin(13);
-	color: rgba(20, 33, 61, .6);
-	margin-top: vwmin(16);
-	opacity: 0;
-	transition: opacity .6s ease .8s;
-
-	@include sp {
-		font-size: vw(20);
-		margin-top: vw(20);
-		padding: 0 vw(48);
-	}
-}
-.worksIntro.--is-ani .worksIntro__note {
-	opacity: 1;
-}
