@@ -29,7 +29,7 @@ module.exports = [
 		title: "総合病院コーポレートサイト制作",
 		type: "新規制作",
 		pages: "100+40",
-		team: "コーダー5人指揮",
+		team: "コーダー5人・メイン",
 		collab: ["他社ディレクション"],
 		tech: ["Sass", "JavaScript", "PHP"],
 		description:
@@ -114,7 +114,7 @@ module.exports = [
 		title: "大手ホールディングスの周年記念コーポレートサイト制作",
 		type: "新規制作",
 		pages: "20",
-		team: "コーダー3人・補佐",
+		team: "コーダー3人・サブ",
 		collab: ["他社デザイン"],
 		tech: ["HTML/CSS", "Sass", "JavaScript"],
 		description:
@@ -202,7 +202,7 @@ module.exports = [
 		title: "大学のオープンキャンパスサイト",
 		type: "新規制作",
 		pages: "10",
-		team: "コーダー2人・指揮",
+		team: "コーダー2人・メイン",
 		collab: ["他社デザイン", "他社ディレクション"],
 		tech: ["HTML/CSS", "Sass", "JavaScript", "PHP"],
 		description:
