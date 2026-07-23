@@ -1,0 +1,106 @@
+@use "../../global/mixins" as *;
+
+/*-----------------------------------------------
+ * WORKS INTRO
+-------------------------------------------------*/
+/**
+ * worksIntro
+ */
+.worksIntro {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	padding: vwmin(160) vwmin(40) vwmin(80);
+	color: var(--color-navy);
+	text-align: center;
+
+	@include sp {
+		padding: vw(180) vw(40) vw(96);
+	}
+}
+
+/* count */
+.worksIntro__count {
+	font-family: var(--font-en);
+	font-size: vwmin(18);
+	letter-spacing: .3em;
+	color: var(--color-teal);
+	margin-bottom: vwmin(16);
+
+	@include sp {
+		font-size: vw(22);
+		margin-bottom: vw(24);
+	}
+}
+
+/* head */
+.worksIntro__head {
+	display: flex;
+	justify-content: center;
+	font-family: var(--font-en);
+	font-size: vwmin(80);
+	font-weight: 900;
+	line-height: 1;
+	margin-bottom: vwmin(24);
+
+	@include sp {
+		font-size: vw(88);
+		margin-bottom: vw(32);
+	}
+}
+.worksIntro__head--char {
+	display: inline-block;
+	overflow: hidden;
+}
+.worksIntro__head--charIn {
+	display: inline-block;
+	transform: translateY(110%);
+	opacity: 0;
+	transition: transform .6s ease, opacity .6s ease;
+}
+.worksIntro.--is-ani .worksIntro__head--charIn {
+	transform: translateY(0);
+	opacity: 1;
+}
+.worksIntro__head--char:nth-child(1) .worksIntro__head--charIn { transition-delay: .08s; }
+.worksIntro__head--char:nth-child(2) .worksIntro__head--charIn { transition-delay: .16s; }
+.worksIntro__head--char:nth-child(3) .worksIntro__head--charIn { transition-delay: .24s; }
+.worksIntro__head--char:nth-child(4) .worksIntro__head--charIn { transition-delay: .32s; }
+.worksIntro__head--char:nth-child(5) .worksIntro__head--charIn { transition-delay: .4s; }
+
+/* lead */
+.worksIntro__lead {
+	font-size: vwmin(18);
+	letter-spacing: .05em;
+	opacity: 0;
+	transform: translateY(16px);
+	transition: opacity .6s ease .5s, transform .6s ease .5s;
+
+	@include sp {
+		font-size: vw(26);
+		padding: 0 vw(48);
+	}
+}
+.worksIntro.--is-ani .worksIntro__lead {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* note */
+.worksIntro__note {
+	font-size: vwmin(13);
+	color: rgba(20, 33, 61, .6);
+	margin-top: vwmin(16);
+	opacity: 0;
+	transition: opacity .6s ease .8s;
+
+	@include sp {
+		font-size: vw(20);
+		margin-top: vw(20);
+		padding: 0 vw(48);
+	}
+}
+.worksIntro.--is-ani .worksIntro__note {
+	opacity: 1;
+}
