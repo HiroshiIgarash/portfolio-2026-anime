@@ -92,3 +92,24 @@
 	display: inline-block;
 	opacity: 0;
 }
+
+/**
+ * prism__introThanks--hint
+ * THANK YOU～の下に添える操作ヒント。--charと同じくJS側でフェードインさせるため
+ * 初期状態はopacity:0（詳細はtop.portfolio.jsのsetupPrismIntroを参照）
+ */
+.prism__introThanks--hint {
+	display: block;
+	margin-top: vwmin(20);
+	opacity: 0;
+	white-space: normal;
+	font-family: var(--font-ja);
+	font-size: vwmin(18);
+	font-weight: 500;
+	letter-spacing: .08em;
+
+	@include sp {
+		margin-top: vw(28);
+		font-size: vw(26);
+	}
+}

@@ -835,6 +835,7 @@ function setupPrismIntro() {
 	const stage = document.querySelector('.js-prismStage');
 	const overlay = document.querySelector('.js-prismIntroOverlay');
 	const chars = gsap.utils.toArray('.js-prismIntroChar');
+	const hint = document.querySelector('.js-prismIntroHint');
 	if (!stage || !overlay || !chars.length) return;
 
 	const tl = gsap.timeline({
@@ -848,6 +849,11 @@ function setupPrismIntro() {
 
 	tl.fromTo(overlay, { opacity: 1 }, { opacity: 0, ease: 'none' }, 0)
 		.fromTo(chars, { y: 10, opacity: 0 }, { y: 0, opacity: 1, ease: 'none', stagger: 0.05 }, 0);
+
+	// 操作ヒントは文字が出揃ってから追う（'>'＝直前のtweenのstagger完了位置）
+	if (hint) {
+		tl.fromTo(hint, { y: 10, opacity: 0 }, { y: 0, opacity: 1, ease: 'none' }, '>');
+	}
 }
 setupPrismIntro();
 
