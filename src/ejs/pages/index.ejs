@@ -392,6 +392,7 @@ const pageJs = 'top';
 		<div class="prism__introOverlay js-prismIntroOverlay"></div>
 		<p class="prism__introThanks js-prismIntroThanks">
 			<%_ const prismThanksWords = 'THANK YOU FOR WATCHING!'.split(' '); _%><%_ prismThanksWords.forEach(function (word, wi) { _%><span class="prism__introThanks--word"><%_ word.split('').forEach(function (ch) { _%><span class="prism__introThanks--char js-prismIntroChar"><%- ch %></span><%_ }); _%></span><%_ if (wi < prismThanksWords.length - 1) { _%>&#32;<%_ } _%><%_ }); _%>
+			<span class="prism__introThanks--hint js-prismIntroHint">パネルをタップ！</span>
 		</p>
 	</section><!-- /#prism -->
 </main>
